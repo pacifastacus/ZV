@@ -1,0 +1,277 @@
+%-------------------------------------------------------------------------------
+\subsection{Az informatika logikai alapjai}
+%-------------------------------------------------------------------------------
+\def\InterpretOnNu{^{\langle U, \rho \rangle}_{\nu}}
+\subsubsection{Az elsőrendű matematikai logikai nyelv.}
+\begin{definition}[Elsőrendű nyelv]
+	Klasszikus elsőrendű nyelven az $$ L^{(1)} = \langle LC,Var,Con,Term,Form\rangle $$ rendezett ötöst értjük, ahol\\
+	\begin{easylist}
+	# $LC = \{\neg,\supset,\land,\lor,\equiv,=,\forall,\exists,(,)\}$ a nyelv logikai konstansainak halmaza\footnote{A logikai konstansok olyan nyelvi eszközök, amelyek jelentését a szemantikai szabályok (logikai kalkulusok esetén az axiómák) rögzítik. Egy adott logikai rendszer esetén a logikai konstansok rögzített jelentéssel (rögzített szemantikai értékkel)rendelkeznek, jelentésük (szemantikai értékük) minden interpretációban megegyezik. Egy adott logikai rendszer esetén a logikai konstansokat általában az adott logikai rendszer nyelvének $LC$	halmaza tartalmazza.}
+	# $Var = \{x_{n}| n = 0,1,2,\dots\}$ a nyelv változóinak megszámlálhatóan végtelen halmaza\footnote{A köznyelvi mondatokban nevek helyett néha névmásokkal utalunk egyes individuumokra (objektumokra). A tudományos nyelvben gyakran kívánatos analóg kifejezési formák megadása. A szabatosság, az egyértelműség és a tömörség érdekében ilyenkor mesterséges névmásokat vezetnek be, amelyeket változóknak neveznek.}
+	# $Con = \bigcup_{n=0}^\infty(\mathcal{F}(n)\cup\mathcal{P}(n))$ a nyelv nemlogikai konstansainak legfeljebb megszámlálhatóan végtelen halmaza\footnote{A nemlogikai konstansok, más néven paraméterek olyan nyelvi eszközök, amelyek jelentését az interpretáció rögzíti. Egy adott logikai rendszer esetén a nemlogikai konstansok (a paraméterek) nem rendelkeznek rögzített jelentéssel (rögzített szemantikai értékkel), jelentésük (szemantikai értékük) interpretációról interpretációra változhat. Egy adott logikai rendszer esetén a nemlogikai konstansokat általában az adott logikai rendszer nyelvének $Con$ halmaza tartalmazza.}
+	## $\mathcal{F}(0)$ a névparaméterek (névkonstansok),
+	## $\mathcal{F}(n)$ az $ n $ argumentumú függvényjelek (műveleti jelek),
+	## $\mathcal{P}(0)$ a állításparaméterek (állításkonstansok),
+	## $\mathcal{P}(n)$ az $ n $ argumentumú predikátumparaméterek (predikátumkonstansok) halmaza.
+	# Az $LC,Var,\mathcal{F}(n),\mathcal{P}(n)$ halmazok ($n = 0,1,2,\dots$) páronként diszjunktak.
+	# A nyelv terminusainak a halmazát, azaz a $Term$ halmazt az alábbi induktív definíció adja:
+	## $Var \cup \mathcal{F}(0)\subseteq Term$
+	## Ha $f\in\mathcal{F}(n), (n=1,2,\dots)$,és $t_1,t_2,\dots,t_n \in Term$, akkor $f(t_1,t_2,\dots,t_n)\in Term$
+	# \label{itm:induction}A nyelv formuláinak halmazát, azaz a $Form$ halmazt az alábbi induktív definíció adja meg:
+	## \label{itm:rule1} $\mathcal{P}\subseteq Form$
+	## \label{itm:rule2} Ha $t_1,t_2 \in Term$, akkor $(t_1 = t_2) \in Form$
+	## \label{itm:rule3} Ha $P \in \mathcal{P}, (n=1,2,\dots)$, és $t_1,t_2,\dots,t_n\in Term$, akkor $P(t_1,t_2,\dots,t_n)\in Form$
+	## Ha $A \in Form$, akkor $\neg A \in Form$
+	## Ha $A,b \in Form$, akkor $(A \supset B),(A \land B),(A\lor B),(A\equiv B) \in Form$
+	## Ha $x\in Var, A\in Form$, akkor $\forall x A, \exists x A \in Form$
+	\end{easylist}
+\end{definition}
+\begin{note}
+	Azokat a formulákat, amelyek a \ref{itm:induction} \ref{itm:rule1}, \ref{itm:rule2}, \ref{itm:rule3} szabályok által jönnek létre, atomi formuláknak\index{atomi formula} vagy prímformuláknak\index{prímforumla} nevezzük.
+\end{note}
+
+\subsubsection{A nyelv interpretációja, formulák igazságértéke az interpretációban adott változókiértékelés mellett.}
+\begin{definition}[interpretáció (elsőrendű)]
+	Az $\langle U, \rho\rangle$ párt az $L^{(1)}$ nyelv egy interpretációjának nevezzük, ha\\
+	\begin{easylist}
+		# $U \neq \emptyset$ azaz $U$ nemüres halmaz
+		# $Dom(\rho) = Con$ azaz a $\rho$ a $Con$ halmazon értelmezett függvény, amelyre teljesülnek a következők:
+		## Ha $a \in F(0)$, akkor $\rho(a) \in U$
+		## Ha $f \in \mathcal{F}(n)$ ahol $n\neq 0$, akkor $\rho(f)$ az $U^{(n)}$ halmazon értelmezett az $U$ halmazba képező függvény ($\rho(f) : U^{(n)} \rightarrow U $)
+		## Ha $p \in \mathcal{P}(0)$, akkor $\rho(p) \in {0, 1}$
+		## Ha $P \in \mathcal{P}(n)$ ahol $n \neq 0$, akkor $\rho(P) \subseteq U^{(n)}$
+	\end{easylist}
+\end{definition}
+\begin{definition}[értékelés (elsőrendű)]
+	Legyen $L^{(1)} = \langle LC, Var, Con, Term, Form\rangle$ egy elsőrendű nyelv, $\langle U, \rho\rangle$ pedig a nyelv egy interpretációja. Az $\langle U, \rho\rangle$ interpretációra támaszkodó $\nu$ értékelésen egy olyan függvényt értünk, amely teljesíti a következőket:
+	\begin{itemize}
+		\item  $ Dom(\nu) = Var $
+		\item  $ Ha x \in Var$, akkor $\nu(x) \in U $
+	\end{itemize}
+\end{definition}
+\begin{definition}[értékelés (elsőrendű)]
+	Legyen $L^(1) = (LC, Var, Con, Term, Form)$ egy elsőrendű nyelv, $\langle U, \rho \rangle$ pedig a nyelv egy interpretációja, $\nu$ pedig az $\langle U, \rho \rangle$ interpretációra támaszkodó értékelés.\\
+	\begin{easylist}
+		# Ha $a \in F(0)$, akkor 
+				$|a|\InterpretOnNu = \rho(a)$
+		# Ha $x \in Var$, akkor 
+				$|x|^{\langle U,\rho \rangle}_{\nu} = \nu(x)$
+		# Ha $f \in F(n)$,$(n = 1,2,\dots)$ és $t_1,t_2,\dots,t_n \in Term$, akkor 
+				$$|f(t_1,t_2,\dots,t_n)|\InterpretOnNu = \rho(f)(|t_1|\InterpretOnNu,|t_2|\InterpretOnNu,\dots,|t_n|\InterpretOnNu)$$
+		# Ha $p \in P(0)$, akkor
+				 $|p|_\nu^{\langle U,\rho\rangle} = \rho(p)$
+		# Ha $t_1, t_2 \in Term$, akkor
+		\begin{equation}
+			|(t_1 = t_2)|\InterpretOnNu =
+			\begin{cases}
+				1, & \text{ha $|t_1|\InterpretOnNu = |t_2|\InterpretOnNu$}\\
+				0, & \text{egyébként.}
+			\end{cases}
+		\end{equation}
+		# Ha $P \in P(n) ahol n = 0, t1 , \dots , tn \in Term$, akkor
+		\begin{equation}
+			|P(t_1,t_2,\dots,t_n)|\InterpretOnNu =
+			\begin{cases}
+				1, & \text{ha $\big(|t_1|\InterpretOnNu,|t_2|\InterpretOnNu,\dots,|t_n|\InterpretOnNu\big)\in \rho(P)$}\\
+				0, & \text{egyébként.}
+			\end{cases}
+		\end{equation}
+		# Ha $A \in Form$, akkor
+			$|\neg A|\InterpretOnNu = 1 - |A|\InterpretOnNu$.
+		# Ha $A,B \in Form$, akkor
+			\begin{equation}
+				|(A\supset B)|\InterpretOnNu
+				\begin{cases}
+				0, & \text{ha $|A|\InterpretOnNu = 1$, és $|B|\InterpretOnNu = 0$}\\
+				1, & \text{egyébként.}
+				\end{cases}
+			\end{equation}
+			
+			\begin{equation}
+				|(A\land B)|\InterpretOnNu
+				\begin{cases}
+				1, & \text{ha $|A|\InterpretOnNu = 1$, és $|B|\InterpretOnNu = 1$}\\
+				0, & \text{egyébként.}
+				\end{cases}
+			\end{equation}
+			
+			\begin{equation}
+				|(A\lor B)|\InterpretOnNu
+				\begin{cases}
+				0, & \text{ha $|A|\InterpretOnNu = 0$, és $|B|\InterpretOnNu = 0$}\\
+				1, & \text{egyébként.}
+				\end{cases}
+			\end{equation}
+			
+			\begin{equation}
+				|(A\equiv B)|\InterpretOnNu
+				\begin{cases}
+				1, & \text{ha $|A|\InterpretOnNu = |B|\InterpretOnNu$}\\
+				0, & \text{egyébként.}
+				\end{cases}
+			\end{equation}
+		# Ha $A \in Form, x \in Var$, akkor
+			\begin{equation}
+				|(\forall_x A)|\InterpretOnNu =
+				\begin{cases}
+				0, & \text{ha van olyan $u \in U$, hogy$|A|^{\langle U, \rho \rangle}_{\nu [x:u]} = 0$}\\
+				1, & \text{egyébként.}
+				\end{cases}
+			\end{equation}
+			
+			\begin{equation}
+				|(\exists_x A)|\InterpretOnNu =
+				\begin{cases}
+				1, & \text{ha van olyan $u \in U$, hogy$|A|^{\langle U, \rho \rangle}_{\nu [x:u]} = 1$}\\
+				0, & \text{egyébként.}
+				\end{cases}
+			\end{equation}
+	\end{easylist}
+\end{definition}
+
+\subsubsection{Logikai törvény, logikai következmény.}
+\begin{definition}[modell]
+	Legyen $L^{(1)} = (LC, Var, Con, Term, Form)$ egy elsőrendű nyelv és $\Gamma \subseteq Form$ egy tetszőleges formulahalmaz. Az $(U, \rho, \nu)$ rendezett hármas elsőrendű modellje a $\Gamma$ formulahalmaznak, ha 
+	\begin{itemize}
+		\item  $(U, \rho)$ egy interpretációja az $L^{(1)}$ nyelvnek; 
+		\item  $\nu$ egy $(U, \rho)$ interpretációra támaszkodó értékelés; 
+		\item  minden  $A \in \Gamma$ esetén $|A|\InterpretOnNu = 1$.
+	\end{itemize}
+	
+\end{definition}
+\begin{definition}
+	Legyen $L^{(1)} = (LC, Var, Con, Term, Form)$ egy elsőrendű nyelv és $\Gamma \subseteq Form$ egy tetszőleges formulahalmaz, $A,B \in Form$ egy tetszőleges formulák.
+	\begin{itemize}
+		\item Egy $\Gamma$ formulahalmaz \emph{kielégíthető}, ha van (elsőrendű) modellje;
+		\item Egy $\Gamma$ formulahalmaz \emph{kielégíthetetlen}, ha nem kielégíthető, azaz nincs modellje;
+		\item Az $A$ formula \emph{modellje} az $\{A\}$ egyelemű formulahalmaz modelljét értjük;
+		\item Az $A$ formula \emph{kielégíthető}, ha $\{A\}$ formulahalmaz kielégíthető;
+		\item Az $A$ formula \emph{kielégíthetetlen}, ha $\{A\}$ formulahalmaz kielégíthetetlen;
+		\item A  $\Gamma$ formulahalmaznak \underline{logikai következménye} az $A$ formula, ha a $\Gamma \cup \{\neq A\}$ formulahalmaz kielégíthetetlen. Jelölés: $\Gamma \models A$ 
+		\item Az $A$ formulának \underline{logikai következménye} a $B$ formula, ha a $\{A\} \models B$. Jelölés: $A \models B$ 
+		\item Az $A$ formula \emph{érvényes} (\underline{logikai törvény})\label{def:logikai törvény}, ha $\emptyset \models A$, azaz ha az $A$ formula \underline{logikai következménye} az üres halmaznak. Másképpen, ha minden $ \langle U, \rho \rangle$ interpretációjában, minden $\nu$ értékelés szempontjából $|A|\InterpretOnNu = 1$ Jelölés: $\models A$
+		\item Az $A$ és a $B$ formula \emph{logikailag ekvivalens}, ha $A \models B$ és $B \models A$. Jelölés: $A \Leftrightarrow B$ 
+	\end{itemize}
+\end{definition}
+
+\subsubsection{Logikai ekvivalencia, normálformák.}
+\begin{definition}[Logikai ekvivalencia]
+	lásd:a \ref{def:logikai törvény} fejezet definíciója.
+\end{definition}
+\begin{definition}[elemi konjunkció]
+	Legyen $L^{(0)} = (LC, Con, Form)$ egy nulladrendű nyelv. Ha az $A \in Form$ formula literál vagy különböző alapú literálok konjunkciója, akkor $A$-t elemi konjunkciónak nevezzük. 
+\end{definition}
+\begin{definition}[elemi diszjunkció]
+	Legyen $L^{(0)} = (LC, Con, Form)$ egy nulladrendű nyelv. Ha az $A \in Form$ formula literál vagy különböző alapú literálok diszjunkciója, akkor $A$-t elemi diszjunkciónak nevezzük. 
+\end{definition}
+\begin{definition}[diszjunktív normálforma]
+	Egy elemi konjunkciót vagy elemi konjunkciók diszjunkcióját diszjunktív normálformának nevezzük. 
+\end{definition}
+\begin{definition}[konjunktív normálforma]
+	Egy elemi diszjunkciót vagy elemi diszjunkciók konjunkcióját konjunktív normálformának nevezzük.
+\end{definition}
+\begin{definition}
+	Legyen $L^{(0)} = (LC, Con, Form)$ egy nulladrendű nyelv és $A \in Form$ egy formula. Ekkor létezik olyan $B \in Form$, hogy
+	\begin{itemize}
+		\item $A\Leftrightarrow B$
+		\item $B$ diszjunktív vagy konjunktív normálformájú. 
+	\end{itemize}
+
+\end{definition}
+
+\subsubsection{Kalkulusok (Gentzen-kalkulus).}
+
+\paragraph{Logikai kalkulus} 
+Logikai kalkuluson olyan adott nyelv formuláihoz tartozó formális rendszert, szabályrendszert értünk, amely pusztán szintaktikailag, szemantika nélkül ad meg egy következményrelációt. A logikai kalkulus tehát egy axiómarendszer, amely magában a logikai tautológiákat állítja elő, adott formulákat ideiglenesen hozzávéve (premissza) pedig más formulákra (konklúzió) lehet jutni (következtetni) vele.
+
+\paragraph{Gentzen-féle szekvenciakalkulus}
+Ebben a kalkulusban nem formulákra vonatkoznak a szabályok és nem is formulák alkotják az axiómákat, hanem a formulák eddigi szerepét az ún. szekvencia töltik be. Szekvenciának nevezzük a
+$$\Gamma \vdash \Delta$$
+alakú jelsorozatokat, ahol $\Gamma$ és $\Delta$ olyan rendezett jelsorozatok, amelyeknek minden tagja egy formula.
+\begin{definition}[axiómasémák]
+	Legyen $L^{(0)} = (LC, Con, Form)$ egy nulladrendű nyelv (a klasszikus állításlogika nyelve). A nulladrendű kalkulus (klasszikus állításkalkulus) axiómasémái (alapsémái):
+	\begin{easylist}
+		# $A \supset (B \supset A)$
+		# $(A \supset (B \supset C)) \supset ((A \supset B) \supset (A \supset C))$
+		# $(\neg A \supset \neg B) \supset (B \supset A)$
+	\end{easylist}
+\end{definition}
+
+Az axiómaséma szabályos behelyettesítésén olyan formulát értünk, amely az axiómasémából a benne szereplő betűk tetszőleges formulával való helyettesítése útján jön létre. A nulladrendű kalkulus (klasszikus állításkalkulus) axiómái az axiómasémák szabályos behelyettesítései. 
+
+\begin{definition}[szintaktikai következmény]
+	Legyen $L^{(0)} = (LC, Con, Form)$ egy nulladrendű nyelv, $\Gamma \subseteq Form$ egy tetszőleges formulahalmaz. A $\Gamma$ formulahalmaz szintaktikai következményeinek induktív definíciója:
+
+	Bázis:
+	\begin{itemize}
+		\item Ha $A \in \Gamma$, akkor $\Gamma \vdash A$ 
+		\item Ha $A$ axióma, akkor $\Gamma \vdash A$. 
+	\end{itemize}
+	
+	Szabály (leválasztási szabály): 
+	\begin{itemize}
+		\item Ha $\Gamma \vdash B$, és $\Gamma \vdash (B \subset A)$, akkor $\Gamma \vdash A$. 
+	\end{itemize}
+\end{definition}
+
+\begin{definition}[szintaktikai következmény]
+Legyen $L^{(0)} = (LC, Con, Form)$ egy nulladrendű nyelv és $A, B \in Form$ két tetszőleges formula. Az $A$ formulának szintaktikai következménye a $B$ formula, ha $\{A\} \vdash B$. Jelölés: $A \vdash B$ 
+\end{definition}
+
+\begin{definition}[szekvencia]
+Legyen $L^{(0)} = (LC, Con, Form)$ egy nulladrendű nyelv, $\Gamma \subseteq Form$ egy formulahalmaz és $A \in Form$ egy formula. Ha az $A$ formula szintaktikai következménye a $\Gamma$ formulahalmaznak, akkor a $\Gamma \vdash A$ jelsorozatot szekvenciának nevezzük. 
+\end{definition}
+
+\begin{definition}[levezethetőség]
+Legyen $L^{(0)} = (LC, Con, Form)$ egy nulladrendű nyelv és $A \in Form$ egy tetszőleges formula. Az $A$ formula levezethető, ha $\emptyset \vdash A$, azaz ha az $A$ formula szintaktikai következménye az üres halmaznak. Jelölés: $\vdash A$ 
+\end{definition}
+
+\begin{definition}[természetes levezetés szabályai]
+Legyen $L^{(0)} = (LC, Con, Form)$ egy nulladrendű nyelv  $\Gamma, \Delta \subseteq Form$ és $A, B, C \in Form$. A természetes levezetés által az $L^{(0)}$ nyelvben bizonyítható következményrelációk alábbiak:
+
+Bázis:
+\begin{equation}
+	\frac{\omega}{\Gamma,A \vdash A}
+\end{equation}
+Szabályok:
+\begin{itemize}
+	\item Struktúrális szabályok:
+	\begin{itemize}
+		\item Bővítés $\frac{\Gamma \vdash A}{\Gamma, B \vdash A} $
+		\item Felcserélés $\frac{\Gamma,B,C,\Delta\vdash A} {\Gamma,C,B,\Delta\vdash A} $
+		\item Szűkítés $\frac{\Gamma,B,B,\Delta\vdash A}
+		{\Gamma,B,\Delta\vdash A} $
+		\item Metszet $\frac{\Gamma\vdash A \Delta,A\vdash B}{\Gamma,\Delta\vdash B} $
+	\end{itemize}
+	\item Logikai szabályok:
+	\begin{itemize}
+		\item Implikáció szabályai:
+		\begin{itemize}
+			\item bevezető: $\frac{\Gamma,A\vdash B}{\Gamma\vdash A \supset B} $
+			\item alkalmazó: $\frac{\Gamma\vdash A \Gamma\vdash A \supset B}{\Gamma \vdash B} $
+		\end{itemize}
+		\item Negáció szabályai:
+		\begin{itemize}
+			\item bevezető:$\frac{\Gamma,A\vdash B \Gamma,A\vdash \neg B}{\Gamma\vdash \neg A} $
+			\item alkalmazó:$\frac{\Gamma\vdash \neg\neg A}{\Gamma \vdash A}$
+		\end{itemize}
+		\item Konjunkció szabályai:
+		\begin{itemize}
+			\item bevezető:$\frac{\Gamma\vdash A \Gamma\vdash B}{\Gamma\vdash A\land B}$
+			\item alkalmazó:$\frac{\Gamma,A,B\vdash C}{\Gamma,A\land B,\vdash C}$
+		\end{itemize}
+		\item Diszjunkció szabályai:
+		\begin{itemize}
+			\item bevezető:$\frac{\Gamma\vdash A}{\frac{\Gamma\vdash A \lor B \Gamma\vdash B}{\Gamma\vdash A \lor B}}$
+			\item alkalmazó:$\frac{\Gamma,A\vdash C \Gamma,B\vdash C}{\Gamma,A\lor B\vdash C}$
+		\end{itemize}
+		\item (Materiális) ekvivalencia szabályai:
+		\begin{itemize}
+			\item bevezető:$\frac{\Gamma,A\vdash B \Gamma,B\vdash A}{\Gamma\vdash A\equiv B}$
+			\item alkalmazó:$\frac{\Gamma\vdash A \Gamma\vdash A\equiv B}{\frac{\Gamma\vdash B \Gamma\vdash B \Gamma\vdash A \equiv B}{\Gamma\vdash A}}$
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+\end{definition}
+
+%-------------------------------------------------------------------------------

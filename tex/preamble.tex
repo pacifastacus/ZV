@@ -1,0 +1,50 @@
+\documentclass[magyar,\PAPER,\OPTIONS]{article}
+\usepackage{imakeidx}    %Tárgymutatóhoz (index)
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage[magyar]{babel}
+\usepackage[sharp]{easylist}
+\usepackage[
+top=2cm,
+bottom=2cm,
+left=2cm,
+right=1cm
+]{geometry}
+\usepackage[]{hyperref}
+%\usepackage{showframe}
+%\usepackage{titlesec}
+
+%\titleformat{\section}[display]{\bfseries}{\thesection. tétel:}{0pt}{}[]
+\let\OldEasylist\easylist
+\let\OldEndEasylist\endeasylist
+\renewenvironment{easylist}{
+	\OldEasylist
+	\ListProperties(Numbers2=l,FinalMark2={)},Hide2=1,Progressive*=3ex, Start1=1)
+}{
+	\OldEndEasylist
+}
+\newcounter{descriptcount}
+\newlist{enumdescript}{description}{2}
+\setlist[enumdescript,1]{
+	before={\setcounter{descriptcount}{0}
+		\renewcommand*\thedescriptcount{\arabic{descriptcount}}}
+	,font=\bfseries\stepcounter{descriptcount}\thedescriptcount.~
+}
+\setlist[enumdescript,2]{
+	before={\setcounter{descriptcount}{0}
+		\renewcommand*\thedescriptcount{\roman{descriptcount}}}
+	,font=\bfseries\stepcounter{descriptcount}\thedescriptcount.~
+}
+
+\newtheorem*{definition}{Definíció}
+\newtheorem*{theorem}{Tétel}
+\newtheorem*{note}{Megjegyzés}
+
+\makeindex
+
+\title{Záróvizsga tételsor mérnökinformatikus hallgatóknak\thanks{A Debreceni Egyetem mérnökinformatikus alapszakhoz}}
+\author{Palkovics Dénes, \TARSSZERZO}
+\date{2019}
