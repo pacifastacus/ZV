@@ -1,0 +1,57 @@
+\def\PAPER{a4paper} % papítméret
+\def\FONTSIZE{10pt} % betűméret
+\def\OPTIONS{twoside} % oldalbeállítások
+\def\TARSSZERZO{} % Ha tettél hozzá érdemi munkát, és közreadnád, írd fel magad
+
+\input{tex/preamble.tex}
+
+\setlength{\parskip}{6pt plus 3pt minus 3pt} % Bekezdések térközölése
+\setcounter{tocdepth}{3} % Tartalomjegyzék mélysége. Alapegyég 3
+
+\begin{document}
+\maketitle
+%\cleardoublepage
+%\input{fedolap.tex}
+\textbf{ A záróvizsga tematikája és tartalma}\\
+A záróvizsgán kettő kérdésre kell válaszolni, egyre az általános kérdések közül, egyre pedig a specializációnak megfelelő kérdések közül
+\tableofcontents
+\cleardoublepage
+\section{Általános kérdések}
+\input{altalanos/altalanos_1}
+\include{altalanos/altalanos_2}
+\include{altalanos/altalanos_3}
+\include{altalanos/altalanos_4}
+\include{altalanos/altalanos_5}
+\include{altalanos/altalanos_6}
+\include{altalanos/altalanos_7}
+\include{altalanos/altalanos_8}
+\include{altalanos/altalanos_9}
+\include{altalanos/altalanos_10}
+\include{altalanos/altalanos_11}
+
+\section[Infokommunikációs hálózatok]{Infokommunikációs hálózatok specializáció}
+\input{halozatok/halozatok_1}
+\include{halozatok/halozatok_2}
+\include{halozatok/halozatok_3}
+\include{halozatok/halozatok_4}
+\include{halozatok/halozatok_5}
+\include{halozatok/halozatok_6}
+
+%\section[Mérés és folyamatirányítás]{Mérés és folyamatirányítás specializáció}
+%\input{halozatok/halozatok_1}
+%\include{halozatok/halozatok_2}
+%\include{halozatok/halozatok_3}
+%\include{halozatok/halozatok_4}
+%\include{halozatok/halozatok_5}
+%\include{halozatok/halozatok_6}
+
+%\section[Vállalati információs rendszerek]{Vállalati információs rendszerek specializáció}
+%\input{halozatok/halozatok_1}
+%\include{halozatok/halozatok_2}
+%\include{halozatok/halozatok_3}
+%\include{halozatok/halozatok_4}
+%\include{halozatok/halozatok_5}
+%\include{halozatok/halozatok_6}
+
+\printindex\addcontentsline{toc}{section}{Tárgymutató}
+\end{document}
