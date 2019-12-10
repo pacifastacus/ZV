@@ -1,10 +1,218 @@
 %----------------------------------------------------------------------------
-\subsection{Magas szintű Programozási nyelvek}
+\section{Magas szintű Programozási nyelvek}
 %----------------------------------------------------------------------------
-\subsubsection{Adattípus, konstans, változó, kifejezés.}
+\subsection{Adattípus, konstans, változó, kifejezés.}
+Az adatabsztrakció első megjelenési formája az adattípus\index{adattípus} a programozási nyelvekben. Az adattípus maga egy absztrakt programozási eszköz, amely mindig más, konkrét programozási eszköz egy komponenseként jelenik meg. Az adattípusnak neve van, ami egy azonosító. A programozási nyelvek
+egy része ismeri ezt az eszközt, más része nem. Ennek megfelelően beszélünk típusos és nem típusos nyelvekről. Az eljárásorientált nyelvek típusosak. Egy adattípust három dolog határoz meg, ezek:
+\begin{enumerate}[noitemsep]
+	\item tartomány
+	\item műveletek
+	\item reprezentáció
+\end{enumerate}
+Az adattípusok tartománya azokat az elemeket tartalmazza, amelyeket az adott típusú konkrét programozási eszköz fölvehet értékként. Bizonyos típusok esetén a tartomány elemei jelenhetnek meg a programban literálként. Az adattípushoz hozzátartoznak azok a műveletek, amelyeket a tartomány elemein végre tudunk hajtani. Minden adattípus mögött van egy megfelelő belső ábrázolási mód. A reprezentáció az egyes típusok tartományába tartozó értékek tárban való megjelenését határozza meg, tehát azt, hogy az egyes elemek hány bájtra és milyen bitkombinációra képződnek le. Minden típusos nyelv rendelkezik beépített (standard) típusokkal. Egyes nyelvek lehetővé teszik azt, hogy a
+programozó is definiálhasson típusokat. A saját típus definiálási lehetőség az adatabsztrakciónak egy magasabb szintjét jelenti, segítségével a valós világ egyedeinek tulajdonságait jobban tudjuk modellezni.
+A saját típus definiálása általában szorosan kötődik az absztrakt adatszerkezetekhez. Saját típust úgy tudunk létrehozni, hogy megadjuk a tartományát, a műveleteit és a reprezentációját. Szokásos, hogy saját típust a beépített és a már korábban definiált saját típusok segítségével adjuk meg. Általános, hogy a reprezentáció megadásánál így járunk el. Csak nagyon kevés nyelvben lehet saját reprezentációt megadni (ilyen az Ada). Kérdés, hogy egy nyelvben lehet-e a saját típushoz saját műveleteket és saját operátorokat megadni. Van, ahol igen, de az is lehetséges, hogy a műveleteket alprogramok (l. 5.1. alfejezet) realizálják. %TODO alfejezet?
+A tartomány megadásánál is alkalmazható a visszavezetés technikája, de van olyan lehetőség is, hogy explicit módon adjuk meg az elemeket. Az egyes adattípusok, mint programozási eszközök önállóak, egymástól különböznek. Van azonban egy speciális eset, amikor egy típusból (ez az alaptípus) úgy tudok származtatni egy másik típust (ez lesz az altípus), hogy leszőkítem annak tartományát, változatlanul hagyva műveleteit és reprezentációját. Az alaptípus és az altípus tehát nem különböző típusok.
+Az \emph{adattípusoknak} két nagy csoportjuk van:
+\begin{description}
+	\item[skalár vagy egyszerű adattípus] tartománya atomi értékeket tartalmaz, minden érték egyedi, közvetlenül nyelvi eszközökkel tovább nem bontható. A skalár típusok tartományaiból vett értékek jelenhetnek meg literálként a program szövegében.
+	\item[strukturált vagy összetett adattípus] tartományának elemei maguk is valamilyen típussal rendelkeznek. Az elemek egy-egy értékcsoportot képviselnek, nem atomiak, az értékcsoport elemeihez külön-külön is hozzáférhetünk. Általában valamilyen absztrakt adatszerkezet programnyelvi megfelelői. Literálként általában nem jelenhetnek meg, egy konkrét értékcsoportot explicit módon kell megadni.
+\end{description}
 
-\subsubsection{Paraméterkiértékelés, paraméterátadás.}
+\subsubsection{Egyszerű típusok}
+Minden nyelvben létezik az egész típus\index{egész típus}, sőt általában egész típusok. Ezek belső ábrázolása fixpontos. Az egyes egész típusok az ábrázoláshoz szükséges bájtok számában térnek el és nyilván ez határozza meg a tartományukat is. Néhány nyelv ismeri az előjel nélküli egész típust, ennek belső ábrázolása előjel nélküli (direkt).
 
-\subsubsection{Hatáskör, névterek, élettartam. }
+Alapvetőek a valós típusok\index{valós típus}, belső ábrázolásuk lebegőpontos. A tartomány itt is az alkalmazott ábrázolás függvénye, ez viszont általában implementációfüggő.
+Az egész és valós típusokra közös néven, mint numerikus típusokra\index{numerikus típus} hivatkozunk. A numerikus típusok értékein a numerikus és hasonlító műveletek hajthatók végre.
+A karakteres típus tartományának elemei karakterek, a karakterlánc vagy sztring típuséi pedig karaktersorozatok. Ábrázolásuk karakteres (karakterenként egy vagy két bájt, az alkalmazott kódtáblától függően), műveleteik a szöveges és hasonlító műveletek.
 
-\subsubsection{Fordítási egységek, kivételkezelés.}
+Egyes nyelvek ismerik a logikai típust. Ennek tartománya a hamis és igaz értékekből áll, műveletei a logikai és hasonlító műveletek, belső ábrázolása logikai.
+
+Speciális egyszerű típus a felsorolásos típus. A felsorolásos típust\index{felsorolásos típus} saját típusként kell létrehozni. A típus definiálása úgy történik, hogy megadjuk a tartomány elemeit. Ezek azonosítók lehetnek. Az elemekre alkalmazhatók a hasonlító műveletek.
+
+Egyes nyelvek értelmezik az egyszerű típusok egy speciális csoportját, a sorszámozott típust\index{sorszámozott típus}. Ebbe a csoportba tartoznak általában az egész, karakteres, logikai és felsorolásos típusok. A sorszámozott típus tartományának elemei listát (mint absztrakt adatszerkezetet) alkotnak, azaz van első és utolsó elem, minden elemnek van megelőzője (kivéve az elsőt) és minden elemnek van rákövetkezője (kivéve az utolsót). Tehát az elemek között egyértelmű sorrend értelmezett. A tartomány elemeihez kölcsönösen egyértelműen hozzá vannak rendelve a 0,~1,~2,~\dots sorszámok. Ez alól kivételt képeznek az egész típusok, ahol a tartomány minden eleméhez önmaga, mint sorszám van hozzárendelve. Egy sorszámozott típus esetén mindig értelmezhetők a következő műveletek:
+\begin{itemize}[noitemsep]
+	\item ha adott egy érték, meg kell tudni mondani a sorszámát, és viszont
+	\item bármely értékhez meg kell tudni mondani a megelőzőét és a rákövetkezőjét
+\end{itemize}
+A sorszámozott típus az egész típus egyfajta általánosításának tekinthető. Egy sorszámozott típus altípusaként lehet származtatni az intervallum típust.
+
+\paragraph{Mutató típus} Lényegében egyszerű típus, specialitását az adja, hogy tartományának elemei tárcímek. A mutató típus segítségével valósítható meg a programnyelvekben az indirekt címzés. A mutató típusú programozási eszköz értéke tehát egy tárbeli cím, így azt mondhatjuk, hogy az adott eszköz a tár adott területét címzi, az adott tárterületre „mutat”. A mutató típus egyik legfontosabb művelete a megcímzett tárterületen elhelyezkedő érték elérése. A mutató típus tartományának van egy speciális eleme, amely nem valódi tárcím. Tehát ezzel az értékkel rendelkező mutató típusú programozási eszköz „nem mutat sehova”. A nyelvek ezt az értéket általában beépített nevesített konstanssal kezelik. A mutató típus alapvető szerepet játszik az absztrakt adatszerkezetek szétszórt reprezentációját kezelő implementációknál.
+
+\subsubsection{Összetett típusok}
+Az eljárás orientált nyelvek két legfontosabb összetett típusa a tömb (melyet minden nyelv ismer) és a rekord (egyes nyelvek, pl. a FORTRAN nem ismerik).
+\paragraph{A tömb típus} absztrakt adatszerkezet megjelenése típus szinten. A tömb statikus és homogén összetett típus, vagyis tartományának elemei olyan értékcsoportok, amelyekben az elemek száma azonos, és az elemek azonos típusúak. A tömböt, mint típust meghatározza:
+\begin{itemize}[noitemsep]
+	\item dimenzióinak száma
+	\item indexkészletének típusa és tartománya
+	\item elemeinek a típusa
+\end{itemize}
+Egyes nyelvek (pl. a C) nem ismerik a többdimenziós tömböket. Ezek a nyelvek a többdimenziós tömböket úgy képzelik el, mint olyan egydimenziós tömbök, amelyek elemei egydimenziós tömbök. Többdimenziós tömbök reprezentációja lehet sor- vagy oszlop-folytonos. Ez általában implementációfüggő, a sorfolytonos a gyakoribb. Ha van egy tömb típusú programozási eszközünk, akkor a nevével az összes elemre együtt, mint egy értékcsoportra tudunk hivatkozni (az elemek sorrendjét a reprezentáció határozza meg). Az értékcsoport egyes elemeire a programozási eszköz neve után megadott indexek segítségével hivatkozunk. Az indexek a nyelvek egy részében szögletes, másik részében kerek zárójelek között állnak. Egyes nyelvek (pl. COBOL, PL/Ő) megengedik azt is, hogy a tömb egy adott dimenziójának összes elemét (pl. egy kétdimenziós tömb egy sorát) együtt hivatkozhassuk.
+
+A nyelveknek a tömb típussal kapcsolatban a következő kérdéseket kell megválaszolniuk:
+\begin{itemize}[noitemsep]
+	\item Milyen típusúak lehetnek az elemek?
+	\item Milyen típusú lehet az index?
+	\item Amikor egy tömb típust definiálunk, hogyan kell megadni az indextartományt?
+	\item Hogyan lehet megadni az alsó és a felső határt, illetve a darabszámot?
+\end{itemize}
+A tömb típus alapvető szerepet játszik az absztrakt adatszerkezetek folytonos ábrázolását megvalósító
+implementációknál.
+\paragraph{A rekord típus} absztrakt adatszerkezet megjelenése típus szinten. A rekord típus minden esetben heterogén, a tartományának elemei olyan értékcsoportok, amelyeknek elemei különböző típusúak lehetnek. Az értékcsoporton belül az egyes elemeket mezőnek nevezzük. Minden mezőnek saját, önálló neve (ami egy azonosító) és saját típusa van. A különböző rekord típusok mezőinek neve megegyezhet.
+
+A nyelvek egy részében (pl. C) a rekord típus statikus, tehát a mezők száma minden értékcsoportban azonos. Más nyelvek esetén (pl. Ada) van egy olyan mezőegyüttes, amely minden értékcsoportban szerepel (a rekord fix része), és van egy olyan mezőegyüttes, amelynek mezői közül az értékcsoportokban csak bizonyosak szerepelnek (a rekord változó része). Egy külön nyelvi eszköz (a diszkriminátor) szolgál annak megadására, hogy az adott konkrét esetben a változó rész mezői közül melyik jelenjen meg.Az ősnyelvek (pl. PL/Ő, COBOL) többszintű rekord típussal dogoznak. Ez azt jelenti, hogy egy mező felosztható újabb mezőkre, tetszőleges mélységig, és típus csak a legalsó szintű mezőkhöz rendelhető, de az csak egyszerű típus lehet. A későbbi nyelvek (pl. Pascal, C, Ada) rekord típusa egyszintű, azaz nincsenek almezők, viszont a mezők típusa összetett is lehet.
+
+Egy rekord típusú programozási eszköz esetén az eszköz nevével az értékcsoport összes mezőjére hivatkozunk egyszerre (a megadás sorrendjében). Az egyes mezőkre külön minősített névvel tudunk hivatkozni, ennek alakja:
+
+{
+\centering
+\verb|eszköznév.mezőnév|\\
+}
+Az eszköz nevével történő minősítésre azért van szükség, mert a mezők nevei nem szükségszerűen egyediek. A rekord típus alapvető szerepet játszik az input-outputnál.
+\subsubsection{Literálok vagy konstansok}
+A literál olyan programozási eszköz, amelynek segítségével fix, explicit értékek építhetők be a program szövegébe. A literáloknak két komponensük van: típus és érték. A literál mindig önmagát definiálja. A literál felírási módja (mint speciális karaktersorozat) meghatározza mind a típust, mind az értéket. A nyelveknek saját literál rendszerük van.
+\paragraph{Nevesített konstans}
+Ez már konkrét eszköz, melynek három komponense van: név, típus, érték. Jelentősége: programozás technikai eszköz. A programozás szövegében a nevével jelenik meg, de az értéket jelenti. Azon programozási eszközökhöz, melyeknek van neve (név komponense) kötődik a deklaráció (a nyelvekben speciális utasítások állnak rendelkezésre). Mindhárom komponense a deklarációnál dől el (ott kell megadni, csak ott lehet megadni). Vannak olyan literálok, melyeknek nincs szemantikai értékük, ezeket, ha nevesítjük, beszélő névvel láthatjuk el. Technikai problémákat egyszerűsít, ha a program szövegében meg akarjuk változtatni ezt a névvel ellátott értéket, akkor nem kell annak valamennyi előfordulását megkeresni és átírni, hanem elegendő egy helyen, a deklarációs utasításban végrehajtani a módosítást.
+
+\subsubsection{Változó}
+A változó olyan programozási eszköz, amelynek négy komponense van:
+\begin{enumerate}[noitemsep]
+	\item név
+	\item attribútumok
+	\item cím
+	\item érték
+\end{enumerate}
+A \emph{név} egy azonosító. A program szövegében a változó mindig a nevével jelenik meg, az viszont bármely komponenst jelentheti. Szemlélhetjük úgy a dolgokat, hogy a másik három komponenst a névhez rendeljük hozzá.\\
+Az \emph{attribútumok} olyan jellemzők, amelyek a változó futás közbeni viselkedését határozzák meg. Az eljárás-orientált nyelvekben (általában a típusos nyelvekben) a legfőbb attribútum a típus, amely a változó által felvehető értékek körét határolja be. Változóhoz attribútumok deklaráció segítségével rendelődnek. A deklarációnak különböző fajtáit ismerjük.
+\begin{description}
+	\item[Explicit deklaráció] A programozó végzi explicit deklarációs utasítás segítségével. A változó teljes nevéhez kell az attribútumokat megadni. A nyelvek általában megengedik, hogy egyszerre több változónévhez ugyanazokat az attribútumokat rendeljük hozzá.
+	\item[Implicit deklaráció] A programozó végzi, betűkhöz rendel attribútumokat egy külön deklarációs utasításban. Ha egy változó neve nem szerepel explicit deklarációs utasításban, akkor a változó a nevének kezdőbetűjéhez rendelt attribútumokkal fog rendelkezni, tehát az azonos kezdőbetűjű változók ugyanolyan attribútumúak lesznek.
+	\item[Automatikus deklaráció] A fordítóprogram rendel attribútumot azokhoz a változókhoz, amelyek nincsenek explicit módon deklarálva, és kezdőbetűjükhöz nincs attribútum rendelve egy implicit deklarációs utasításban. Az attribútum hozzárendelése a név valamelyik karaktere (gyakran az első) alapján történik:
+\end{description}
+Az eljárás-orientált nyelvek mindegyike ismeri az explicit deklarációt, és egyesek csak azt ismerik. Az utóbbiak általánosságban azt mondják, hogy minden névvel rendelkező programozói eszközt explicit módon deklarálni kell. A változó címkomponense a tárnak azt a részét határozza meg, ahol a változó értéke elhelyezkedik. A futási idő azon részét, amikor egy változó rendelkezik címkomponenssel, a változó élettartamának hívjuk. Egy változóhoz cím rendelhető az alábbi módokon:
+\begin{description}
+	\item[Statikus tárkiosztás] A futás előtt eldől a változó címe, és a futás alatt az nem változik. Amikor a program betöltődik a tárba, a statikus tárkiosztású változók fix tárhelyre kerülnek.
+	\item[Dinamikus tárkiosztás] A cím hozzárendelését a futtató rendszer végzi. A változó akkor kap címkomponenst, amikor aktivizálódik az a programegység, amelynek ő lokális változója, és a címkomponens megszűnik, ha az adott programegység befejezi a működését. A címkomponens a futás során változhat, sőt vannak olyan időintervallumok, amikor a változónak nincs is címkomponense. \item[A programozó által vezérelt tárkiosztás] A változóhoz a programozó rendel címkomponenst futási időben. A címkomponens változhat, és az is elképzelhető, hogy bizonyos időintervallumokban nincs is címkomponens. Három alapesete van:
+	\begin{enumerate}[noitemsep]
+		\item A programozó abszolút címet rendel a változóhoz, konkrétan megadja, hogy hol helyezkedjen el.
+		\item Egy már korábban a tárban elhelyezett programozási eszköz címéhez képest mondja meg, hogy hol legyen a változó elhelyezve, vagyis relatív címet ad meg. Lehet, hogy a programozó az abszolút címet nem is ismeri.
+		\item A programozó csak azt adja meg, hogy mely időpillanattól kezdve legyen az adott változónak   címkomponense, az elhelyezést a futtató rendszer végzi. A programozó nem ismeri az abszolút címet.
+	\end{enumerate}
+	Mindhárom esetben lennie kell olyan eszköznek, amivel a programozó megszüntetheti a címkomponenst.
+\end{description}
+A programozási nyelvek általában többféle címhozzárendelést ismernek, az eljárás-orientált nyelveknél általános a dinamikus tárkiosztás. A változók címkomponensével kapcsolatos a többszörös tárhivatkozás esete. Erről akkor beszélünk, amikor két különböző névvel, esetleg különböző attribútumokkal rendelkező változónak a futási idő egy adott pillanatában azonos a címkomponense ésígy értelemszerűen az értékkomponense is. Így ha az egyik  változó értékét módosítjuk, akkor a másiké is megváltozik. A korai nyelvekben (pl. FORTRAN, PL/Ő) erre explicit nyelvi eszközök álltak rendelkezésre, mert bizonyos problémák megoldása csak így volt lehetséges. A szituáció viszont előidézhető (akár véletlenül is) más nyelvekben is, és ez nem biztonságos kódhoz vezethet.
+
+A változó értékkomponense mindig a címen elhelyezett bitkombinációként jelenik meg. A bitkombináció felépítését a típus által meghatározott reprezentáció dönti el.
+
+Egy változó értékkomponensének meghatározására a következő lehetőségek állnak rendelkezésünkre:
+\begin{description}
+	\item[Értékadó utasítás] Az eljárás-orientált nyelvek leggyakoribb utasítása, az algoritmusok kódolásánál alapvető.
+\end{description}
+
+\subsubsection{Kifejezés}
+A kifejezések szintaktikai eszközök. Arra valók, hogy a program egy adott pontján ott már ismert értékekből új értéket határozzunk meg. Két komponensük van, érték és típus. Egy kifejezés formálisan a következő összetevőkből áll:
+\begin{description}
+\item[Operandusok] az operandus literál, nevesített konstans, változó vagy függvényhívás lehet. Az értéket képviseli.
+\item[Operátorok] Műveleti jelek. Az értékekkel végrehajtandó műveleteket határozzák meg.
+\item[Kerek zárójelek] A műveletek végrehajtási sorrendjét befolyásolják. Minden nyelv megengedi a redundáns zárójelek alkalmazását.
+\end{description}
+Attól függően, hogy egy operátor hány operandussal végzi a műveletet, beszélünk \emph{egyoperandusú} (unáris), \emph{kétoperandusú} (bináris), vagy \emph{háromoperandusú} (ternáris) operátorokról. A kifejezésnek három alakja lehet attól függően, hogy kétoperandusú operátorok esetén az operandusok és az operátor sorrendje milyen. A lehetséges esetek:
+\begin{description}
+\item[prefix] az operátor az operandusok előtt áll (* 3 5)
+\item[infix] az operátor az operandusok között áll (3 * 5)
+\item[postfix] az operátor az operandusok mögött áll (3 5 *)
+\end{description}
+Az egyoperandusú operátorok általában az operandus előtt, ritkán mögötte állnak. A háromoperandusú operátorok általában infixek.
+\paragraph{Kifejezés kiértékelése} Azt a folyamatot, amikor a kifejezés értéke és típusa meghatározódik, a kifejezés kiértékelésének nevezzük. A kiértékelés során adott sorrendben elvégezzük a műveleteket, előáll az érték, és hozzárendelődik a típus. A műveletek végrehajtási sorrendje a következő lehet:
+\begin{itemize}[noitemsep]
+	\item A műveletek felírási sorrendje, azaz balról-jobbra.
+	\item A felírási sorrenddel ellentétesen, azaz jobbról-balra.
+	\item Balról-jobbra a precedencia táblázat figyelembevételével.
+\end{itemize}
+Az infix alak nem egyértelmű. Az ilyen alakot használó nyelvekben az operátorok nem azonos erősségűek. Az ilyen nyelvek operátoraikat egy precedencia táblázatban adják meg. A precedencia táblázat sorokból áll, az egy sorban megadott operátorok azonos erősségűek (prioritásúak,precedenciájúak), az előrébb szereplők erősebbek. Minden sorban meg van adva még a kötési irány,
+amely megmondja, hogy az adott sorban szereplő operátorokat milyen sorrendben kell kiértékelni, ha azok egymás mellett állnak egy kifejezésben. A kötési irány lehet balról jobbra, vagy jobbról balra.
+
+A kifejezés típusának meghatározásánál kétféle elvet követnek a nyelvek. Vannak a típus-egyenértékűséget és vannak a típuskényszerítést vallók. A típus-egyenértékűséget valló nyelvek azt mondják, hogy egy kifejezésben egy kétoperandusú vagy háromoperandusú operátornak csak azonos típusú operandusai lehetnek. Ilyenkor nincs konverzió, az eredmény típusa vagy az operandusok közös
+típusa, vagy azt az operátor dönti el (például hasonlító műveletek esetén az eredmény logikai típusú lesz). A különböző nyelvek szerint két programozási eszköz típusa azonos, ha azoknál fönnáll a:
+\begin{description}
+\item[deklaráció egyenértékűség] az adott eszközöket azonos deklarációs utasításban, együtt, azonos típusnévvel deklaráltuk.
+\item[név egyenértékűség] az adott eszközöket azonos típusnévvel deklaráltuk
+\item[struktúra egyenértékűség] a két eszköz összetett típusú és a két típus szerkezete megegyezik.
+\end{description}
+A típuskényszerítés elvét valló nyelvek esetén különböző típusú operandusai lehetnek az operátornak. A műveletek viszont csak az azonos belső ábrázolású operandusok között végezhetők el, tehát különböző típusú operandusok esetén konverzió van. Ilyen esetben a nyelv definiálja, hogy egy adott operátor esetén egyrészt milyen típuskombinációk megengedettek, másrészt, hogy mi lesz a művelet
+eredményének a típusa. A kifejezés kiértékelésénél minden művelet elvégzése után eldől az adott részkifejezés típusa és az utoljára végrehajtott műveletnél pedig a kifejezés típusa. Egyes nyelvek (pl. Pascal, C) a numerikus típusoknál megengedik a típuskényszerítés egy speciális fajtáját még akkor is, ha egyébként a típus-egyenértékűséget vallják. Ezeknél a nyelveknél beszélünk a bővítés és szűkítés esetéről. A bővítés olyan típuskényszerítés, amikor a konvertálandó típus tartományának minden eleme egyben eleme a céltípus tartományának is (pl. egész $\rightarrow$ valós). Ekkor a konverzió minden további nélkül, értékvesztés nélkül végrehajtható. A szűkítés ennek a fordítottja (pl. valós $\rightarrow$ egész), ekkor a konverziónál értékcsonkítás, esetleg kerekítés történik. A nyelvek közül az ADA-ban semmiféle típuskeveredés nem lehet, a PL/I viszont a teljes konverzió híve.
+A \emph{konstans kifejezés}\index{konstans kifejezés} olyan kifejezés, melynek értéke fordítási időben eldől, kiértékelését a fordító végzi. Operandusai literálok és nevesített konstansok lehetnek.
+
+\subsection{Paraméterkiértékelés, paraméterátadás.}
+
+\subsubsection{Paraméterkiértékelés}
+alatt értjük azt a folyamatot, amikor egy alprogram hívásánál egymáshoz
+rendelődnek a formális- és aktuális paraméterek, és meghatározódnak azok az információk, amelyek a paraméterátadásnál a kommunikációt szolgáltatják. A paraméterkiértékelésnél mindig a formális paraméter lista az elsődleges, ezt az alprogram specifikációja tartalmazza, egy darab van belőle. Aktuális paraméter lista viszont annyi lehet, ahányszor meghívjuk az alprogramot, ezeket rendeljük a formális paraméterlistához.
+
+A formális és aktuális paraméterek egymáshoz rendelése történhet \emph{sorrendi kötés} vagy \emph{név szerinti kötés} szerint. \textbf{Sorrendi kötés}\index{Sorrendi kötés} esetén a formális paraméterekhez a felsorolás sorrendjében rendelődnek hozzá az aktuális paraméterek. Ezt minden nyelv ismeri, általában ez az alapértelmezés. \textbf{Név szerinti kötés}\index{Név szerinti kötés} esetén az aktuális paraméter listában határozhatjuk meg az egymáshoz rendelést, a formális paraméter nevét és mellette valamilyen szintaktikával az aktuális paramétert megadva. Ilyenkor lényegtelen a formális paraméterek sorrendje. Néhány nyelv ismeri. Alkalmazható a sorrendi és név szerinti kötés kombinációja együtt is, az aktuális paraméter lista elején sorrendi kötés, utána név szerinti kötés van.
+
+Ha a formális paraméterek száma fix, a formális paraméter lista adott számú paramétert tartalmaz. Ekkor az aktuális paraméterek számának meg kell egyeznie a formális paraméterek számával, vagy lehet kevesebb, mint a formális paraméterek száma. Ez csak érték szerinti paraméterátadási mód esetén lehetséges. Azon formális paraméterekhez, amelyekhez nem tartozik aktuális paraméter, a formális paraméter listában alapértelmezett módon rendelődik érték. Ha a formális paraméterek száma tetszőleges, az aktuális paraméterek száma is tetszőleges. Létezik olyan megoldás is, hogy a paraméterek számára van alsó korlát.
+
+A nyelvek egyik része a \emph{típusegyenértékűséget}\index{típusegyenértékűséget} vallja, ekkor az aktuális paraméter típusának azonosnak kell lennie a formális paraméter típusával. A nyelvek másik része a \emph{típuskényszerítés}\index{típuskényszerítés} alapján azt mondja, hogy az aktuális paraméter típusának konvertálhatónak kell lennie a formális paraméter típusára.
+
+\subsubsection{Paraméterátadás}
+A paraméterátadás az alprogramok és más programegységek közötti kommunikáció egy formája. A paraméterátadásnál mindig van egy hívó, ez tetszőleges programegység és egy hívott, amelyik mindig alprogram. Kérdés, hogy melyik irányban és milyen információ mozog. A nyelvek érték szerinti, cím szerinti, eredmény szerinti, érték-eredmény szerinti, név szerinti és szöveg szerinti paraméterátadási módokat ismernek.
+
+\paragraph{Érték szerinti paraméterátadás} esetén a formális paramétereknek van címkomponensük a hívott alprogram területén. Az aktuális paraméternek rendelkeznie kell értékkomponenssel a hívó oldalon. Ez az érték meghatározódik a paraméterkiértékelés folyamán, majd átkerül a hívott alprogram területén lefoglalt címkomponensre. A formális paraméter kap egy kezdőértéket, és az alprogram ezzel az értékkel dolgozik a saját területén. Az információáramlás egyirányú, a hívótól a hívott felé irányul. A hívott alprogram semmit sem tud a hívóról, a saját területén dolgozik. Mindig van egy értékmásolás, és ez az érték tetszőleges bonyolultságú lehet. Ha egy egész adatcsoportot kell átmásolni, az hosszadalmas. Lényeges, hogy a két programegység egymástól függetlenül működik, és egymás működését az érték meghatározáson túl nem befolyásolják. Az aktuális paraméter kifejezés lehet.
+
+\paragraph{Cím szerinti paraméterátadás} esetén a formális paramétereknek nincs címkomponensük a hívott alprogram területén. Az aktuális paraméternek viszont rendelkeznie kell címkomponenssel a hívó területén. Paraméterkiértékeléskor meghatározódik az aktuális paraméter címe és átadódik a hívott alprogramnak, ez lesz a formális paraméter címkomponense. Tehát a meghívott alprogram a hívó területén dolgozik. Az információátadás kétirányú, az alprogram a hívó területéről átvehet értéket, és írhat is oda, átnyúl a hívó területre. Időben gyors, mert nincs értékmásolás, de veszélyes lehet, mert a hívott hozzáfér a hívó területén lévő információkhoz. Az aktuális paraméter változó lehet.
+
+\paragraph{Eredmény szerinti paraméterátadás} a formális paraméternek van címkomponense a hívott alprogram területén, az aktuális paraméternek pedig lennie kell címkomponensének. Paraméterkiértékeléskor meghatározódik az aktuális paraméter címe és átadódik a hívott alprogramnak, azonban az alprogram a saját területén dolgozik, és csak működésének befejeztekor másolja át a formális paraméter értékét erre a címre. A kommunikáció egyirányú, a hívottól a hívó felé irányul. Van értékmásolás. Az aktuális paraméter változó lehet.
+
+\paragraph{Érték-eredmény szerinti paraméterátadás} esetén a formális paraméternek van címkomponense a hívott területén és az aktuális paraméternek rendelkeznie kell érték- és címkomponenssel. A paraméterkiértékelésnél meghatározódik az aktuális paraméter értéke és címe és mindkettő átkerül a hívotthoz. Az alprogram a kapott értékkel, mint kezdőértékkel kezd el dolgozni a saját területén és a címet nem használja. Miután viszont befejeződik, a formális paraméter értéke átmásolódik az aktuális paraméter címére. A kommunikáció kétirányú, kétszer van értékmásolás. Az aktuális paraméter változó lehet.
+
+\paragraph{Név szerinti paraméterátadás} esetén az aktuális paraméter egy az adott szövegkörnyezetben értelmezhető tetszőleges szimbólumsorozat lehet. A paraméterkiértékelésnél rögzítődik az alprogram szövegkörnyezete, itt értelmezésre kerül az aktuális paraméter, majd a szimbólumsorozat a formális paraméter nevének minden előfordulását felülírja az alprogram szövegében és ezután fut le az. Az információáramlás iránya az aktuális paraméter adott szövegkörnyezetbeli értelmezésétől függ. 
+
+\paragraph{Szöveg szerinti paraméterátadás} a név szerintinek egy változata, annyiban különbözik tőle, hogy a hívás után az alprogram elkezd működni, az aktuális paraméter értelmező szövegkörnyezetének rögzítése, a formális paraméter csak akkor íródik felül, amikor a formális paraméter neve először fordul elő az alprogram szövegében a végrehajtás folyamán.
+
+Alprogramok esetén típust paraméterként átadni nem lehet. Egy adott esetben a paraméterátadás módját az alábbiak döntik el: a nyelv csak egyetlen paraméterátadási módot ismer (pl. C, Java), a formális paraméter listában explicit módon meg kell adni a paraméterátadási módot (pl. Ada), az aktuális és formális paraméter típusa együttesen dönti el, a formális paraméter típusa dönti el.
+Az alprogramok formális paramétereit három csoportra oszthatjuk:
+\begin{enumdescript}[noitemsep]
+	\item[Input paraméterek] ezekkel az alprogram kap információt a hívótól (pl. érték szerinti).
+	\item[Output paraméterek] a hívott alprogram ad információt a hívónak (pl. eredmény szerinti).
+	\item[Input-output paraméterek] az információ mindkét irányba mozog (pl. érték-eredmény).
+\end{enumdescript}
+
+\subsection{Hatáskör, névterek, élettartam. }
+A hatáskör a nevekhez kapcsolódó fogalom. Egy név hatásköre alatt értjük a program szövegének azon részét, ahol az adott név ugyanazt a programozási eszközt hivatkozza, tehát jelentése, felhasználási módja, jellemzői azonosak. A hatáskör szinonimája a láthatóság. A név hatásköre az eljárásorientált programnyelvekben a programegységekhez illetve a fordítási egységekhez kapcsolódik. Egy programegységben deklarált név a programegység lokális neve. A nem a programegységben deklarált, de ott hivatkozott név a szabad név. Azt a tevékenységet, mikor egy név hatáskörét megállapítjuk, hatáskörkezelésnek hívjuk. Kétféle hatáskörkezelést ismerünk, a statikus és a dinamikus hatáskörkezelést.
+
+\subsubsection{Statikus hatáskörkezelés}
+A statikus hatáskörkezelés fordítási időben történik, a fordítóprogram végzi. Alapja a programszöveg programegység szerkezete. Ha a fordító egy programegységben talál egy szabad nevet, akkor kilép a tartalmazó programegységbe, és megnézi, hogy a név ott lokális-e. Ha igen vége a folyamatnak, ha nem, akkor tovább lépked kifelé, amíg meg nem találja lokális névként, vagy el nem jut a legkülső szintre. Ha kiért a legkülső szintre, akkor vagy a mivel a programozónak kellett volna deklarálnia a nevet, ez fordítási hiba, vagy mivel ismeri az automatikus deklarációt a nyelv, a fordító hozzárendeli a névhez az attribútumokat. A név ilyenkor a legkülső szint lokális neveként értelmeződik.
+
+Statikus hatáskörkezelés esetén egy lokális név hatásköre az a programegység, amelyben deklaráltuk és minden olyan programegység, amelyet ez az adott programegység tartalmaz, hacsak a tartalmazott programegységekben a nevet nem deklaráltuk újra. A hatáskör befelé terjed, kifelé soha. Egy programegység a lokális neveit bezárja a külvilág elől. Azt a nevet, amely egy adott programegységben nem lokális név, de onnan látható, globális névnek hívjuk. A globális név, lokálisnév relatív fogalmak. Ugyanaz a név az egyik programegység szempontjából lokális, egy másikban globális, egy harmadikban pedig nem is látszik.
+
+\subsubsection{Dinamikus hatáskörkezelés}
+A dinamikus hatáskörkezelés futási idejű tevékenység, a futtató rendszer végzi. Alapja a hívási lánc. Ha a futtató rendszer egy programegységben talál egy szabad nevet, akkor a hívási láncon keresztül kezd el visszalépkedni mindaddig, amíg meg nem találja lokális névként, vagy a hívási lánc elejére nem ér. Ez utóbbi esetben vagy futási hiba keletkezik, vagy automatikus deklaráció következik be. Dinamikus hatáskörkezelésnél egy név hatásköre az a programegység, amelyben deklaráltuk, és minden olyan programegység, amely ezen programegységből induló hívási láncban helyezkedik el, hacsak ott nem deklaráltuk újra a nevet. Újradeklarálás esetén a hívási lánc további elemeiben az újradeklarált eszköz látszik, nincs „lyuk a hatáskörben” szituáció.
+
+Statikus hatáskörkezelés esetén a programban szereplő összes név hatásköre a forrásszöveg alapján egyértelműen megállapítható. Dinamikus hatáskörkezelésnél viszont a hatáskör futási időben változhat és más-más futásnál más-más lehet.
+
+Az eljárásorientált nyelvek statikus hatáskörkezelést valósítanak meg. Általánosságban elmondható, hogy az alprogramok formális paraméterei az alprogram lokális eszközei, így neveik az alprogram lokális nevei. Viszont a programegységek neve a programegység számára globális. A kulcsszavak, mint nevek a program bármely pontjáról láthatók. A standard azonosítók, mint nevek azon programegységekből láthatók, ahol nem deklaráltuk újra őket. A globális változók az eljárásorientált nyelvekben a programegységek közötti kommunikációt szolgálják.
+
+\paragraph{Névtér} tulajdonképpen egy csoport azon azonosítóknak (változók, konstansok (Math.PI, Math.E), függvény nevek (Math.Abs) stb) amik létezhetnek már egy másik fájlban, dokumentumban. Namespacek segítségével egyértelműen be tudjuk azonosítani, hogy melyik dokumentumban definiált azonosítót szeretnénk használni.
+
+\subsection{Fordítási egységek, kivételkezelés.}
+Az eljárásorientált nyelvekben a program közvetlenül fordítási egységekből épül föl. Ezek olyan forrásszöveg-részek, melyek önállóan, a program többi részétől fizikailag különválasztva fordíthatók le. Az egyes nyelvekben a fordítási egységek felépítése igen eltérő lehet. A fordítási egységek általában hatásköri és gyakran élettartam definiáló egységek is. A C\# fordítási egysége a névtér, ami a C forrásállományának felel meg, és hatásköri egység is.
+
+\subsubsection{Kivételkezelés}
+A kivételkezelési eszközrendszer azt teszi lehetővé, hogy az operációs rendszertől átvegyük a megszakítások kezelését, felhozzuk azt a program szintjére. A kivételek olyan események, amelyek megszakítást okoznak. A kivételkezelés az a tevékenység, amelyet a program végez, ha egy kivétel következik be. Kivételkezelő alatt egy olyan programrészt fogunk érteni, amely működésbe lép egy adott kivétel bekövetkezte után, reagálva az eseményre. A kivételkezelés az eseményvezérlés lehetőségét teszi lehetővé a programozásban. Operációs rendszer szinten lehetőség van bizonyos megszakítások maszkolására, ennek mintájára egyes kivételek figyelése letiltható vagy engedélyezhető. Egy kivétel figyelésének letiltása a legegyszerűbb kivételkezelés. Ekkor az esemény hatására a megszakítás bekövetkezik, feljön programszintre, kiváltódik a kivétel, de a program nem vesz róla tudomást, fut tovább. Természetesen nem tudjuk, hogy ennek milyen hatása lesz a program további működésére.
+
+A kivételeknek általában van neve (egy kapcsolódó sztring, amely gyakran az eseményhez kapcsolódó üzenet szerepét játssza) és kódja (ami általában egy egész szám). A kivételkezelés a PL/I-ben jelenik meg és az Ada is rendelkezik vele. A két nyelv kétfajta kivételkezelési filozófiát vall. A PL/I azt mondja, hogy ha egy program futása folyamán bekövetkezik egy kivétel, akkor az azért van, mert a program által realizált algoritmust nem készítettük föl az adott esemény kezelésére, olyan szituáció következett be, amelyre speciális módon kell reagálni. Ekkor keressük meg az esemény bekövetkeztének az okát, szüntessük meg a speciális szituációt és térjünk vissza a program normál működéséhez, folytassuk a programot ott, ahol a kivétel kiváltódott. Az Ada szerint viszont, ha bekövetkezik a speciális szituáció, akkor hagyjuk ott az eredeti tevékenységet, végezzünk olyan tevékenységet, ami adekvát a bekövetkezett eseménnyel és ne térjünk vissza oda, ahol a kivétel kiváltódott. A kivételkezelési eszközrendszerrel kapcsolatban felmerülnek kérdések:
+\begin{itemize}[noitemsep]
+	\item Milyen beépített kivételek vannak?
+	\item Definiálhatunk-e saját kivételt?
+	\item Mik a kivételkezelés hatásköri szabályai?
+	\item Hogyan folytatódik a futás a kivételkezelés után?
+	\item Mi történik a kivételkezelőben történt kivétel esetén? 
+	\item Van-e beépített kivételkezelő, illetve általános és parametrizált kivételkezelő?
+\end{itemize}
+
+Sem a PL/I-ben, sem az Adában nincs parametrizált és beépített kivételkezelő. Az Ada beépített kivételei általában eseménycsoportot neveznek meg. Alaphelyzetben minden kivétel figyelése engedélyezett, de egyes események figyelése (bizonyos ellenőrzések) letiltható. Saját kivétel az EXCEPTION attribútummal deklarálható. Kivételkezelő minden programegység törzsének végén, közvetlenül a záró END előtt helyezhető el, ebben WHEN-ágból tetszőleges számú megadható, de legalább egy kötelező. WHEN OTHERS ág viszont legfeljebb egyszer szerepelhet, és utolsóként kell megadni. Ez a nem nevesített kivételek kezelésére való (általános kivételkezelés). A kivételkezelő a teljes programegységben, továbbá az abból meghívott programegységekben látszik, ha azokban nem szerepel saját kivételkezelő. Tehát a kivételkezelő hatásköre az Adában dinamikus, hívási láncon öröklődik. Bármely kivételt explicit módon kiváltani a RAISE kivételnév; utasítással lehet. Programozói kivétel kiváltása csak így lehetséges.
+
+Ha egy programegységben kiváltódik egy kivétel, akkor a futtató rendszer megvizsgálja, hogy az adott kivétel figyelése le van-e tiltva. Ha igen, akkor a program fut tovább, különben a programegység befejezi működését. Ezek után a futtató rendszer megnézi, hogy az adott programegységen belül van-e kivételkezelő. Ha van, akkor megnézi, hogy annak van-e olyan WHEN-ága, amelyben szerepel az adott kivétel neve. Ha van ilyen ág, akkor végrehajtja az ott megadott utasításokat. Ha ezen utasítások között szerepel a GOTO-utasítás, akkor a megadott címkén folytatódik a program. Ha nincs GOTO, akkor úgy folytatódik a program futása, mintha a programegység szabályosan fejeződött volna be. Ha a kivétel nincs nevesítve, megnézi, hogy van-e WHEN OTHERS ág. Ha van, akkor az ott megadott utasítások hajtódnak végre és a program ugyanúgy folytatódik mint az előbb. Ha nincs nevesítve a kivétel egyetlen ágban sem és nincs WHEN OTHERS ág, vagy egyáltalán nincs kivételkezelő, akkor az adott programegység továbbadja a kivételt. Ez azt jelenti, hogy a kivétel kiváltódik a hívás helyén, és a fenti folyamat ott kezdődik elölről. Tehát a hívási láncon visszafelé lépkedve keres megfelelő kivételkezelőt. Ha a hívási lánc elejére ér és ott sem talál kivételkezelőt, akkor a program a kivételt nem kezelte és a vezérlés átadódik az operációs rendszernek. Kivételkezelőben kiváltott kivétel azonnal továbbadódik. Csak a kivételkezelőben alkalmazható a RAISE; utasítás, amely újra kiváltja azt a kivételt, amely aktivizálta a kivételkezelőt. Ez viszont az adott kivétel azonnali továbbadását eredményezi. Deklarációs utasításban kiváltódott kivétel azonnal továbbadódik. Csomagban bárhol bekövetkezett és ott nem kezelt kivétel beágyazott csomag esetén továbbadódik a tartalmazó programegységnek, fordítási egység szintű csomagnál viszont a főprogram félbeszakad.
+
+Az Ada fordító nem tudja ellenőrizni a kivételkezelők működését. Az Adában a saját kivételeknek alapvető szerepük van a programírásban, egyfajta kommunikációt tesznek lehetővé a programegységek között az eseményvezérlés révén.

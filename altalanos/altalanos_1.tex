@@ -1,8 +1,8 @@
 %-------------------------------------------------------------------------------
-\subsection{Az informatika logikai alapjai}
+\section{Az informatika logikai alapjai}
 %-------------------------------------------------------------------------------
 \def\InterpretOnNu{^{\langle U, \rho \rangle}_{\nu}}
-\subsubsection{Az elsőrendű matematikai logikai nyelv.}
+\subsection{Az elsőrendű matematikai logikai nyelv.}
 \begin{definition}[Elsőrendű nyelv]
 	Klasszikus elsőrendű nyelven az $$ L^{(1)} = \langle LC,Var,Con,Term,Form\rangle $$ rendezett ötöst értjük, ahol\\
 	\begin{easylist}
@@ -30,7 +30,7 @@
 	Azokat a formulákat, amelyek a \ref{itm:induction} \ref{itm:rule1}, \ref{itm:rule2}, \ref{itm:rule3} szabályok által jönnek létre, atomi formuláknak\index{atomi formula} vagy prímformuláknak\index{prímforumla} nevezzük.
 \end{note}
 
-\subsubsection{A nyelv interpretációja, formulák igazságértéke az interpretációban adott változókiértékelés mellett.}
+\subsection{A nyelv interpretációja, formulák igazságértéke az interpretációban adott változókiértékelés mellett.}
 \begin{definition}[interpretáció (elsőrendű)]
 	Az $\langle U, \rho\rangle$ párt az $L^{(1)}$ nyelv egy interpretációjának nevezzük, ha\\
 	\begin{easylist}
@@ -129,7 +129,7 @@
 	\end{easylist}
 \end{definition}
 
-\subsubsection{Logikai törvény, logikai következmény.}
+\subsection{Logikai törvény, logikai következmény.}
 \begin{definition}[modell]
 	Legyen $L^{(1)} = (LC, Var, Con, Term, Form)$ egy elsőrendű nyelv és $\Gamma \subseteq Form$ egy tetszőleges formulahalmaz. Az $(U, \rho, \nu)$ rendezett hármas elsőrendű modellje a $\Gamma$ formulahalmaznak, ha 
 	\begin{itemize}
@@ -154,7 +154,7 @@
 	\end{itemize}
 \end{definition}
 
-\subsubsection{Logikai ekvivalencia, normálformák.}
+\subsection{Logikai ekvivalencia, normálformák.}
 \begin{definition}[Logikai ekvivalencia]
 	lásd:a \ref{def:logikai törvény} fejezet definíciója.
 \end{definition}
@@ -179,7 +179,7 @@
 
 \end{definition}
 
-\subsubsection{Kalkulusok (Gentzen-kalkulus).}
+\subsection{Kalkulusok (Gentzen-kalkulus).}
 
 \paragraph{Logikai kalkulus} 
 Logikai kalkuluson olyan adott nyelv formuláihoz tartozó formális rendszert, szabályrendszert értünk, amely pusztán szintaktikailag, szemantika nélkül ad meg egy következményrelációt. A logikai kalkulus tehát egy axiómarendszer, amely magában a logikai tautológiákat állítja elő, adott formulákat ideiglenesen hozzávéve (premissza) pedig más formulákra (konklúzió) lehet jutni (következtetni) vele.
