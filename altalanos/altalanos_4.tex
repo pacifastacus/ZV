@@ -2,13 +2,139 @@
 \section{Magas Sintű programozási nyelvek 2}
 %----------------------------------------------------------------------------
 \subsection{Speciális programnyelvi eszközök.}
-Nem érdemel külön fejezetet
+Programnyelven vagy nyelvi csoporton belüli eszközök összessége, ami más nyelvekre vagy nyelvcsoportokra általánosságban nem jellemző. Ilyen például a C nyelvben a mutató, ami olyan változó, amely egy memóriacímet tárol, és ami akár egy újabb memóriacímet tartalmazó változóra mutathat. Az assembly nyelvekben ilyen eszköznek tekinthető a regiszterek címzésére szolgáló utasítás, hiszen magasabb szintű nyelvekben konkrétan regiszterre nem hivatkozhatunk assembly kód beékelése nélkül, maximum jelezhetjük, hogy regiszterben szeretnénk tárolni a változót. Az objektumorientált (OO) programnyelveknél az objektumorientált paradigma által meghatározott eszközök mindegyike tekinthető speciálisnak a többi nyelv felől tekintve rájuk, és a nyelveken belül is előfordul speciális, más OO nyelvekre nem jellemző eszköz.
 
 \subsection{Az objektumorientált programozás eszközei és jelentősége.}
-Az objektumorientált (OO) paradigma középpontjában a programozási nyelvek absztrakciós szintjének növelése
-áll. Ezáltal egyszerűbbé, könnyebbé válik a modellezés, a valós világ jobban leírható, a valós problémák
-hatékonyabban oldhatók meg. Az OO szemlélet szerint az adatmodell és a funkcionális modell egymástól
-elválaszthatatlan, külön nem kezelhető. A valós világot egyetlen modellel kell leírni és ebben kell kezelni a
-statikus (adat) és a dinamikus (viselkedési) jellemzőket. Ez az egységbezárás elve.
+Az objektumorientált (OO) paradigma középpontjában a programozási nyelvek absztrakciós szintjének növelése áll. Ezáltal egyszerűbbé, könnyebbé válik a modellezés, a valós világ jobban leírható, a valós problémák hatékonyabban oldhatók meg. Az OO szemlélet szerint az adatmodell és a funkcionális modell egymástól elválaszthatatlan, külön nem kezelhető. A valós világot egyetlen modellel kell leírni és ebben kell kezelni a statikus (adat) és a dinamikus (viselkedési) jellemzőket. Ez az egységbezárás elve.
 
-\subsection{Funkcionális és logikai programozás.}
+\subsubsection{Osztály}
+Az OO paradigma az absztrakt adattípus fogalmán épül fel. Az OO nyelvek legfontosabb alapeszköze az absztrakt adattípust megvalósító osztály. Az osztály maga egy absztrakt nyelvi eszköz, ezen nyelvek implementációi gyakran egy osztály együttesként jönnek létre. Az osztály rendelkezik attribútumokkal és módszerekkel. Az attribútumok tetszőleges bonyolultságú adatstruktúrát írhatnak le. A módszerek szolgálnak a viselkedés megadására. Ezek fogalmilag (és általában ténylegesen is) megfelelnek az eljárás orientált nyelvek alprogramjainak.
+
+\subsubsection{Objektum}
+A másik alapeszköz az objektum, ami konkrét nyelvi eszköz. Egy objektum mindig egy osztály példányaként jön létre a példányosítás során. Egy adott osztály minden példánya azonos adatstruktúrával és azonos viselkedésmóddal rendelkezik. Minden objektumnak van címe, az a memóriaterület, ahol az adatstruktúra elemei elhelyezkednek. Az adott címen elhelyezkedő érték együttest az objektum állapotának hívjuk. A példányosítás folyamán az objektum kezdőállapotba kerül. Az OO szemléletben az objektumok egymással párhuzamosan, egymással kölcsönhatásban léteznek. Az objektumok kommunikációja üzenetküldés formájában történik. Minden objektum példányosító osztálya meghatározza azt az interfészt, amely definiálja, hogy más objektumok számára az ő példányainak mely attribútumai és módszer-specifikációi látszanak (erre szolgál a bezárási eszközrendszer -- l. később).
+
+Tehát egy objektum küld egy üzenetet egy másik objektumnak (ez általában egy számára látható módszer meghívásával és az üzenetet fogadó objektum megnevezésével történik), ez pedig megválaszolja azt (a módszer visszatérési értéke, vagy változó paraméter segítségével). Az üzenet hatására lehet, hogy az objektum megváltoztatja az állapotát. Az objektumnak van öntudata, minden objektum csak önmagával azonos és az összes többi objektumtól különbözik. Minden objektum rendelkezik egyedi objektumazonosítóval (Object Identifier -- OID), amelyet valamilyen nyelvi mechanizmus valósít meg.
+
+\subsubsection{Attribútumok és metódusok}
+Egy osztály attribútumai és metódusai vagy módszerei lehetnek osztály és példány szintűek. A példány szintű attribútumok minden példányosításnál elhelyezésre kerülnek a memóriában, ezek értékei adják meg a példány állapotát. Az osztály szintű attribútumok az osztályhoz kötődnek, nem „többszöröződnek”. Például ilyen attribútum lehet az osztály kiterjedése, ami azt adja meg, hogy az adott osztálynak az adott pillanatban hány példánya van. A példány szintű módszerek a példányok viselkedését határozzák meg. Ezen módszerek meghívásánál mindig meg kell adni egy konkrét objektumot. Azt az objektumot, amelyen egy módszer éppen operál, aktuális példánynak hívjuk. Az osztály szintű módszereknél általában nincs aktuális példány, általában az osztály szintű attribútumok manipulálására használjuk őket.
+
+A példány szintű módszerek lehetnek beállító és lekérdező módszerek. A beállító módszerek hatására az aktuális példány állapotot vált, valamelyik (esetleg mindegyik) attribútumának értéke megváltozik. Ezek eljárás jellegűek, az új attribútum-értékeket paraméterek segítségével határozhatjuk meg. A lekérdező módszerek függvény jellegűek. Az aktuális példány aktuális állapotával térnek vissza. Példányosításkor lefoglalódik a memóriaterület az objektum számára, ott elhelyezésre kerülnek a példány szintű attribútumok, és beállítódik a kezdőállapot. Az objektum ettől kezdve él és tudja, hogy mely osztály példányaként jött létre.
+
+\subsubsection{Konstruktor}
+A kezdőállapot meghatározására az OO nyelvek általában egy speciális módszert, a konstruktort használják. Az aktuális példány kezelését az OO nyelvek a példány szintű módszerekbe implicit paraméterként beépülő speciális hivatkozással oldják meg.
+Az OO nyelvek az osztályok között egy aszimmetrikus kapcsolatot értelmeznek, melynek neve öröklődés. Az öröklődés az újrafelhasználhatóság eszköze. Az öröklődési viszonynál egy már létező osztályhoz kapcsolódóan -- melyet szuperosztálynak (szülő osztálynak, alaposztálynak) hívunk -- hozunk létre egy új osztályt, melynek elnevezése alosztály (gyermek osztály, származtatott osztály). Az öröklődés lényege, hogy az alosztály átveszi (örökli) szuperosztályának minden (a bezárás által megengedett) attribútumát és módszerét, és ezeket azonnal fel is tudja használni. Ezen túlmenően új attribútumokat és módszereket definiálhat, az átvett eszközöket átnevezheti, az átvett neveket újradeklarálhatja, megváltoztathatja a láthatósági viszonyokat, a módszereket újraimplementálhatja. 
+
+\subsubsection{Öröklődés}
+Az öröklődés lehet egyszeres és többszörös. Egyszeres öröklődés esetén egy osztálynak pontosan egy, többszörös öröklődés esetén egynél több szuperosztálya lehet. Mindkét esetben igaz, hogy egy osztálynak akárhány alosztálya létrehozható. Természetesen egy alosztály lehet egy másik osztály szuperosztálya. Így egy osztályhierarchia jön létre. Az osztályhierarchia egyszeres öröklődés esetén fa, többszörös öröklődés esetén aciklikus gráf. A többszörös öröklődést valló nyelvek osztályhierarchiájában is van azonban általában egy kitüntetett „gyökér” osztály, amelynek nincs szuperosztálya, és léteznek olyan „levél” osztályok, amelyeknek nincsenek alosztályai.
+A többszörös öröklődésnél gondot okozhat a különböző szuperosztályokban használt azonos nevek ütközése. Az öröklődési hierarchiában az egy úton elhelyezkedő osztályok közvetlen vagy közvetett öröklődési viszonyban vannak. Az alosztályok irányába haladva az osztályok leszármazott osztályai helyezkednek el, a másik irányban viszont az előd osztályok találhatók. Az egymással előd-leszármazott viszonyban nem levő osztályokat kliens osztályoknak hívjuk. Az osztályok eszközeinek láthatóságát szabályozza a bezárás.
+
+\subsubsection{Bezárási szintek}
+Az OO nyelvekben általában a következő bezárási szintek léteznek. Publikus szint esetén az eszközt látja az összes kliens osztály. Védett szintnél az eszközökhöz csak a leszármazott osztályok férhetnek hozzá. A privát szintű eszközök viszont csak az adott osztályban használhatók (pontosabban: egy alosztály természetesen örökli a privát attribútumokat és módszereket, de ezekre közvetlenül, explicit módon nem hivatkozhat – láthatatlan öröklés). Több OO nyelv értelmez még egy negyedik szintet is, amely a nyelv programegység szerkezetén alapul.
+
+\subsubsection{Helyettesíthetőség}
+Az öröklődésen alapul és az újrafelhasználhatóságnak egy igen jellegzetes megnyilvánulása a helyettesíthetőség. Az OO paradigma azt mondja, hogy egy leszármazott osztály példánya a program szövegében minden olyan helyen megjelenhet, ahol az előd osztály egy példánya. Egy alosztály az örökölt módszereket újraimplementálhatja. Ez azt jelenti, hogy különböző osztályokban azonos módszer-specifikációkhoz különböző implementáció tartozik. Ezek után a kérdés az, hogy ha meghívunk egy objektumra egy ilyen módszert, akkor melyik implementáció fog lefutni. A választ egy nyelvi mechanizmus, a kötés adja meg. 
+
+Az OO nyelvek két fajta kötést ismernek. Statikus kötés esetén már fordításkor eldől a kérdés. Ekkor a helyettesíthetőség nem játszik szerepet. A forrásszövegben megadott objektum deklaráló osztályának módszere fog lefutni minden esetben. Dinamikus kötés esetén a kérdés csak futási időben dől el, a megoldás a helyettesíthetőségen alapul. Annak az objektumnak a példányosító osztályában megadott (vagy ha nem írta fölül, akkor az öröklött) implementáció fog lefutni, amelyik ténylegesen kezelésre kerül. Az OO nyelvek egy része a dinamikus kötést vallja. Másik részükben mindkettő jelen van, az egyik alapértelmezett, a másikat a programozónak explicit módon kell beállítania.
+
+Az OO nyelvek általában megengedik a módszernevek túlterhelését. Ez annyit jelent, hogy egy osztályon belül azonos nevű és természetesen eltérő implementációjú módszereket tudunk létrehozni. Ekkor természetesen a hivatkozások feloldásához a specifikációknak különbözniük kell a paraméterek számában, vagy azok típusában (ez nem mindig elég).
+
+\subsubsection{Speciális osztályok}
+Az OO nyelvek általában ismerik az absztrakt osztály fogalmát. Az absztrakt osztály egy olyan eszköz, amellyel viselkedésmintákat adhatunk meg, amelyeket aztán valamely leszármazott osztály majd konkretizál. Egy absztrakt osztályban általában vannak absztrakt módszerek, ezeknek csak a specifikációja létezik, implementációjuk nem. Egy absztrakt osztályból származtatható absztrakt és konkrét osztály. A konkrét osztály minden módszeréhez kötelező az implementáció, egy osztály viszont mindaddig absztrakt marad, amíg legalább egy módszere absztrakt. Az absztrakt osztályok nem példányosíthatók, csak örököltethetők.
+
+Egyes OO nyelvekben létrehozhatók olyan osztályok, amelyekből nem lehet alosztályokat származtatni (ezek az öröklődési hierarchia „levelei” lesznek). Ezek természetesen nem lehetnek absztrakt osztályok, hiszen akkor soha nem lehetne őket konkretizálni.
+
+Egyes OO nyelvek ismerik a paraméterezett osztály fogalmát. Ezek lényegében az OO világ generikusai.
+
+\subsubsection{Objektumok élettartama}
+Az OO nyelvekben az objektumok memóriában kezelt konstrukciók. Egy objektum mindig tranziens, tehát nem éli túl az őt létrehozó programot. I/O segítségével természetesen bármely objektum állományba menthető és azután bármikor létrehozható egy másik objektum, amelynek állapota ugyanaz lesz.
+
+A nem nyelvi OO rendszerek (pl. adatbázis-kezelők) ismerik a perzisztens objektum fogalmát. Ekkor az objektum túléli az őt létrehozó alkalmazást, bármikor újra betölthető a memóriába, és ugyanaz az objektum marad. Természetesen egy program működése közben is fel kell szabadítani a már szükségtelen objektumokhoz rendelt tárterületet. Erre az OO nyelvek kétféle megvalósítást tartalmaznak. Egy részük azt mondja, hogy a programozónak kell explicit módon megszüntetnie az objektumot. Más részük automatikus törlési mechanizmust biztosít (garbage collection). Ezeknél a háttérben, aszinkron módon, automatikusan működik a „szemétgyűjtögető” a szokásos algoritmusok valamelyike (pl. hivatkozásfigyelés) alapján. 
+
+\subsubsection{Objetumorientált nyelvek fajtái}
+Az OO nyelveknek két nagy csoportja van.
+A tiszta OO nyelvek teljes mértékben az OO paradigma mentén épülnek fel, ezekben nem lehet más paradigma eszközeinek segítségével programozni. Ezen nyelvekben egyetlen osztályhierarchia létezik. Ez adja a nyelvi rendszert és a fejlesztői környezetet is egyben. Ezen nyelvekben a programozás azt jelenti, hogy definiáljuk a saját osztályainkat, azokat elhelyezzük az osztályhierarchiában, majd példányosítunk. A hibrid OO nyelvek valamilyen más paradigma (eljárásorientált, funkcionális, logikai, stb.) mentén épülnek fel, és az alap eszközrendszerük egészül ki OO eszközökkel. Ezen nyelvekben mindkét paradigma mentén lehet programozni. Általában nincs beépített osztályhierarchia (hanem pl. osztálykönyvtárak vannak), és a programozó saját osztályhierarchiákat hozhat létre. Egyes tiszta OO nyelvek az egységesség elvét vallják. Ezen nyelvekben egyetlen programozási eszköz van, az objektum. Ezekben a nyelvekben tehát minden objektum, a módszerek, osztályok is. Az OO paradigma imperatív paradigmaként jött létre. Tehát ezek a nyelvek algoritmikusak, és így eredendően fordítóprogramosak. A SIMULA 67 az első olyan nyelv, amely tartalmazza az OO eszközrendszert, de a paradigma fogalmait később a Smalltalk fejlesztői csapata tette teljessé. Aztán folyamatosan kialakultak a hibrid OO nyelvek, és megjelent a deklaratív OO paradigma (CLOS, Prolog++) is. 
+
+\subsection{Logikai programozás.}
+
+A paradigma az 1970-es évek elején születik meg az első logikai programozási nyelv, a Prolog megkonstruálásával. A logikai paradigma a matematikai logika fogalom- és eszközrendszerén épül fel. A Prolog alapjait az elsőrendű predikátumkalkulus és a rezolúciós algoritmus képezi. Egy logikai program nem más, mint egy absztrakt modellre vonatkozó állítások egy halmaza. Az állítások a modell elemeinek tulajdonságait és a közöttük levő kapcsolatokat formalizálják. Az állítások egy konkrét kapcsolatot leíró részhalmazát predikátumnak nevezzük. Általánosságban egy logikai program lefuttatása egy, az állításokból következő tétel konstruktív bizonyítását jelenti. Ekkor a program állításai egy megoldási környezetet definiálnak, és ebben a környezetben tesszük fel a programnak a kérdést (vagy fogalmazzuk meg a feladatot), amire a választ egy következtető gép keresi meg. 
+
+A logikai programozási nyelvekben az állítás tény vagy szabály lehet. Az állításokat és a kérdéseket közös néven mondatoknak nevezzük. Egyes logikai nyelvekben a szigorúan vett logikai eszközökön túlmutató mondatok is lehetnek. A deklarációk a predikátumok alkalmazását pontosítják, a direktívák a program futtatási környezetét határozzák meg. 
+
+A Prolog egy általános célú magas szintű programozási nyelv. A teljes Prolog a logikai eszközrendszeren kívül tartalmaz metalogikai és logikán kívüli nyelvi elemeket is, továbbá be van ágyazva egy interaktív fejlesztői környezetbe. 
+
+Egy tiszta Prolog program felhasználói predikátumok együttese, amelyekben sehol sincs hivatkozás beépített predikátumra. 
+
+A Prolog egy nem típusos, interpreteres nyelv. A Prologban a mondatokat . zárja. 
+
+A Prolog nyelv alapeleme a term, amely lehet egyszerű és összetett. Egy egyszerű term az vagy állandó vagy változó. Az állandó az név vagy szám. A név egy kisbetűvel kezdődő azonosító, vagy a +,~–,~*,~/,~\\,~\textasciicircum,~<,~>,~=,~$\sim$,~:,~.,~?,~@,~\#,~\&,~\$ karakterekből álló karaktersorozat. Van négy foglalt név: ;, !, [], {}. 
+
+A szám egy olyan karaktersorozat, amely formálisan megfelel az eljárásorientált nyelvek egész és valós numerikus literáljának. 
+
+A változó speciális változó. Típusa nincs, címe nem hozzáférhető. Neve aláhúzásjellel vagy nagybetűvel kezdődő azonosító. Értékkomponensének kezelése speciális. A változó a matematikai egyenletek ismeretlenjének felel meg. Rá az egyszeres értékadás szabálya vonatkozik. Egy változónak tehát vagy nincs értéke és ekkor a neve önmagát, mint karaktersorozatot képviseli hatáskörén belül mindenütt, vagy van értéke és ekkor a név mindenütt ezt az értékkomponenst jelenti. Az értékkomponens nem írható felül. A tiszta Prologban egy változónak értéket a Prolog következtető gép adhat. A változó hatásköre az a mondat, amelyikben szerepel a neve. Kivétel ez alól az a változó, amelynek neve \_ (ún. névtelen változó), amelynek minden előfordulása más- más változót jelöl. 
+
+Egy tiszta Prolog program futtatásának célja általában a kérdésekben szereplő változók lehetséges értékeinek meghatározása. Általános Prolog konvenció, hogy az eredmény szempontjából érdektelen változók nevét aláhúzásjellel kezdjük. 
+
+Az összetett term alakja: név(argumentum [, argumentum ]...) ahol az argumentum egy tetszőleges term, vagy egy aposztrófok közé zárt tetszőleges karaktersorozat lehet. 
+
+A tény egy összetett term és mint olyan, egy igaz állítás. 
+
+Egy szabály áll fejből és törzsből és közöttük valamilyen elhatároló áll (nálunk ez a :- lesz). A fej egy összetett term, a törzs egy vesszőkkel elválasztott összetett term sorozat (ezek predikátumok). 
+
+A szabály egy következtetési szabály: a fej akkor igaz, ha a törzs igaz. A vessző tehát itt egy rövidzár és műveletnek felel meg. A kérdésnek csak törzse van. 
+
+A Prologban a deklarációk és direktívák alakja: :- törzs 
+
+A Prolog állításaiban szereplő változók univerzálisan, a kérdésben szereplők viszont egzisztenciálisan kvantáltak. 
+
+Tehát a tények törzs nélküli szabályok, vagyis a törzs mindig igaznak tekinthető. A kérdés viszont fej nélküli szabály, azaz vagy azt kérdezzük, hogy a megoldási környezet mely elemei teszik igazzá a predikátumokat, vagy pedig csak egy „igen-nem” típusú kérdést teszünk föl. 
+
+A szabályok lehetnek rekurzívak. 
+
+Akárhány olyan szabály lehet, ahol a fej azonos, ilyenkor az argumentumok közötti kapcsolatot az egyes állítások által definiált kapcsolatok uniója határozza meg. 
+
+A Prolog következtető gép a program futtatása során a memóriában egy keresési fát épít föl és jár be preorder módon. A fát teljes mértékben soha nem építi föl, mindig csak az aktuálisan kezelt út áll rendelkezésre, a bejárt csúcsot törli a feldolgozás után. A fa csúcsaiban a kérdés aktuális alakja áll, az éleket viszont az adott lépésben végrehajtott változóhelyettesítések címkézik. A kérdés megválaszolásánál a tényeket és szabályokat a felírásuk sorrendjében használja fel, a megoldásnál alkalmazott technika pedig az illesztés és a visszalépés. 
+
+A megoldás lépései a következők: 
+\begin{enumerate}
+	\item A keresési fa gyökerében az eredeti kérdés áll. Induláskor ez az aktuális csúcs. 
+	\item Ha az aktuális csúcsban a kérdés törzse üres, akkor megvan egy megoldás. Ezt kiírja a rendszer, és rákérdez, hogy a felhasználó akar-e további megoldásokat. Ha nem, akkor a programnak vége, ha igen, akkor folytatás 4-től. 
+	\item Ha az aktuális csúcsban a kérdés törzse nem üres, akkor veszi a törzs első predikátumát, majd az első tényre végrehajt egy illesztést. Ha nem sikerül az illesztés, akkor veszi sorra a további tényeket és próbál azokra illeszteni. Ha sikerül valamelyik tényre illeszteni, akkor a fában létrehoz egy új csúcsot és abban a kérdés aktuális alakja úgy áll elő, hogy elhagyja az első predikátumot. Az élet címkézi az illesztéshez esetleg szükséges változóhelyettesítésekkel. Ha egyetlen tényre sem sikerült illeszteni, akkor megpróbál illesztést találni a szabályok fejére. Ha van illeszkedés, akkor létrehoz egy új csúcsot a fában, az éleket ugyanúgy címkézi, és a kérdés új alakja úgy keletkezik, hogy a predikátumot felülírja az illeszkedő fejű szabály törzsével. Ha nem illeszkedik egyetlen tény és egyetlen szabályfej sem, akkor a Prolog azt mondja, hogy zsákutcába jutott és a végrehajtás folytatódik 4-től, különben az új csúcs lesz az aktuális és folytatás 2-től. 
+	\item Ez a visszalépés. Ha az aktuális csúcs a fa gyökere, akkor a program véget ér, nincs több megoldás (az eddigiekkel együtt esetleg egy sem). Különben törli a fában az aktuális csúcsot, és a megelőző csúcs lesz az aktuális. Egyben törli a két csúcsot összekötő él változóhelyettesítéseit. Ezután 3-tól folytatva megpróbál illesztést keresni az eddig felhasznált állításokat követő állítások segítségével. 
+\end{enumerate}
+
+Az illesztés algoritmusa a következő: 
+\begin{enumerate}
+	\item Ha az illesztendő termsorozatok üresek, akkor vége (az illesztés sikeres), különben illeszti a két sorozat első elemeit 2 szerint, majd ha, azok illeszkednek, folytatódik az illesztés a sorozatok maradék elemeire 1 szerint. 
+	\item Ha mindkét term állandó, akkor attól függően, hogy mint karaktersorozatok azonosak-e, az illesztés sikeres lesz, vagy meghiúsul. 
+	\item Állandó és összetett term esetén az illesztés sikertelen lesz. 
+	\item Két összetett term esetén az illesztés sikertelen, ha különbözik a nevük, vagy az argumentumaik száma. Különben az argumentumok sorozatai kerülnek illesztésre 1 szerint. 
+	\item Ha mindkét term változó, bármelyik helyettesíthető a másikkal. Általában az állítás változói kapnak értéket. 
+	\item Ha az egyik term változó, akkor az helyettesítődik a másik (állandó vagy összetett) termmel. 
+\end{enumerate}
+
+\subsection{Funkcionális programozás}
+A funkcionális paradigma középpontjában a függvények állnak. Egy funkcionális (vagy applikatív) nyelvben egy program típus-, osztály- és függvénydeklarációk, illetve függvénydefiníciók sorozatából, valamint egy kezdeti kifejezésből áll. A kezdeti kifejezésben tetszőleges hosszúságú (esetleg egymásba ágyazott) függvényhívás- sorozat jelenhet meg. A program végrehajtását a kezdeti kifejezés kiértékelése jelenti. Ezt úgy képzelhetjük el, hogy a kezdeti kifejezésben szereplő függvények meghívása úgy zajlik le, hogy a hívást szövegszerűen (a paraméterek figyelembevételével) helyettesítjük a definíció törzsével. A helyettesítés pontos szemantikáját az egyes nyelvek kiértékelési (átírási) modellje határozza meg. 
+
+A funkcionális nyelvek esetén nem választható szét a nyelvi rendszer a környezettől. Ezek a nyelvi rendszerek eredendően interpreter alapúak, interaktívak, de tartalmaznak fordítóprogramokat is. Középpontjukban mindig egy redukciós (átíró) rendszer áll. Ha a redukciós rendszer olyan, hogy az egyes részkifejezések átírásának sorrendje nincs hatással a végeredményre, akkor azt konfluensnek nevezzük. 
+
+Egy funkcionális nyelvű program legfontosabb építőkövei a saját függvények. Ezek fogalmilag semmiben sem különböznek az eljárásorientált nyelvek függvényeitől. A függvény törzse meghatározza adott aktuális paraméterek mellett a visszatérési érték kiszámításának módját. A függvény törzse a funkcionális nyelvekben kifejezésekből áll. 
+
+Egy funkcionális nyelvi rendszer beépített függvények sokaságából áll. Saját függvényt beépített, vagy általunk már korábban definiált függvények segítségével tudunk definiálni (függvényösszetétel). Egy funkcionális nyelvben a függvények alapértelmezett módon rekurzívak lehetnek, sőt létrehozhatók kölcsönösen rekurzív függvények is. 
+
+A kezdeti kifejezés redukálása (a nyelv által megvalósított kiértékelési stratégia alapján) mindig egy redukálható részkifejezés (egy redex) átírásával kezdődik. Ha a kifejezés már nem redukálható tovább, akkor normál formájú kifejezésről beszélünk. 
+
+A kiértékelés lehet lusta kiértékelés, ekkor a kifejezésben a legbaloldalibb legkülső redex kerül átírásra. Ez azt jelenti, hogy ha a kifejezés egy függvényhívás, akkor az aktuális paraméterek kiértékelését csak akkor végzi el a rendszer, ha szükség van rájuk. A lusta kiértékelés mindig eljut a normál formáig, ha az létezik. 
+
+A mohó kiértékelés a legbaloldalibb legbelső redexet írja át először. Ekkor tehát az aktuális paraméterek kiértékelése történik meg először. A mohó kiértékelés gyakran hatékonyabb, de nem biztos, hogy véget ér, még akkor sem, ha létezik a normál forma. 
+
+Egy funkcionális nyelvet tisztán funkcionálisnak (tisztán applikatívnak) nevezünk, ha nyelvi elemeinek nincs mellékhatása, és nincs lehetőség értékadásra vagy más eljárásorientált nyelvi elem használatára. 
+
+A nem tisztán funkcionális nyelvekben viszont van mellékhatás, vannak eljárásorientált (néha objektumorientált) vagy azokhoz hasonló eszközök. 
+
+A tisztán funkcionális nyelvekben teljesül a hivatkozási átláthatóság. Ez azt jelenti, hogy egy kifejezés értéke nem függ attól, hogy a program mely részén fordul elő. Tehát ugyanazon kifejezés értéke a szöveg bármely pontján ugyanaz. A függvények nem változtatják meg a környezetüket, azaz a tartalmazó kifejezés értékét nem befolyásolják. Az ilyen nyelvnek nincsenek változói, csak konstansai és nevesített konstansai. A tisztán funkcionális nyelvek általában szigorúan típusosak, a fordítóprogram ellenőrzi a típuskompatibilitást. A funkcionális nyelvek eszközként tartalmaznak olyan függvényeket, melyek paramétere, vagy visszatérési értéke függvény (funkcionálok, vagy magasabb rendű függvények). Ez a procedurális absztrakciót szolgálja. 
+
+A funkcionális nyelvek egy részének kivételkezelése gyenge vagy nem létezik, másoknál hatékony eszközrendszer áll rendelkezésre. 
+
+A függvényösszetétel asszociatív, így a funkcionális nyelven megírt programok kiértékelése jól párhuzamosítható. Az elterjedt funkcionális nyelveknek általában van párhuzamos változata. 
+
+A funkcionális nyelvek közül a Haskell egy erősen típusos, tisztán funkcionális, lusta kiértékelést megvalósító, a LISP egy imperatív eszközöket is tartalmazó, objektumorientált változattal (CLOS) is rendelkező, mohó kiértékelést valló nyelv.

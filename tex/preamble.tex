@@ -27,6 +27,7 @@ right=1cm
 	\OldEndEasylist
 }
 \newcounter{descriptcount}
+\newcounter{prevdescriptcount}
 \newlist{enumdescript}{description}{2}
 \setlist[enumdescript,1]{
 	before={\setcounter{descriptcount}{0}
@@ -34,9 +35,11 @@ right=1cm
 	,font=\bfseries\stepcounter{descriptcount}\thedescriptcount.~
 }
 \setlist[enumdescript,2]{
-	before={\setcounter{descriptcount}{0}
-		\renewcommand*\thedescriptcount{\roman{descriptcount}}}
+	before={\setcounter{prevdescriptcount}{\value{descriptcount}}
+		\setcounter{descriptcount}{0}
+		\renewcommand*\thedescriptcount{\alph{descriptcount}}}
 	,font=\bfseries\stepcounter{descriptcount}\thedescriptcount.~
+	,after={\setcounter{descriptcount}{\value{prevdescriptcount}}}
 }
 
 \newtheorem*{definition}{Definíció}
