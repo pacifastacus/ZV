@@ -2,11 +2,116 @@
 \section{Adatszerkezetek és algoritmusok}
 %----------------------------------------------------------------------------
 \subsection{Adatszerkezetek reprezentációja.}
+A reprezentáció az absztrakt adatszerkezet tárolásának, ábrázolásának és leképezésének a módja. Az ábrázolás kétféleképpen történhet: folytonosan vagy szétszórtan.
+\begin{description}
+	\item[Folytonos] Egy tárhelyen csak az adatelem értéke található, \textbf{az adatszerkezethez} tartozó adatelemek \textbf{folytonosan egymás után következnek a memóriában}, az adatelemek mérete általában azonos. A kezdőcím és az elemek száma ismert. Az adatelemek tárolási jellemzői (típus, ábrázolás, hossz) azonosak. Közvetlen elérést biztosít, a keresés, rendezés és csere műveletek gyorsabbak, de a bővítés és a fizikai törlés nehezebb.
+	\item[Szétszórt] Egy tárhelyen az adatelemen kívül legalább egy cím is van, ami az adatszerkezetben szomszédos adatelem címe, ennek segítségével érhetjük el az összes adatelemet. A \textbf{memóriában nem egymást követően helyezkednek el az adatelemek}. Az adatelemek tárolási jellemzői eltérhetnek. Könnyebb a bővítés és a fizikai törlés, illetve nagyobb adatmennyiséget is könnyebb tárolni, de nehezebb a keresés, rendezés és csere, mert nem érjük el közvetlenül az adatelemeket.
+\end{description}
 
 \subsection{Műveletek adatszerkezetekkel.}
+Az adatszerkezetek kezeléséhez műveletek állnak rendelkezésre, melyek mindegyik adatszerkezetnél más megvalósítást követelnek. Vannak olyan adatszerkezetek, melyeknél néhány művelet nem lehetséges, vagy nincs értelmezve.
+\begin{enumdescript}
+	\item[Létrehozás] Az adatszerkezet szerkezeti vázának leíróit adjuk meg. Létrehozzuk a fejmutatót, ami az első elemre tud hivatkozni. Néhány adatszerkezetnél kezdőérték is definiálható.
+	\item[Bővítés] A meglévő szerkezet bővítése egy vagy több adatelemmel. \emph{Csak dinamikus adatszerkezeteknél lehetséges}.
+	\item[Törlés] Egy vagy több adatelem törlése a szerkezetből. Létezik logikai és fizikai törlés.
+	\begin{enumdescript}[noitemsep]
+		\item[Logikai törlés] Felülírjuk az adatelem értékét egy olyan értékre, amely nem fordulhat elő, ezzel jelezve, hogy ott nincs értelmezhető adat.
+		\item[Fizikai törlés] A tárhelyet is eltávolítjuk, így a teljes adatelem megszűnik. \emph{Csak dinamikus adatszerkezeteknél lehetséges}.
+	\end{enumdescript}
+	\item[Csere]  Két adatelem felcserélése. Általában az értékek felülírásával történik, nem a tárhelyek mozgatásával.
+	\item[Rendezés] Valamilyen szabály alapján növekvő vagy csökkenő sorrendet adunk meg az adatelemek között. Ehhez véges számú csere műveletet kell elvégezni. \emph{Fajtái:} szélsőérték kiválasztásos, beszúrásos, buborék-, shell-, gyorsrendezés, stb.
+	\item[Keresés] Az adatszerkezet egy adott értékkel rendelkező adatelemének megtalálása, mellyel annak indexét és címét is megtudjuk. \emph{Fajtái:} teljes, lineáris, bináris keresés.
+	\item[Elérés] Egy adatelemhez való hozzáférés annak címe segítségével, hogy valamilyen műveletet hajthassunk végre rajta.
+	\item[Bejárás] Egy adatszerkezet minden elemének egymás utáni elérése. \emph{Fajtái:} soros, szekvenciális, közvetlen.
+	\item[Feldolgozás] Egy adatelemen végrehajtott módosítás.
+	\item[Felszabadítás] Memóriában tárolt adatszerkezetek memóriából való eltávolítása.
+\end{enumdescript}
 
 \subsection{Adatszerkezetek osztályozása és jellemzésük. }
+\begin{enumdescript}[]
+	\item [Adatelemek száma szerint] ~
+	\begin{enumdescript}[nosep]
+		\item[Statikus] Az adatelemek száma állandó, az adatszerkezet létrehozásakor rögzül. Az adatelemek száma csak közvetetten módosítható: egy különböző elemszámmal rendelkező adatszerkezetet kell létrehozni és a megtartandó értékeket átmásolni a megfelelő helyekre, majd a régit felszabadítani. (pl. tömb)
+		\item[Dinamikus] Az adatelemek száma időben változhat. (pl. lista)
+	\end{enumdescript}
+	\item [Adatelemek típusa szerint] ~
+	\begin{enumdescript}[nosep]
+		\item [Homogén] Az adatszerkezet minden adatelemének típusa azonos. Ez a típus lehet egyszerű vagy összetett, így további részekre bontható. (pl. halmaz)
+		\item [Heterogén] Az adatelemek típusa nem egyezik meg. (pl. rekord)
+	\end{enumdescript}
+	\item [Adatelemek közötti kapcsolat szerint] ~
+	\begin{enumdescript}[nosep]
+		\item [Struktúra nélküli] Nincs rögzített sorrendi kapcsolat az adatelemek között, csak az azonos típus köti össze őket. (pl. halmaz)
+		\item [Asszociatív] Nincs lényegi kapcsolat az adatelemek között, csak szabály nélküli sorrendiség. (pl. tömb, mátrix)
+		\item [Szekvenciális] Az adatelemek egymás után helyezkednek el úgy, hogy egy elem csak a szomszédjain keresztül érhető el, közvetlenül nem. (pl. lista)
+		\item [Hierarchikus] Minden adatelem csak egy elemből érhető el, de egy elemből több elem is elérhető. Az elemek között egy-sok kapcsolat áll fenn. (pl. fa)
+		\item [Hálós] Minden adatelem több elemből is elérhető, és egy elemből több elem is elérhető. Az elemek között sok-sok kapcsolat áll fenn. (pl. gráf)
+	\end{enumdescript}
+	\item [Tárolás szerint] ~
+	\begin{enumdescript}[nosep]
+		\item [Folytonos] Az adatelemek egymást követő címen helyezkednek el (1. oldal).
+		\item [Szétszórt] Az adatelemek véletlenszerűen helyezkednek el (1. oldal).
+	\end{enumdescript}
+\end{enumdescript}
 
 \subsection{Szekvenciális adatszerkezetek: sor, verem, lista, sztring.}
+\paragraph{Lista}
+Olyan dinamikus adatszerkezet, melynek adatelemeiben vagy a következő elem címe, vagy az előző és következő elemek címe is megtalálható a tárolt érték mellett. Az első elem (lista feje vagy fejmutató) speciális, mert csak az első tényleges adatelem címét tartalmazza, értéket nem. A lista méretét az elemek száma határozza meg, amit külön tárolhatunk, vagy függvénnyel határozhatjuk meg. Minden műveletet lehet rajta használni. Listafajták:
+\begin{enumdescript}[nosep]
+	\item[Egyirányban láncolt]  Az adatelemek a következő elem címét tárolják.
+	\item[Kétirányban láncolt]  Az adatelemek az előző és következő elem címét is tárolják.
+	\item[Cirkuláris]  Az utolsó elem következője az első, az elsőt megelőző az utolsó elem.
+	\item[Multilista]  Az adatelemek valamilyen másik lista fejmutatói.
+\end{enumdescript}
+
+\paragraph{Sor}
+Olyan speciális lista, melynek csak az egyik elemét érjük el, a bővítés és törlés műveletek speciálisan vannak megvalósítva. Folytonos és szétszórt ábrázolással is megvalósítható. Létrehozásához két értékre van szükség, melyek jelzik az első és utolsó elem címét. A sor FIFO (First In First Out) adatszerkezet, azt az elemet érjük el először, amelyik előbb került bele. Speciális műveletei:
+\begin{enumdescript}[nosep]
+	\item[ACCESS HEAD]  az első elem elérése
+	\item[PUT]  sor bővítése a végén
+	\item[GET]  sor első elemének elérése és törlése
+\end{enumdescript}
+
+\paragraph{Verem}
+A verem olyan, mint egy fordított elérésű sor. Csak egy elemet érünk el, a bővítés és törlés műveletek speciálisan vannak megvalósítva. Folytonos (általában) és szétszórt ábrázolással is megvalósítható. Szerkezetét leírni két értékkel lehet: az egyik a verem alját (elejét), a másik a verem tetejét (végét) jelzi. A verem LIFO (Last In First Out) adatszerkezet, azt az elemet érjük el először, amelyik utoljára került bele. Speciális műveletei:
+\begin{enumdescript}[nosep]
+	\item[ACCESS HEAD]  az utolsó elem elérése
+	\item[PUSH]  verem bővítése a végén
+	\item[POP]  verem utolsó elemének elérése és törlése
+\end{enumdescript}
+
+\paragraph{Sztring}
+Olyan speciális adatszerkezet, melynek adatelemei karaktereket kódolnak. A karakterek kódolása (ASCII, UTF-8, UNICODE, stb.) és a tárolás implementációja határozza meg, hogyan lehet kezelni őket. Lehetséges asszociatív adatszerkezettel is tárolni, ekkor minden karakterét közvetlenül el lehet érni. Gyakran úgy van megvalósítva, hogy a végén lehet bővíteni, így karakterenkénti olvasással sztringet lehet összefűzni. Speciális műveletei:
+\begin{enumdescript}[nosep]
+	\item karakterképzés
+	\item részsztringképzés
+	\item konkatenáció (összefűzés)
+\end{enumdescript}
 
 \subsection{Egyszerű és összetett állományszerkezetek.}
+
+\paragraph{Egyszerű állományszerkezet} esetén a fizikai állomány csak a logikai állomány adatelemeit tartalmazza. Ez azt jelenti, hogy a fizikai állomány a logikai állomány adataiból kialakítható, nem szükséges hozzá technikai szerkezethordozó (strukturáló) adatokat is tárolni, illetve meglétük nem meghatározó a szerkezet szempontjából. Az egyszerű állományszerkezeteknek négy típusát különböztetjük meg:
+\begin{enumdescript}[nosep]
+	\item[Szeriális] Szerkezet nélküli állomány. Logikai és fizikai szinten sincs megkötés a rekordok közötti kapcsolatra. Kezelése egyszerű, de lassú benne egy adott rekord keresése, és nem lehet rendezni. Szabadon szegmentálható, így a tárolása nem okoz problémát. Általában ideiglenes tárolásra használt.
+	\item[Szekvenciális] Logikai szinten sorrend van az egyes rekordok között. A háttértáron való elhelyezésre nincsenek megkötések. A keresés a sorrendiség miatt gyorsabb, jó kapacitáskihasználás jellemzi, bármilyen (soros és közvetlen) háttértárolón megvalósítható. Hátránya, hogy nem támogatja a közvetlen elérést, létrehozásához először rendezni kell az adatokat.
+	\item[Direkt] A logikai rekordok fizikai elhelyezését egy kölcsönösen egyértelmű hash függvény határozza meg a logikai rekordok azonosítója alapján, így a rekordok és a blokkok között szoros kapcsolat van. Emiatt minden rekord közvetlenül elérhető, de csak címezhető tárolón valósítható meg (mágnesesen például nem). A logikai rekordok között is jól meghatározható kapcsolat van. Csak fix formátumú rekordokat tartalmazhat, és az állomány nem szegmentálható. Nagyon gyors elérést biztosít, de nem minden rendszer kezeli.
+	\item[Random] A direkt állományokhoz hasonlóan hash függvény helyezi el a rekordokat a blokkokban, de ez a függvény csak egyértelmű (nem kölcsönösen egyértelmű). A logikai rekordok között nincs jól meghatározott kapcsolat. A hash függvény különböző rekordazonosítókhoz ugyanazt a blokkot is kijelölheti. Ennek kezelése:
+	\begin{enumdescript}[noitemsep]
+		\item[Nyílt címzés] A foglalt helyre került elemet a következő szabad helyen helyezi el
+		\item[Láncolás] Listába fűzi az egy helyre került elemeket
+	\end{enumdescript}
+\end{enumdescript}
+
+\paragraph{Összetett állományszerkezet} azt jelenti, hogy a logikai rekordokon túl szerkezethordozó információkat is tárolunk az egyszerűbb és gyorsabb feldolgozás érdekében. Alapja egy egyszerű szerkezetű állomány, az alapállomány, amely legtöbbször szeriális vagy szekvenciális. Az alapállományra épülnek rá a plusz információhordozó adatok.  Strukturáló adatok megadása:
+\begin{enumdescript}[nosep]
+	\item[Láncolás] Az információhordozó adatok állományon belül jelennek meg mutatómezők formájában, ekkor a rekordokat láncolt listába fűzzük fel
+	\item[Indexelés] A plusz információk az állományon kívül egy (általában) vagy több indextábla formájában jelennek meg
+\end{enumdescript}
+Mivel mindkét technika lemezcímeket kezel, ezért az összetett állományszerkezetek csak közvetlen elérésű háttértárolón alakíthatók ki. A következő összetett állományszerkezeteket különböztetjük meg:
+\begin{enumerate}[nosep]
+	\item Láncolt szeriális állomány
+	\item Indexelt szeriális állomány
+	\item Indexelt szekvenciális állomány
+	\item Multilista állomány
+	\item Invertált állomány
+\end{enumerate}
