@@ -2,6 +2,60 @@
 \section{Adatbázisrendszerek}
 %----------------------------------------------------------------------------
 \subsection{Relációs, ER és objektumorientált modellek jellemzése.}
+\subsubsection{Relációs modell}
+A relációs modell a legelterjedtebb modell. Ez köszönhető egyrészt annak, hogy a
+személyi számítógépek elterjedésekor a megjelenő adatbázis-kezelő rendszerek ezen a modellen alapultak, valamint jól formalizált matematikai háttérrel rendelkezik.
+A \textbf{tartomány (domain)} atomi értékek halmaza. Rendelkezik névvel, típussal és formátummal Jele: \textbf{D}
+Az \textbf{attribútum} kijelöli az adott tartomány szerepét valamely rendszer esetén. Jele: \textbf{A}
+A \textbf{relációs séma} ekkor az R(A 1 , ..., A n ) módon formalizálható, ahol R a séma neve, míg A i -k attribútumok. A relációs séma \textbf{foka} az attribútumainak száma.
+
+A reláció ekkor a következő formalizmussal értelmezett:
+$$r = r(R),\quad \text{ahol}\; r \subset dom(A_1) \times \dots \times dom(A_n)$$
+A reláció az \emph{egyedtípusnak} feleltethető meg Az érték n-esek az \emph{egyed-előfordulások}. Szokták \textbf{rekordnak} is nevezni. A reláció kétdimenziós táblázattal szemléltethető. A táblázat oszlopait az attribútumok címkézik, a sorokban pedig a rekordok helyezkednek el. Megjegyzendő, hogy logikai szinten a rekordoknak nincs sorrendjük, a fizikai megvalósítás során mégis szükséges valamilyen sorrend felállítása.
+\paragraph{A relációs modell megszorításai}
+\begin{description}[nosep]
+	\item[Tartomány megszorítás] a tartomány elemei atomiak.
+	\item[Kulcs megszorítás] \emph{Szuper kulcsnak} nevezzük az olyan attribútum halmazt, amelynél nincs két olyan rekord, ahol az attribútumok rendre megegyeznek. Szuper kulcs mindig van. (Ha más nincs, akkor maga a rekord.) Az elsődleges kulcs olyan halmaz, ami szuper kulcsot alkot, de bármely attribútumot elhagyva belőle már nem kapunk szuper kulcsot. (minimális szuper kulcs) Legyen $R_1$ és $R_2$ két reláció. Az $R_1$ reláció $F_k$-val jelölt attribútum halmazát külső kulcsnak nevezzük, ha az $F_k$-hoz tartozó attribútumok tartományai megegyeznek a $R_2$ elsődleges kulcsának tartományaival, és ha teljesül, hogy valamely $R_1$-beli rekord esetén vagy megegyezik valamely $R_2$-beli rekord elsődleges kulcsával, vagy NULL. (A kapcsolatok realizálják a külső kulcsok.)
+\end{description}
+
+\paragraph{Integritási megszorítások}
+\begin{description}
+	\item[Egyedintegritási megszorítás] Az elsődleges kulcs nem lehet NULL értékű.
+	\item[Hivatkozási integritási megszorítás] Ha létezik külső két reláció között.
+\end{description}
+
+\subsubsection{ER modell}
+\begin{itemize}[nosep]
+	\item egyed - kapcsolat modell
+	\item a leggazdagabb modell
+	\item sématervező eszköz, objektum alapszó, magasszintű eszköz, az 1. szemantikus modell
+	\item koncepciós szinten tervezünk és grafikusan is megjelenik a modell
+\end{itemize}
+\begin{note}
+Nincsen ER alapú adatbázis kezelő, ami azt jeleni, hogy le kell képezzük relációs sémává az ER modellt.
+\end{note}
+\paragraph{A modellhez tartozó alapvető fogalmak}
+\begin{description}[nosep]
+	\item[egyed] Egyednek nevezünk egy olyan valós világban létező dolgot, melyet tulajdonságaival írunk le, mástól függetlenül létezik és más objektumoktól megkülönböztethető.
+	\begin{note}
+		Az egyed lehet konkrét (rendelés, könyv, számla, autó) vagy absztrakt (pénzügyi terv, ünnep, \dots)
+	\end{note}
+
+	\item[egyedtípus] azonos jellegű, fajtájú egyedek halmaza. Az egyedtípusok nem feltétlenül függetlenek egymástól. E\textsubscript{1} E\textsubscript{2} egyedtípusok halmazai nem feltétlenül diszjunktak. pl. személy egyedtípus férj egyedtípus oktató egyedtípus hallgató egyedtípus.
+
+	\item[attribútumok] specifikus tulajdonságok, az egyedeket írjuk le segítségükkel. Jele : \textbf{A}\\
+	Minden attribútumhoz tartozik 1 érték halmaz (Value set) Formálisan : $$A : E \to P(V)$$ (V az értékhalmaz, P(V) a V halmaz összes részhalmaza.) Minden egyed attribútum-érték párokkal adható meg.
+	Attribútum típusai:
+	\begin{description}[nosep]
+		\item[egyszerű] Az értékek nem bonthatóak tovább.
+		\item[összetett] Az ilyen attribútumhoz tartozó értékek, tartalommal bíró részekre bonthatóak
+	\end{description}
+	Példa: Születési dátum (Év,Hónap,Nap); 3 atomi rész. Az összetettség meghatározása függ a kezelésétől. Tehát a Születési dátumot vehetjük atomi attribútumnak, ha feldolgozásnál nem bontjuk fel.%TODO Ez biztos?
+	
+\end{description}
+
+\subsubsection{OO modell}
+
 
 \subsection{Adatbázisrendszer.}
 
