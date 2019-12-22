@@ -4,7 +4,7 @@
 \def\InterpretOnNu{^{\langle U, \rho \rangle}_{\nu}}
 \subsection{Az elsőrendű matematikai logikai nyelv.}
 \begin{definition}[Elsőrendű nyelv]
-	Klasszikus elsőrendű nyelven az $$ L^{(1)} = \langle LC,Var,Con,Term,Form\rangle $$ rendezett ötöst értjük, ahol\\
+	Klasszikus elsőrendű nyelven az $$ L^{(1)} = \langle LC,Var,Con,Term,Form\rangle $$ rendezett ötöst értjük, ahol
 	\begin{easylist}
 	# $LC = \{\neg,\supset,\land,\lor,\equiv,=,\forall,\exists,(,)\}$ a nyelv logikai konstansainak halmaza\footnote{A logikai konstansok olyan nyelvi eszközök, amelyek jelentését a szemantikai szabályok (logikai kalkulusok esetén az axiómák) rögzítik. Egy adott logikai rendszer esetén a logikai konstansok rögzített jelentéssel (rögzített szemantikai értékkel)rendelkeznek, jelentésük (szemantikai értékük) minden interpretációban megegyezik. Egy adott logikai rendszer esetén a logikai konstansokat általában az adott logikai rendszer nyelvének $LC$	halmaza tartalmazza.}
 	# $Var = \{x_{n}| n = 0,1,2,\dots\}$ a nyelv változóinak megszámlálhatóan végtelen halmaza\footnote{A köznyelvi mondatokban nevek helyett néha névmásokkal utalunk egyes individuumokra (objektumokra). A tudományos nyelvben gyakran kívánatos analóg kifejezési formák megadása. A szabatosság, az egyértelműség és a tömörség érdekében ilyenkor mesterséges névmásokat vezetnek be, amelyeket változóknak neveznek.}
@@ -32,7 +32,7 @@
 
 \subsection{A nyelv interpretációja, formulák igazságértéke az interpretációban adott változókiértékelés mellett.}
 \begin{definition}[interpretáció (elsőrendű)]
-	Az $\langle U, \rho\rangle$ párt az $L^{(1)}$ nyelv egy interpretációjának nevezzük, ha\\
+	Az $\langle U, \rho\rangle$ párt az $L^{(1)}$ nyelv egy interpretációjának nevezzük, ha
 	\begin{easylist}
 		# $U \neq \emptyset$ azaz $U$ nemüres halmaz
 		# $Dom(\rho) = Con$ azaz a $\rho$ a $Con$ halmazon értelmezett függvény, amelyre teljesülnek a következők:
@@ -50,7 +50,7 @@
 	\end{itemize}
 \end{definition}
 \begin{definition}[értékelés (elsőrendű)]
-	Legyen $L^(1) = (LC, Var, Con, Term, Form)$ egy elsőrendű nyelv, $\langle U, \rho \rangle$ pedig a nyelv egy interpretációja, $\nu$ pedig az $\langle U, \rho \rangle$ interpretációra támaszkodó értékelés.\\
+	Legyen $L^(1) = (LC, Var, Con, Term, Form)$ egy elsőrendű nyelv, $\langle U, \rho \rangle$ pedig a nyelv egy interpretációja, $\nu$ pedig az $\langle U, \rho \rangle$ interpretációra támaszkodó értékelés.
 	\begin{easylist}
 		# Ha $a \in F(0)$, akkor 
 				$|a|\InterpretOnNu = \rho(a)$
