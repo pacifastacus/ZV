@@ -2,7 +2,140 @@
 \section{Hálózatok hatékonyságanalízise}
 %----------------------------------------------------------------------------
 \subsection{Markov-láncok, születési-kihalási folyamatok.}
+A Markov-lánc fogalmához legegyszerűbben a független kísérletek fogalmának általánosításával jutunk el. Tekintsük egymás után végrehajtott  kísérletek sorozatát. Legyen $E_1,E_2,\dots,E_i,\dots$ egy teljes eseményrendszer. Vizsgáljuk az egyes kísérletek eredményét az $E_i$ események bekövetkezése szempontjából. Definiáljuk a $\xi_n\quad(n=0,1,2,\dots)$ valószínűségi változókat úgy, hogy $\xi_n=i$, ha az n-edik kísérletnél az $E_i$ esemény fordul elő.
+
+Független kísérletek esetén érvényes, hogy
+$$P(\xi_n=j|\xi_1=i_1,\xi_2=i_2,\dots,\xi_{n-1}=i_{n-i})=P(\xi_n=j)$$
+minden n-re, és a szóban forgó valószínűségi változók valamennyi lehetséges értéke. A Markov-lánc fogalmához akkor jutunk, ha a fenti valószínűségeknél feltesszük, hogy a $\xi_n$ változó eloszlása függ az előző $\xi_1,\dots,\xi_{n-1}$ változóktól is.
+
+Ha fennáll minden lehetséges n-re és a változók összes lehetséges értékeire, hogy
+$$P(\xi_n=j|\xi_1=i_1,\xi_2=i_2,\dots,\xi_{n-1}=i_{n-i})=P(\xi_n=j|\xi_{n-1}=i_{n-i})$$
+úgy azt mondjuk, hogy az egymást követő kísérletek, ill. a $\xi_n$ valószínűségi változók \emph{egyszerű Markov-láncot} alkotnak.
+
+A Markov-láncok fontos speciális esetét képezik a \emph{homogén Markov-láncok}. Ezeknél a  $P(\xi_n=j|\xi_{n-1}=i)$ átmenetvalószínűségek  függetlenek az n-től, azaz
+$$P(\xi_n=j|\xi_{n-1}=i)=p_{ij}$$
+írható.
+
+Fizikai alkalmazásokat szem előtt tartva a Markov-láncokkal kapcsolatban rendszerint a következő terminológia szokásos: az $E_i$ eseményeket a rendszer \emph{állapotainak} nevezzük. a $\xi_0$ változó $P(\xi_0=i)=P_i(0)$ eloszlást \emph{kezdeti eloszlásnak} és a $P(\xi_n=j|\xi_{n-1}=i)$ feltételes valószínűséget \emph{átmenetvalószínűségnek} nevezzük. Ha pedig $\xi_{n-1}=i$ és $\xi_n=j$ akkor azt mondjuk, hogy a rendszer az n-edik lépésben \emph{átmenetet} tett.
+
+Ha egy Markov-láncnál ismerjük a kezdeti eloszlást és az átmenetvalószínűségeket, úgy ezek segítségével az összes $\xi_n$ változó eloszlása egyértelműen meghatározható.
+
+\subsubsection{Születési-kihalási folyamatok}
+A Markov-folyamatok egy igen fontos speciális osztálya születési-halálozási folyamatok néven ismert. A definiáló feltétel: minden állapotból csak "szomszédos" állapotba mehet végbe átmenet ($\pm1$-el változhat). Állapottérnek ekkor a nemnegatív egész számok halmazát választjuk (ami nem megy az általánosság rovására), és $X_k=i$ esetében $X_{k+1}$ vagy $i-1$ vagy $i$ vagy $i+1$ lehet.
+
+Ahhoz, hogy egy $X(t)$ Markov-lánc születési-halálozási folyamat legyen, ki kell elégítenie az alábbi feltételeket:
+\begin{enumerate}
+	\item $$P(X(t+h)=k+1|X(t)=k)=\lambda_k h+o(h)$$
+	\item $$P(X(t+h)=k-1|X(t)=k)=\mu_k h+o(h)$$
+	\item $$P(X(t+h)=k|X(t)=k)=1-(\lambda_k+\mu_k)h+o(h)$$
+	\item $$P(X(t+h)=m|X(t)=k)=o(h)\quad |m-k|>1$$
+\end{enumerate}
+ahol $h$ egy tetszőleges kis intervallumot jelent, $o(h)$ pedig olyan mennyiséget jelöl, amely gyorsabban tart 0-hoz, mint $h$, ahogy $h$ nullához tart, vagyis
+$$\frac{o(h)}{h}\to 0 ,\quad \text{ha} h\to0$$
+
+Vegyük észre, hogy $\lambda_k,\mu_k$ pozitív mennyiségek függetlenek az időtől. A $\lambda_k$-kat \emph{születési intenzitásnak}, a $\mu_k$-kat pedig \emph{halálozási intenzitásnak} nevezzük.
+
+Jelöljük $P_k(t)$-vel annak a valószínűségét, hogy a folyamat a $t$ időpillanatban a $k$ állapotban van, vagyis
+$$P_k(t)=P(X(t)=k)$$
+Ezt szokás \emph{abszolút valószínűségnek} is nevezni. Ezen valószínűségek kiszámításához figyelembe kell venni a következőket: A $t+h$ időpillanatban az $X(t)$ $k$ állapotban van akkor és csak akkor, ha az alábbi feltételek teljesülnek:
+\begin{enumerate}
+	\item $t$ időpillanatban a folyamat a $k$ állapotban van, és a $(t,t+h)$ időintervallumban változás nem következik be
+	\item $t$ időpillanatban a folyamat a $k-1$ állapotban volt, és a $k$-ba történt átmenet
+	\item $t$ időpillanatban a folyamat a $k+1$ állapotban volt, és a $k$-ba történt átmenet
+	\item $(t,t+h)$ alatt 2 vagy több átmenet történt.
+\end{enumerate}
+Látható, hogy az 1-3 feltételek kölcsönösen kizárják egymást és a 4. eset valószínűsége $o(h)$. Világos, hogy $t$ minden értékére teljes eseményrendszerről van szó, így:
+$$\sum_{k=0}^{\infty}P_k(t)=1$$
+Az előbbi feltételek teljesülése után mára felírhatjuk a $P_k(t+h)$ valószínűséget:
+$$P_k(t+h)=P_k(t)\{1-\lambda_k h-o(h)\}+P_{k-1}(t)\{\lambda_{k-1} h+o(h)\}+P_{k+1}(t)\{\mu_{k+1} h+o(h)\}+o(h),\quad k\ge1$$
 
 \subsection{A legalapvetőbb sorbanállási rendszerek vizsgálata.}
+\subsubsection{Rendszerjellemzők}
+
+\paragraph{Kendall-féle jelölés: N/A/B/m/K}~\\
+N: igényforrások száma\\
+A: beérkezési időközök eloszlása\\
+B: kiszolgálási időközök eloszlása\\
+m: a kiszolgálók száma\\
+K: a várakozási sor kapacitása
+
+\subsubsection{M/M/1}
+Az M/M/1 rendszer a legegyszerűbb nemtriviális rendszer. A beérkezési folyamat \textbf{$\lambda$ paraméterű Poisson--folyamat}, vagyis a beérkezési időközök \emph{$\lambda$ paraméterű exponenciális eloszlású} valószínűségi változók.
+
+A kiszolgálási időközök $\mu$ paraméterű exponenciális eloszlású valószínűségi változók. feltesszük továbbá, hogy a beérkezési időközök és a kiszolgálási idők egymástól független valószínűségi változók.
+
+Az ergodikusság szükséges és elégséges feltétele az M/M/1 sor eseten egyszerűen
+$$\lambda<\mu,\quad P_0 = 1-\frac{\lambda}{\mu}$$
+A kihasználtsági tényező: $\rho=\frac{\lambda}{\mu}$\\
+A k.-adik állapot valószínűsége:
+$$P_k=(1-\rho)\rho^k \quad k=0,1,2,\dots$$
+\paragraph{A rendszer jellemzői}
+\begin{description}
+	\item[A rendszerben tartózkodó igények átlagos száma] $N=\frac{\rho}{1-\rho}$
+	\item[A rendszerben tartózkodó igények átlagos számának szórásnégyzete] $\sigma_N^2=\frac{\rho}{(1-\rho)^2}$
+	\item[A várakozó igények átlagos száma (átlagos sorhossz)] $\overline{Q}=\overline{N}-\rho=\frac{\rho^2}{1-\rho}$
+	\item[A szerver kihasználtsága] $U_s=1-P_0=\frac{\lambda}{\mu}=\rho$
+	\item[A kiszolgáló átlagos foglaltsági periódushossza:] $E_\delta=\frac{1}{\lambda}\cdot\frac{\rho}{1-\rho}=\frac{1}{\lambda}\overline{N}=\frac{1}{\mu-\lambda}$
+\end{description}
+\subparagraph{Little-formulák}
+$$\lambda T=\lambda\frac{1}{\mu(1-\rho)}=\frac{\rho}{1-\rho}=\overline{N}$$
+$$\lambda \overline{W}=\lambda\frac{\rho}{\mu(1-\rho)}=\frac{\rho^2}{1-\rho}=\overline{Q}$$
+
+\subsubsection{M/M/1/K}
+Rögzített a várakozó igények számának maximuma. Felteszük, hogy a rendszerben legfeljebb K igény tartózkodhat (beleértve a kiszolgálás alatt álló igényt is). Az ezen felül érkező igények nem kerül be a rendszerbe, azonnal távozik, nem kerül kiszolgálásra. Továbbra is \textbf{Poisson--folyamat} szerint érkeznek az igények, azonban csak azok az igények léphetnek be a rendszerbe, amelyek érkezésekor a rendszer állapota kisebb, mint K.
+
+$$\lambda_k=
+\begin{cases}
+\lambda, & \text{ha } k<K\\
+0, & \text{ha } k\geq K 
+\end{cases}$$
+$$ \mu_k=\mu \quad k=1,2,\dots,K$$
+Látszik, hogy ez a rendszer mindig ergodikus, mert állapottere véges. Továbbá:
+$$P_k = 
+\begin{cases}
+P_0\prod_{j=0}^{k-1}\frac{\lambda}{\mu}=P_0(\frac{\lambda}{\mu})^k & \text{ha }k\leq K\\
+0 & \text{ha }k>K
+\end{cases}$$
+$$P_0 = \frac{1-\nicefrac{\lambda}{\mu}}{1-(\nicefrac{\lambda}{\mu})^{K+1}}$$
+K=1 esetén a M/M/1/1 rendszer azt jelenti, hogy egyáltalán nincs várakozás.
+
+\subsubsection{M/M/N}
+A rendszer n db kiszolgálócsatornával (szerverrel) van ellátva.
+Az ergodikusság feltétele: $\frac{\lambda}{n\mu}<1$\\
+Ha $k<n$:
+$$P_k=P_0(\frac{\lambda}{\mu})^k\frac{1}{k!}$$
+Ha viszont $k\geq n$:
+$$P_K=P_0(\frac{\lambda}{\mu})^k\frac{1}{n!n^{k-n}}$$
 
 \subsection{A rendszerjellemzők meghatározásának módszerei, meghatározásuk számítógépes támogatása.}
+
+\subsubsection{M/M/n/n -- Elang-féle veszteséges rendszer}
+Az $n$ csatornás rendszerbe Poisson--folyamat szerint érkeznek az igények. Ha van üres csatorna (vagy szerver), az igény kiszolgálása exponenciális időtartalmú $\mu$ paraméterrel. Ha minden kiszolgálóegység foglalt, akkor az igény elvész, azaz nincs sorban állás. Ezen probléma a tömegkiszolgálás egyik legrégebbi problémája, mellyel a XX. század elején a telefonközpontok kihasználtságával kapcsolatban foglalkozott A. K. Erlang és C. Palm.
+$$\lambda_k=
+\begin{cases}
+\lambda & \text{ha } k<n\\
+0 & \text{ha } k\geq n
+\end{cases}$$
+$$\mu_k=k\mu\quad k=1,2,\dots,K$$
+Azt mondjuk a rendszer k állapotban van, ha k szerver foglalt, azaz ha k igény tartózkodik a rendszerben.
+
+A folyamat stacionárius eloszlása:
+$$P_k=
+\begin{cases}
+P_0(\frac{\lambda}{\mu})^k\frac{1}{k!} & \text{ha } k\leq n\\
+0 & \text{ha } k>n
+\end{cases}$$
+A normalizáló feltétel miatt:
+$$P_0=(\sum_{k=0}^{n}(\frac{\lambda}{\mu})^k\frac{1}{k!})^{-1} \implies
+P_k=\frac{\frac{\rho^k}{k!}}{\sum_{i=0}^{n}\frac{\rho^i}{i!}}\quad k\leq n$$
+A rendszer egyik jellemzője a $P_n=\nicefrac{\frac{\rho^n}{n!}}{\sum_{k=0}^{n}\frac{\rho^k}{k!}}$ valószínűség, melyet először Erlang vezetett be 1917-ben és \emph{Erlang--féle veszteségformula} vagy \emph{Erlang--féle B formula} néven ismert. Általában $B(n,\nicefrac{\lambda}{\mu}$ szimbólummal jelölik. A $P_n$ valószínűség annak a valószínűsége stacionárius esetben, hogy egy újonnan érkező igényt nem fogad a rendszer, azaz az igény elveszik.
+
+Ez a rendszerjellemző meghatározható rekurzív módon, így a köv. formulával számítógép segítségével gyorsan számolható a $B(n,\rho)$:
+\begin{align*}
+	B(0,\rho)&=1\\
+	B(1,\rho)&=\frac{\rho}{1+\rho}\\
+	B(n,\rho)&=\frac{\rho B(n-1,\rho}{1+\rho B(n-1,\rho)}
+\end{align*}
+
+További számítógépes segítség a rendszerjellemzők meghatározására a szimuláció. A szimulációs folyamat után statisztikai eszközökkel határozzuk meg a rendszerjellemzőket.
+

@@ -9,13 +9,14 @@
 \usepackage{textgreek}
 \usepackage{lipsum}
 \usepackage{amsthm}
+\usepackage{multicol}
 \usepackage{enumitem}
 \usepackage[magyar]{babel}
 \usepackage[sharp]{easylist}
 \usepackage[
 top=2cm,
 bottom=2cm,
-left=2cm,
+left=3cm,
 right=1cm
 ]{geometry}
 \usepackage[]{hyperref}
@@ -46,6 +47,10 @@ right=1cm
 	,font=\bfseries\stepcounter{descriptcount}\thedescriptcount.~
 	,after={\setcounter{descriptcount}{\value{prevdescriptcount}}}
 }
+
+% oldal tetejére és aljára került "elárvult" sorok letiltása
+\widowpenalty=30000 
+\clubpenalty=30000
 
 \newtheorem*{definition}{Definíció}
 \newtheorem*{theorem}{Tétel}
