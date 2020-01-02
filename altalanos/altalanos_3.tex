@@ -107,7 +107,9 @@ A változó értékkomponense mindig a címen elhelyezett bitkombinációként j
 
 Egy változó értékkomponensének meghatározására a következő lehetőségek állnak rendelkezésünkre:
 \begin{description}
-	\item[Értékadó utasítás] Az eljárás-orientált nyelvek leggyakoribb utasítása, az algoritmusok kódolásánál alapvető.
+	\item[Értékadó utasítás] Az eljárás-orientált nyelvek leggyakoribb utasítása, az algoritmusok kódolásánál alapvető. Az értékadó utasítás bal oldalán a változó neve általában a címkomponenst, kifejezésben az értékkomponenst jelenti. 
+	
+	Az étrtékadó utasítás esetén a műveletek elvégzésének sorrendje implementációfüggő. Általában a baloldali változó címkomponense dől el először. A típusegyenértékűséget valló nyelvekben a kifejezés típusának azonosnak kell lennie a változó típusával, a típuskényszerítést valló nyelveknél pedig mindig a kifejezés típusa konvertálódik a változó típusára.
 	\item[Input] A változó értékkomponensét egy perifériáról kapott adat határozza meg.
 	\item[Kezdőértékadás] Két fajtája van. \textbf{Explicit kezdőértékadásnál} a programozó explicit deklarációs utasításban a változó értékkomponensét is megadja. Amikor a változó címkomponenst kap, akkor egyben az értéket reprezentáló bitsorozat is beállítódik Megadható az értékkomponens literál vagy kifejezés segítségével.
 	
