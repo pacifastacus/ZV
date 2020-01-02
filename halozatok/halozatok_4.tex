@@ -1,4 +1,118 @@
 %----------------------------------------------------------------------------
 \section{A RIP protokoll működése és paramétereinek beállítása (konfigurációja).}
-
 %----------------------------------------------------------------------------
+Az irányító protokollok a forgalomirányítók között folytatnak adatcserét. Az irányító protokollok segítségével a forgalomirányítók megoszthatják az általuk ismert hálózatokról rendelkezésükre álló információkat a többi forgalomirányítóval, illetve közölhetik más forgalomirányítóktól való távolságukat. A forgalomirányítók a többi forgalomirányítótól kapott információk alapján saját irányítótáblát építenek fel és tartanak karban.
+
+\subsection{A távolságvektor alapú forgalomirányító protokollok szolgáltatásai}
+A távolságvektor alapú irányító algoritmusokat használó forgalomirányítók periodikusan elküldenek egymásnak egy-egy másolatot az irányítótáblájukról. Ezek a rendszeres frissítések viszik át a topológia változásaira vonatkozó információkat a forgalomirányítók között. A távolságvektor alapú algoritmusokat Bellman-Ford algoritmusoknak is nevezik.
+
+Minden forgalomirányító a közvetlen szomszédjaitól kap irányítótáblákat. A B forgalomirányító az A forgalomirányítótól kap adatokat. A B forgalomirányító a kapott adatokhoz valamilyen távolságadatot ad hozzá, például az ugrások számát, így növeli a távolságvektor nagyságát. A B forgalomirányító ezt a módosított irányítótáblát adja tovább szomszédjának, a C forgalomirányítónak. A szomszédos forgalomirányítók között lépésről lépésre ugyanez a folyamat játszódik le.
+
+Az összegyűlt távolságértékek alapján az algoritmus egy adatbázist tart karban a hálózat topológiájáról. A távolságvektor alapú algoritmusokkal azonban nem alkotható teljes kép az összekapcsolt hálózatról, mivel minden forgalomirányító csak a szomszédos forgalomirányítókat látja.
+
+A távolságvektor alapú forgalomirányítást használó forgalomirányítók először szomszédjaikat azonosítják. A közvetlenül csatlakoztatott hálózatok felé vezető interfészek távolsága nulla. A távolságvektor alapú felismerő folyamat előrehaladtával a forgalomirányítók a különféle célhálózatok felé vezető legjobb útvonalakat a szomszédjaiktól kapott adatok alapján ismerik fel. Az A forgalomirányító a B forgalomirányítótól kapott adatok alapján ismeri meg a többi
+hálózatot. Az irányítótábla minden más bejegyzése akkumulált távolságvektort tartalmaz, amely az adott hálózat adott irányban mért távolságát tükrözi.
+
+Az irányítótábla frissítései a topológia változásait követően történnek meg. A hálózatfelderítő folyamathoz hasonlóan a topológiaváltozásra vonatkozó frissítések is lépésenként jutnak el az egyik forgalomirányítótól a másikig. A távolságvektor alapú irányító algoritmusokat futtató forgalomirányítók a teljes irányítótáblájukat elküldik valamennyi szomszédjuknak. Az irányítótáblák többek között az útvonalaknak az adott mérték szerinti teljes költségét és az egyes hálózatokhoz vezető útvonalak első forgalomirányítójának logikai címét tartalmazzák.
+
+A távolságvektorokat az autópályák kereszteződéseiben látható feliratokhoz hasonlíthatnánk. Minden csomópontban nyíl mutatja a célállomások irányát, távolságukat pedig szám jelzi. Ha továbbhaladunk, akkor újabb nyíl mutatja a helyes irányt, de már kisebb távolság lesz kiírva. Amíg a távolság csökken, addig tudhatjuk, hogy a legjobb úton haladunk.
+
+\paragraph{A Routing Information Protocol}
+(forgalomirányítási információs protokoll, RIP) egy távolságvektor alapú, a világ több ezer hálózatában alkalmazott protokoll. Mivel a RIP nyílt szabványokon alapul, üzembe helyezése pedig rendkívül egyszerű. A RIP korszerű, szabványos változatának, korábban két külön dokumentumban volt a leírása. Az első dokumentum az RFC (Request for Comments) 1058, a másik pedig az STD (Internet Standard) 56 dokumentum.
+
+Legfőbb jellemzői a következők:
+\begin{itemize}[nosep]
+	\item Távolságvektor alapú irányító protokoll.
+	\item Az útválasztás mértékeként az ugrásszámot veszi figyelembe.
+	\item Ha az ugrásszám nagyobb mint 15, a csomagot eldobja.
+	\item Alapbeállítás szerint 30 másodpercenként küld frissítéseket.
+\end{itemize}
+
+Az irányítótábla frissítései periodikusan vagy a távolságvektor alapú protokollt alkalmazó hálózat topológiájának megváltozásakor történnek meg. Az irányító protokollokkal szemben fontos elvárás az irányítótáblák hatékony frissítése. A hálózatfelderítő folyamathoz hasonlóan a topológiaváltozásokra vonatkozó frissítések is lépésenként jutnak el az egyik forgalomirányítótól a másikig. A távolságvektor alapú irányító algoritmusokat futtató forgalomirányítók a teljes irányítótáblájukat elküldik valamennyi szomszédjuknak. Az irányítótáblák többek között az útvonalaknak az adott mérték szerinti teljes költségét és az egyes hálózatokhoz vezető útvonalak első forgalomirányítójának logikai címét tartalmazzák.
+
+A RIP az évek során osztály alapú irányító protokollból – RIP 1-es változat (RIP v1) – osztály nélküli irányító protokollá – RIP 2-es változat (RIP v2) – fejlődött. A RIP v2 újdonságai a következők voltak: Több csomagirányítási információ továbbítása. Hitelesítési eljárások a táblafrissítések biztonságossá tételéhez. A változó hosszúságú alhálózati maszkok (VLSM) támogatása.
+
+A RIP maximálja a forrás és a cél közötti útvonalon megtehető ugrások számát, így megakadályozza a végtelen hurkok kialakulását. Egy-egy útvonalon legfeljebb 15 ugrás lehet. Ha egy forgalomirányító új vagy megváltozott bejegyzést tartalmazó frissítést kap, akkor a benne szereplő mértéket eggyel növeli, ezzel önmagát is egy ugrásnak számolja az útvonalon. Ha emiatt a mérték 15 fölé emelkedik, akkor a rendszer végtelennek veszi, és a hálózati cél elérhetetlen lesz. A RIP más protokollok szolgáltatásai közül is többet támogat. Például a RIP látóhatár-megosztásra és visszatartási időzítők fenntartására egyaránt képes annak érdekében, hogy megakadályozza a helytelen irányítási információk terjedését.
+
+\subsection{A maximális ugrásszám megadása}
+Egy hálózattal kapcsolatos helytelen információk addig járnak körbe, míg ezt valamilyen más folyamat meg nem szakítja. Ebben a végtelenig számolásnak nevezett szituációban a csomagok folyamatosan keringenek a hálózatban, annak ellenére, hogy a célhálózat, nem érhető el. Amíg a forgalomirányítók végtelenig számolnak, a hibás információk miatt irányítási hurok jön létre.
+
+A végtelenig számolás folyamatának megállítását célzó óvintézkedések nélkül valahányszor a csomag egy forgalomirányítón áthalad, az ugrásszám alapú távolságvektor mindig nőni fog. A csomagok az irányítótáblákban szereplő hibás információk miatt keringenek a hálózatban.
+
+A távolságvektor alapú forgalomirányító algoritmusok önjavítóak, de az irányítási hurkok problémája miatt végtelenig számolás következhet be. A probléma megoldására a távolságvektor alapú protokollok egy megadott maximális számot tekintenek végtelennek. Ez a RIP esetén maga az ugrásszám.
+
+Ennél a megoldásnál az irányító protokoll addig engedi az irányítási hurok jelenlétét, ameddig a mérték el nem éri a megengedett maximális értéket. Az ábrán látható esetben a mérték értéke 16 ugrás. Ez nagyobb, mint a távolságvektor számára alapesetben előírt maximálisan 15 ugrás, ezért a csomagot a forgalomirányító eldobja. Ha a mérték meghaladja a maximumértéket, akkor az 1-es hálózat elérhetetlennek minősül, bármi legyen is a maximum túllépésének oka.
+
+\subsection{Az irányítási hurkok kialakulásának megelőzése látóhatár-megosztással}
+A látóhatár-megosztási szabály arra az elvre épít, hogy egy útvonalról nem érdemes információkat küldeni oda, ahonnan a vele kapcsolatos adatok eredetileg érkeztek. Egyes hálózatokban szükség lehet a látóhatár-megosztás letiltására. Irányítási hurok akkor is kialakulhat, ha egy forgalomirányítóhoz visszakerülő hibás információ ellentmond a forgalomirányító által eredetileg terjesztett helyes információnak.
+
+\subsection{Az irányítási hurkok kialakulásának megelőzése eseményvezérelt frissítésekkel}
+Az új irányítótáblák elküldése a szomszédoknak rendszeres jelleggel történik. Például a RIP 30~másodpercenként küld frissítéseket. Az eseményvezérelt frissítések továbbítására az irányítótábla változásainak hatására azonnal sor kerül. A topológia megváltozását észlelő forgalomirányító azonnal frissítési üzenetet küld szomszédjainak, amelyek szintén eseményvezérelt módon értesítik saját szomszédjaikat. Ha egy útvonal meghibásodik, akkor a frissítés elküldése azonnal megtörténik, függetlenül attól, hogy a frissítési időzítő lejárt-e. Az eseményvezérelt frissítéseket az útvonalak mérgezésével együtt alkalmazva biztosítható, hogy minden forgalomirányító tudomást szerezzen az útvonalak meghibásodásáról, függetlenül a visszatartási időzítők állásától. A frissítési hullám végighalad a hálózaton.
+
+\subsection{Az irányítási hurkok kialakulásának megelőzése visszatartási időzítőkkel}
+A végtelenig számolás problémája a visszatartási időzítők segítségével előzhető meg: Amikor egy forgalomirányító arról kap értesítést az egyik szomszédjától, hogy egy korábban elérhető hálózat elérhetetlenné vált, az adott útvonalat elérhetetlennek nyilvánítja, és elindít egy visszatartási időzítőt. Ha az időzítő lejárta előtt ugyanaz a szomszéd arról tájékoztatja a forgalomirányítót, hogy a hálózat újra elérhető, akkor a forgalomirányító elérhetőnek nyilvánítja a hálózatot, és törli az időzítőt. Ha egy másik szomszédtól olyan frissítés érkezik, amely jobb távolságvektor-mértékkel rendelkezik, mint a hálózathoz tartozó eredeti mérték, akkor a forgalomirányító szintén elérhetőnek nyilvánítja a hálózatot, és törli a visszatartási időzítőt. Ha a visszatartási időzítő lejárta előtt olyan frissítés érkezik egy másik szomszédtól, amelynek távolságmértéke rosszabb, akkor a forgalomirányító figyelmen kívül hagyja ezt a frissítést. Azzal, hogy a rosszabb távolságmértékű frissítéseket az időzítő lejártáig figyelmen kívül hagyjuk, több időt biztosítunk a hibát jelző információ egész hálózatban való elterjesztésére.
+
+\subsection{A RIP konfigurálása}
+A RIP irányító protokollként való használata a \verb|router rip| paranccsal engedélyezhető. Ezt követően a \verb|network| paranccsal írható elő a forgalomirányító számára, hogy mely  interfészeken futtassa a RIP-et. Az irányító folyamat ezután az egyes interfészeket társítja amegfelelő hálózatcímekkel, majd ezeken az interfészeken megkezdi a frissítési üzenetek küldését és fogadását.
+
+A RIP-et futtató forgalomirányítók minden cél felé csak a legjobb útvonalat tartják nyilván, de azonos költségű útvonalból egy-egy célhoz többet is kezelni tudnak. A legtöbb irányítóprotokoll az idővezérelt és az eseményvezérelt frissítések kombinációját használja. A RIP idővezérelt, de a RIP Cisco implementációja a változások észlelését követően is küld frissítéseket. A topológia megváltozása az IGRP forgalomirányítóknál is azonnali frissítési üzenetet vált ki, függetlenül a frissítési időzítéstől. A RIP-et előzetesen engedélyezni kell, a hálózatokat pedig meg kell adni.
+\begin{itemize}[nosep]
+	\item A többi művelet elhagyható:
+	\item Eltolások megadása az irányítási mértékekhez
+	\item Időzítők beállítása
+	\item RIP-változat kiválasztása
+	\item A RIP-hitelesítés engedélyezése
+	\item Útvonal-összefogás engedélyezése valamely interfészen
+	\item Az IP útvonal-összefogás ellenőrzése
+	\item Az automatikus útvonal-összefogás letiltása
+	\item Az IGRP és a RIP párhuzamos futtatása
+	\item A forrás IP-címek ellenőrzésének letiltása
+	\item A látóhatár-megosztás engedélyezése és letiltása
+	\item A RIP csatlakoztatása WAN-hoz
+\end{itemize}
+A RIP engedélyezésének műveletét globális konfigurációs módban az alábbi parancsok kiadásával kell elkezdeni:
+\verb|Router(config)#router rip| -- A RIP forgalomirányító folyamat engedélyezése
+\verb|Router(config-router)#network hálózatszám| -- Hálózat hozzárendelése a RIP forgalomirányító folyamathoz
+
+\subsubsection{A RIP konfigurálásával kapcsolatos általános kérdések}
+Az irányítási hurkok kialakulásának megelőzésére és a végtelenig számolás megakadályozására a RIP a következő megoldásokat alkalmazza:
+\begin{itemize}[nosep]
+	\item Végtelenig számolás
+	\item Látóhatár-megosztás
+	\item Visszirányú mérgezés
+	\item Visszatartási időzítők
+	\item Eseményvezérelt frissítések
+\end{itemize}
+
+A RIP használatakor a maximális ugrásszám 15. A 15~ugrásnál távolabb lévő célállomásokat a rendszer elérhetetlennek nyilvánítja. A RIP -- éppen a maximális ugrásszám miatt -- nagyméretű hálózatokban csak korlátozottan alkalmazható, ám mivel a végtelenig számolás problémája segítségével megelőzhető, használatakor a csomagok végtelen körbeutazásától sem kell tartani.
+
+A látóhatár-megosztási szabály arra az elvre épít, hogy egy útvonalról nem érdemes információkat küldeni oda, ahonnan a vele kapcsolatos adatok eredetileg érkeztek. Egyes hálózatokban szükség lehet a látóhatár-megosztás letiltására.\\
+Erre a következő parancs használható: \verb|GAD(config-if)#no ip split-horizon|
+
+A visszatartási időzítők segítségével megelőzhető a végtelenig számolás, viszont nő a konvergencia ideje is. A RIP esetében az alapértelmezett visszatartási idő 180 másodperc. A visszatartási időzítők értéke csökkenthető, ekkor ugyan gyorsul a konvergencia, ám más jellegű problémák jelentkezhetnek. Ideális esetben az időzítő értéke kevéssel nagyobb, mint az összekapcsolt hálózatban lehetséges legnagyobb frissítési idő. Az ábrán például egy négy forgalomirányítóból álló hurok látható. Ha minden forgalomirányító frissítési ideje 30 másodperc, akkor a leghosszabb hurok 120 másodperces. Vagyis a visszatartási időzítőt 120 másodpercnél kicsivel nagyobb értékre kell állítani.
+
+A visszatartási időzítő valamint a frissítés, érvénytelenítés és a törlés időzítőinek beállítására a következő parancsot használjuk:\\ \verb|Router(config-router)#timers basic update invalid holddown flush [alvásidő]|
+
+Ha kiadjuk a network parancsot egy hálózatra vonatkozóan, akkor a RIP azonnal megkezdi a hirdetések küldését a megadott hálózati címtartományba tartozó interfészeken. Ha a hálózati rendszergazda meg szeretné határozni, hogy mely interfészek továbbítsanak útvonalfrissítéseket, akkor a frissítések küldését egy-egy interfészen a \verb|passive-interface| paranccsal tilthatja le.
+
+Mivel a RIP szórásos protokoll, a hálózati rendszergazda részéről külön konfigurálást igényelhet a RIP szórásra nem alkalmas, például Frame Relay hálózatokon való beüzemelése. Az ilyen hálózatokban a RIP-nek külön meg kell adni a szomszédos RIP forgalomirányítókat.\\
+Parancs: \verb|neighbor ip address|
+
+Alapbeállítás szerint a Cisco IOS szoftver a RIP 1-es és 2-es változata szerinti csomagokat egyaránt fogadja, de csak 1-es változat szerinti csomagokat küld. Kézi beállítás:\\
+\begin{tabularx}{\textwidth}{l X}
+	Parancs & Cél \\ 
+	\hline
+	\verb+GAD(config-router)#version {1|2}+ & Beállítja, hogy a szoftver 1-es és 2-es verziójú RIP csomagokat is tudjon fogadni és küldeni \\ 
+	\verb+GAD(config-if)#ip rip send version 1+ & Beállítja, hogy a szoftver 1 -es verziójú RIP csomagokat küldjön\\
+	\verb+GAD(config-if)#ip rip send version 2+ & Beállít egy interfészt, hogy csak 2-es verziójú RIP csomagokat küldjön\\
+	\verb+GAD(config-if)#ip rip send version 1 2+ & Beállítja, hogy a szoftver 1-es vagy 2-es verziójú RIP csomagokat küldjön\\
+\end{tabularx}
+\\
+Ha szabályozni szeretnénk az adott interfészen keresztül beérkező csomagok feldolgozásának módját, akkor:\\
+\begin{tabularx}{\textwidth}{l X}
+	Parancs & Cél \\ 
+	\hline
+	\verb|GAD(confiq-if)#ip rip receive version 1| & Beállít egy interfészt, hogy csak 1-es verziójú RIPcsomagokat fogadjon el\\
+	\verb|GAD(config-if)#ip rip receive version 2| & Beállít egy interfészt, hogy csak 2-es verziójú RIPcsomagokat fogadjon el\\
+	\verb|GAD(config-if)#ip rip receive version 1 2| & Beállít egy interfészt, hogy 1-es és 2-es verziójú RIPcsomagokat is elfogadjon
+\end{tabularx}
