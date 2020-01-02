@@ -1,4 +1,256 @@
 %----------------------------------------------------------------------------
 \section{Bevezetés a Cisco eszközök programozásába 2}
+{\footnotesize A forgalomirányítási táblázatok felépítése, statikus és dinamikus routing összehasonlítása.}
 %----------------------------------------------------------------------------
-\subsection{A forgalomirányítási táblázatok felépítése, statikus és dinamikus routing összehasonlítása.}
+\subsection{A forgalomirányítási táblázatok felépítése}
+A forgalomirányítás a csomagok (IP datagramok) továbbítási irányának meghatározásával kapcsolatos döntések meghozatala. A forgalomirányításhoz szükséges információkat ún. forgalomirányítási táblázatban tartjuk nyilván, melynek segítségével gyorsan meghatározható, hogy egy input interfészen érkező csomagot melyik output interfészen kell továbbítani.\\
+\begin{tabular}{|l|l|l|l|l|}
+	\hline 
+	Célhálózat & Netmask & Kimenő interfész & Köv. Hop & Metrika \\ 
+	\hline 
+\end{tabular}
+\begin{easylist}
+	# A router az input interfészen érkező csomagot fogadja.
+	# A router a csomag célcímét illeszti a routing táblázat soraira.
+	## Ha a célcím több sorra illeszkedik, akkor a leghosszabb prefix sort tekintjük illeszkedőnek.
+	# Ha nem létezik illeszkedő sor, akkor a cél elérhetetlen, a csomag nem továbbítható??
+	## A csomagot a router eldobja és ICMP hibajelzést küld a feladónak VAGY alapértelmezett átjárón továbbküldi
+	# Ha létezik illeszkedő sor, akkor a csomagot az ebben szereplő kimeneti interfészen továbbítjuk (adatkapcsolati rétegbeli beágyazással) a következő, hop-ként megadott szomszédhoz, ill. a célállomáshoz, ha már nincs több hop.
+\end{easylist}
+~\\
+\begin{easylist}
+	# A routing tábla sorait prefix hossz szerint csökken, sorrendbe rendezzük. N=1.
+	## Ezzel biztosítjuk, hogy több illeszkedő sor esetén a leghosszabb prefixűt fogjuk eredményként kapni.
+	# Ha nem létezik a táblázatban az N. sor, akkor nincs illeszkedő sor és vége.
+	# A csomag célcíme és az N. sor hálózati maszkja között bitenkénti AND műveletet hajtunk végre.
+	# Ha a bitenkénti AND művelet eredménye megegyezik az N. sor célhálózat értékével, akkor a cím az N. sorra illeszkedik és vége.
+	# N=N+1, és folytassuk a 2. pontnál.
+\end{easylist}
+
+Forgalomirányítási táblázatok feltöltése történhet statikus vagy dinamikus módon. Statikusnál
+direkt módon megadunk egy vagy több sort a táblázatba, míg dinamikus esetben routing
+protokollok végzik automatikusan, figyelve a hálózatot. Pl.: RIP, OSPF
+
+\subsection{statikus és dinamikus routing összehasonlítása}
+\begin{description}[nosep]
+	\item[nem adaptív] statikus, nem támaszkodhat döntéseiben a mérésekre, a használandó útvonalakat előre definiálják a routerek indulásakor, bekapcsolásakor. Fix-egyutas esetben egyetlen irányba történik az adattovábbítás, központi forgalomirányító táblát alkalmaznak, vonal szakadása esetén 100\%-os veszteség várható. A fix többutas esetben alternatív utakat kínál fel a csomópontoknak. Ezek közül egy kívülről meghatározott módon (például random) választ egyet.Ekkor egy esetleges vonalszakadás nem okozza minden csomag elveszését.
+	\item[adaptív] dinamikus, a forgalomirányítás döntésiben figyelembe veszik a topológiában és a forgalomban történt változásokat. A frissítendő adatokat a (helyi, szomszédos, összes többi) routertől kapja meg.
+	\item[Statikus routing] A forgalomirányítási táblázatot a rendszeradminisztrátor tartja karban. Amit egyszer beírunk, az marad a cím. A világ felé egy, vagy csak néhány kapcsolódási pont van.
+	\item[Dinamikus routing] Ha több kapcsolódási pont van. Hogyan tartják karban a táblát? A forgalomirányítási táblázat(ok) valamilyen routing protocol segítségével kerülnek karbantartásra.
+\end{description}
+
+A dinamikus forgalomirányítás osztályozása:
+\begin{description}[nosep]
+	\item [Belső forgalomirányíási protokollok] legfőbb alapelv a ,,legjobb útvonal'' meghatározása. (IGP, RIP, OSPF)
+	\item[külső forgalomirányítási protokollok] Nem feltétlenül a legjobb útvonal megállapítása a cél, politikai alapú forgalomirányítás. (EGP, BGP)
+\end{description}
+
+\subsubsection{A dinamikus routing áttekintése}
+Az irányító protokollok a forgalomirányítók között folytatnak adatcserét. Az irányító
+protokollok segítségével a forgalomirányítók megoszthatják az általuk ismert hálózatokról
+rendelkezésükre álló információkat a többi forgalomirányítóval, illetve közölhetik más
+forgalomirányítóktól való távolságukat. A forgalomirányítók a többi forgalomirányítótól
+kapott információk alapján saját irányítótáblát építenek fel és tartanak karban.
+
+Példák irányító protokollokra:
+\begin{itemize}[nosep]
+	\item RIP (Routing Information Protocol)
+	\item IGRP (Interior Gateway Routing Protocol)
+	\item EIGRP (Enhanced Interior Gateway Routing Protocol)
+	\item OSPF (Open Shortest Path First)
+\end{itemize}
+
+Az irányított protokollok a felhasználók adatait továbbítják. Az irányított protokollok
+elegendő hálózati rétegbeli információt biztosítanak ahhoz, hogy a csomagok a címzési séma
+alapján eljussanak a célállomáshoz.
+
+Példák irányított protokollokra:
+\begin{itemize}[nosep]
+	\item IP (Internet Protocol)
+	\item IPX (Internetwork Packet Exchange)
+\end{itemize}
+
+\subsubsection{Autonóm rendszerek}
+Az autonóm rendszer egyazon felügyelet alá tartozó, közös irányítási stratégiát alkalmazó
+hálózatok együttese. A külvilág számára az autonóm rendszer egyetlen entitásnak látszik. Az
+autonóm rendszer üzemeltetését egy vagy több operátor is végezheti, ám a külvilág számára
+mindig egységes forgalomirányítási képet tükröz.
+
+Az autonóm rendszerek számára az ARIN (American Registry of Internet Numbers) nevű
+szervezet, valamilyen szolgáltató vagy egy rendszergazda osztja ki az azonosítókat. Az
+autonómrendszer-azonosító egy 16 bites szám. Az irányító protokollok – például a Cisco
+IGRP – egy egyedi autonómrendszer-azonosító hozzárendelését követelik meg.
+
+\subsubsection{Az irányító protokollok és az autonóm rendszerek feladata}
+Az irányító protokollok feladata az irányítótábla létrehozása és karbantartása. Ez a táblázat a
+megismert hálózatokat és a hozzájuk rendelt portokat tartalmazza. A forgalomirányítók az
+irányító protokollokat a más forgalomirányítóktól kapott és a saját interfészeik
+konfigurációjából felismert információk kezelésére használják, kiegészítve velük a kézzel
+konfigurált útvonalakat.
+
+Az irányító protokoll minden rendelkezésre álló útvonalat felmér, a legjobbakat az
+irányítótáblába írja, az érvénytelenné váltakat pedig törli. A forgalomirányító az
+irányítótáblában lévő információk alapján továbbítja az irányított protokollok csomagjait.
+
+Az irányító algoritmus a dinamikus forgalomirányítás legfontosabb eleme. Amikor a hálózat
+topológiája a hálózat növekedése, átkonfigurálása vagy meghibásodása folytán megváltozik, a
+hálózatot leíró tudásbázisnak is követnie kell a változást. A tudásbázisnak pontos, konzisztens
+képet kell adnia az új topológiáról.
+
+Amikor már az összekapcsolt hálózat valamennyi forgalomirányítója ugyanazt a megváltozott
+információbázist használja, akkor azt mondjuk, hogy a hálózati konvergencia megtörtént.
+Kívánatos, hogy a hálózat gyorsan konvergáljon, mert így csökken az az idő, amíg a
+forgalomirányítók a régi információk alapján helytelen forgalomirányítási döntéseket hoznak.
+
+Az autonóm rendszereknek köszönhetően a világméretű összekapcsolt hálózat kisebb,
+könnyebben kezelhető hálózatokra oszlik. Minden autonóm rendszer saját szabálykészlettel és
+házirenddel rendelkezik, valamint egyedi autonómrendszer-azonosítója van, amely a világ
+összes más autonóm rendszerétől megkülönböztethetővé teszi.
+
+\subsubsection{Az irányító protokollok osztályai}
+A legtöbb irányító algoritmus besorolható a következő két alapvető osztály valamelyikébe:
+\begin{itemize}
+	\item távolságvektor alapú
+	\item kapcsolatállapot alapú
+\end{itemize}
+
+A távolságvektor alapú eljárás az összekapcsolt hálózatban minden összeköttetéshez egy
+irányt (vektort) és egy távolságot határoz meg.
+
+A kapcsolatállapot alapú, más néven legrövidebb utat kereső módszer a teljes összekapcsolt
+hálózatról térképet készít.
+
+\subsubsection{A távolságvektor alapú forgalomirányító protokollok szolgáltatásai}
+A távolságvektor alapú irányító algoritmusokat használó forgalomirányítók periodikusan
+elküldenek egymásnak egy-egy másolatot az irányítótáblájukról. Ezek a rendszeres frissítések
+viszik át a topológia változásaira vonatkozó információkat a forgalomirányítók között. A
+távolságvektor alapú algoritmusokat Bellman-Ford algoritmusoknak is nevezik.
+
+Minden forgalomirányító a közvetlen szomszédjaitól kap irányítótáblákat. A B
+forgalomirányító az A forgalomirányítótól kap adatokat. A B forgalomirányító a kapott
+adatokhoz valamilyen távolságadatot ad hozzá, például az ugrások számát, így növeli a
+távolságvektor nagyságát. A B forgalomirányító ezt a módosított irányítótáblát adja tovább
+szomszédjának, a C forgalomirányítónak. A szomszédos forgalomirányítók között lépésről
+lépésre ugyanez a folyamat játszódik le.
+
+Az összegyűlt távolságértékek alapján az algoritmus egy adatbázist tart karban a hálózat
+topológiájáról. A távolságvektor alapú algoritmusokkal azonban nem alkotható teljes kép az
+összekapcsolt hálózatról, mivel minden forgalomirányító csak a szomszédos
+forgalomirányítókat látja.
+
+A távolságvektor alapú forgalomirányítást használó forgalomirányítók először szomszédjaikat
+azonosítják. A közvetlenül csatlakoztatott hálózatok felé vezető interfészek távolsága nulla.
+A távolságvektor alapú felismerő folyamat előrehaladtával a forgalomirányítók a különféle
+célhálózatok felé vezető legjobb útvonalakat a szomszédjaiktól kapott adatok alapján ismerik
+fel. Az A forgalomirányító a B forgalomirányítótól kapott adatok alapján ismeri meg a többi
+hálózatot. Az irányítótábla minden más bejegyzése akkumulált távolságvektort tartalmaz,
+amely az adott hálózat adott irányban mért távolságát tükrözi.
+
+Az irányítótábla frissítései a topológia változásait követően történnek meg. A hálózatfelderítő
+folyamathoz hasonlóan a topológiaváltozásra vonatkozó frissítések is lépésenként jutnak el az
+egyik forgalomirányítótól a másikig. A távolságvektor alapú irányító algoritmusokat futtató
+forgalomirányítók a teljes irányítótáblájukat elküldik valamennyi szomszédjuknak. Az
+irányítótáblák többek között az útvonalaknak az adott mérték szerinti teljes költségét és az
+egyes hálózatokhoz vezető útvonalak első forgalomirányítójának logikai címét tartalmazzák.
+
+A távolságvektorokat az autópályák kereszteződéseiben látható feliratokhoz hasonlíthatnánk.
+Minden csomópontban nyíl mutatja a célállomások irányát, távolságukat pedig szám jelzi. Ha
+továbbhaladunk, akkor újabb nyíl mutatja a helyes irányt, de már kisebb távolság lesz kiírva.
+Amíg a távolság csökken, addig tudhatjuk, hogy a legjobb úton haladunk.
+
+\subsubsection{A kapcsolatállapot alapú irányító protokollok szolgáltatásai}
+A kapcsolatállapot alapú algoritmusokat Dijkstra-algoritmusoknak vagy legrövidebb utat
+kereső algoritmusoknak is nevezzük.\\
+A kapcsolatállapot alapú irányító algoritmusok a topológiáról szerzett információból összetett
+adatbázist készítenek. A távolságvektor alapú algoritmusok a távoli hálózatokról nem
+rendelkeznek specifikus információkkal, és a távoli forgalomirányítókat sem ismerik. A kapcsolatállapot alapú algoritmusok ezzel szemben minden adattal rendelkeznek a távoli
+forgalomirányítókról és kapcsolataikról.
+
+A kapcsolatállapot alapú forgalomirányítás a következő adatokat, eszközöket használja:
+\begin{description}[nosep]
+	\item[Kapcsolatállapot-hirdetések (link-state advertisement, LSA)] A kapcsolatállapot-hirdetés egy forgalomirányítási adatokat tartalmazó kisméretű csomag. A forgalomirányítók továbbítják egymás között.
+	\item[Topológiai adatbázis] A topológiai adatbázis az LSA-kból kinyert információkat foglalja össze.
+	\item[Legrövidebb utat kereső algoritmus] A legrövidebb utat kereső (shortest path first, SPF) algoritmus az adatbázis adatait dolgozza fel. Eredményként az SPF-fát adja.
+	\item[Irányítótáblák] Az ismert útvonalak és interfészek listája.
+\end{description}
+
+A kapcsolatállapot alapú forgalomirányítás által alkalmazott hálózatfelderítési módszerek
+Az LSA-k kölcsönös elküldése a forgalomirányítók között a közvetlenül csatlakozó hálózatok
+adataival kezdődik, ugyanis ezekről a forgalomirányítók közvetlen adatokkal rendelkeznek. A
+többiekkel párhuzamosan az LSA-k felhasználásával az összes forgalomirányító létrehoz egy
+topológiai adatbázist.
+
+Az SPF algoritmus a hálózatok elérhetőségét határozza meg. A forgalomirányító a logikai
+topológiát egy fába szervezi, amelynek saját maga a gyökere. A fa a kapcsolatállapot alapú
+forgalomirányítást használó összekapcsolt hálózat összes hálózatához minden lehetséges
+útvonalat tartalmaz. Ezután az algoritmus az útvonalakat hosszuk szerint sorba állítja úgy,
+hogy a legrövidebb útvonal kerüljön előre (innen származik az SPF, „shortest path first"
+elnevezés). A forgalomirányító a legjobb útvonalakat és a hozzájuk tartozó interfészeket az
+irányítótáblájába írja. Ezenfelül a hálózati topológia elemeiről és azok állapotáról további
+adatbázisokat tart karban.
+
+Az a forgalomirányító, amely elsőként szerez tudomást valamilyen kapcsolat állapotának
+megváltozásáról, ezt az információt továbbítja, így a többi forgalomirányító megfelelő
+frissítést tud végezni. A folyamatba az is beletartozik, hogy általános irányítási információkat
+küldenek az összekapcsolt hálózat valamennyi forgalomirányítójának. A konvergencia
+megvalósítása érdekében minden forgalomirányító nyilvántartja szomszédjait, nevüket,
+interfészeik állapotát, illetve a hozzájuk vezető összeköttetés költségét. Minden
+forgalomirányító egy LSA-csomagot készít, amely az új szomszédokkal, az összeköttetések
+költségének megváltozásával és az érvénytelenné vált összeköttetésekkel kapcsolatos adatokat
+tartalmazza. Ezután elküldi az LSA-csomagot, amelyet az összes forgalomirányító
+megkaphat.
+
+Amikor a forgalomirányító LSA-csomagot kap, az adatbázist a legújabb adatokkal frissíti,
+ezek alapján újraszámítja az összekapcsolt hálózat térképét, valamint az SPF algoritmussal
+meghatározza az egyes hálózatokhoz vezető legrövidebb útvonalakat. Valahányszor egy
+beérkező LSA-csomag változást okoz a kapcsolatállapotokat tároló adatbázisban, az SPF
+algoritmus újraszámolja a legjobb útvonalakat, és ennek megfelelően módosítja az
+irányítótáblát.
+
+A kapcsolatállapot alapú irányítás problémái:
+\begin{itemize}[nosep]
+	\item Nagy processzorterhelés
+	\item Komoly memóriakövetelmények
+	\item A sávszélesség erőteljes igénybe vétele
+\end{itemize}
+
+A kapcsolatállapot alapú protokollokat futtató forgalomirányítóknál több memóriára és
+nagyobb processzorteljesítményre van szükség, mint a távolságvektor alapú protokollt
+használóknál. A forgalomirányítóknak elegendő memóriával kell rendelkezniük ahhoz, hogy
+tárolják a különféle adatbázisokból származó adatokat, a topológiafát és az irányítótáblát. A
+kezdeti kapcsolatállapot-csomagok elárasztással történő szétküldése jelentős sávszélességet
+köt le. A kezdeti felderítés folyamán a kapcsolatállapot alapú protokollokat használó
+valamennyi forgalomirányító az összes többi forgalomirányítónak LSA-csomagot küld. Ezek
+a csomagok elárasztják az összekapcsolt hálózatot, és emiatt átmenetileg csökken az irányított
+forgalom által felhasználói adatok továbbítására használható sávszélesség. A kezdeti
+elárasztás után a kapcsolatállapot alapú irányító protokollok általában csak minimális
+sávszélességet igényelnek, mert a forgalomirányítók a topológiaváltozásokat mutató LSA-
+csomagokat ritkán vagy eseményvezérelten küldik.
+
+\subsubsection{Autonóm rendszerek, az IGP és az EGP összehasonlítása}
+A belső irányító protokollokat több részből álló, de egyetlen szervezet felügyelete alatt lévő
+hálózatokhoz tervezték. A belső irányító protokollok esetében a legfontosabb elvárás, hogy
+megtalálják a legjobb útvonalat a hálózaton keresztül. Másként fogalmazva mondhatjuk, hogy
+a mérték jellege és használatának módja a belső irányító protokollok legfontosabb jellemzője.
+
+A külső irányító protokollokat különálló, eltérő szervezetek ellenőrzése alatt lévő hálózatok
+között használják. Általában internetszolgáltatók között, illetve internetszolgáltató–ügyfél
+kapcsolatok felett használják őket. Adott cég például saját és internetszolgáltatójának
+forgalomirányítója között dönthet a BGP – egy külső irányító protokoll – használata mellett.
+Az IP alapú külső átjáróprotokollok esetében a forgalomirányítás megkezdése előtt a
+következő három adathalmazra van szükség:
+\begin{itemize}
+	\item A szomszédos forgalomirányítók listája, ezekkel folyik az irányítási információk cseréje
+	\item A közvetlenül elérhető hálózatok listája, melyeket hirdetni kell
+	\item A helyi forgalomirányító autonómrendszer-azonosítója
+\end{itemize}
+
+A külső irányító protokolloknak el kell különíteniük az autonóm rendszereket. Ne feledjük, az
+autonóm rendszerek más és más rendszergazdák felügyelete alatt állnak. A hálózatoknak
+biztosítaniuk kell valamilyen protokoll támogatását, amely felett ezek a különböző rendszerek
+kommunikálni tudnak egymással.
+
+Az autonóm rendszerek rendelkeznek egy azonosítóval, amelyet az ARIN (American Registry
+of Internet Numbers) szervezet vagy egy szolgáltató oszt ki nekik. Az autonómrendszer-
+azonosító egy 16 bites szám. Az irányító protokollok – például a Cisco IGRP és EIGRP – egy
+egyedi autonómrendszer-azonosító hozzárendelését követelik meg.

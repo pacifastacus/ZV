@@ -5,7 +5,7 @@
 
 \input{tex/preamble.tex}
 
-\setlength{\parskip}{6pt plus 3pt minus 3pt} % Bekezdések térközölése
+%\setlength{\parskip}{6pt plus 3pt minus 3pt} % Bekezdések térközölése
 \setcounter{tocdepth}{3} % Tartalomjegyzék mélysége. Alapegyég 3
 
 \begin{document}
@@ -13,29 +13,30 @@
 %\cleardoublepage
 %\input{fedolap.tex}
 \textbf{ A záróvizsga tematikája és tartalma}\\
-A záróvizsgán kettő kérdésre kell válaszolni, egyre az általános kérdések közül, egyre pedig a specializációnak megfelelő kérdések közül
+A záróvizsgán kettő kérdésre kell válaszolni, egyre az általános kérdések közül, egyre pedig a specializációnak megfelelő kérdések közül.
 \tableofcontents
 \cleardoublepage
 \part{Általános kérdések}
 \input{altalanos/altalanos_1}		%Kész
 \include{altalanos/altalanos_2}		%kész
-\include{altalanos/altalanos_3}		%Kész, de van egy TODO
+\include{altalanos/altalanos_3}		%TODO
 \include{altalanos/altalanos_4}		%Kész
 \include{altalanos/altalanos_5}		%kész
-\include{altalanos/altalanos_6}
-\include{altalanos/altalanos_7}
-\include{altalanos/altalanos_8}
-\include{altalanos/altalanos_9}
-\include{altalanos/altalanos_10}
-\include{altalanos/altalanos_11}
+\include{altalanos/altalanos_6}		%kész
+\include{altalanos/altalanos_7}		%TODO
+\include{altalanos/altalanos_8}		%kész
+\include{altalanos/altalanos_9}		%kész
+\include{altalanos/altalanos_10}	%kész
+\include{altalanos/altalanos_11}	%kész
+\cleardoublepage
 
-\part[Infokommunikációs hálózatok]{Infokommunikációs hálózatok specializáció}
-\input{halozatok/halozatok_1}
-\include{halozatok/halozatok_2}
+%\part[Infokommunikációs hálózatok]{Infokommunikációs hálózatok specializáció}
+\input{halozatok/halozatok_1}	%Nincs kidolgozott tétel
+\include{halozatok/halozatok_2}	%kész
 \include{halozatok/halozatok_3}
-\include{halozatok/halozatok_4}
-\include{halozatok/halozatok_5}
-\include{halozatok/halozatok_6}
+\include{halozatok/halozatok_4}	%kész
+\include{halozatok/halozatok_5}	%kész
+\include{halozatok/halozatok_6}	
 
 %\part[Mérés és folyamatirányítás]{Mérés és folyamatirányítás specializáció}
 %\input{meres/meres_1}
@@ -53,5 +54,5 @@ A záróvizsgán kettő kérdésre kell válaszolni, egyre az általános kérd�
 %\include{vir/vir_5}
 %\include{vir/vir_6}
 
-\printindex\addcontentsline{toc}{section}{Tárgymutató}
+%\printindex\addcontentsline{toc}{section}{Tárgymutató}
 \end{document}

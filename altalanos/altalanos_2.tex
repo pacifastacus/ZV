@@ -1,5 +1,6 @@
 %-------------------------------------------------------------------------------
 \section{Operációs rendszerek}
+{\footnotesize Operációs rendszerek fogalma, felépítése, osztályozásuk. Az operációs rendszerek jellemzése 	(komponensei és funkciói). A rendszeradminisztráció, fejlesztői és alkalmazói támogatás eszközei.}
 %-------------------------------------------------------------------------------
 \subsection{Operációs rendszerek fogalma, felépítése, osztályozásuk.}
 \paragraph{Operációs rendszerek fogalma}
@@ -9,21 +10,21 @@ Az operációs rendszer feladata, hogy a felhasználónak egy olyan egyenérték
 vagy virtuális gépet nyújtson, amelyiket egyszerűbb programozni, mint a mögöttes hardvert
 \paragraph{Operációs rendszerek felépítése}
 Az operációs rendszerek alapvetően három részre bonthatók:
-	\begin{itemize}
+	\begin{itemize}[nosep]
 	\item a felhasználói felület (a shell, amely lehet egy grafikus felület, vagy egy szöveges)
 	\item alacsony szintű segédprogramok
 	\item kernel (mag), amely közvetlenül a hardverrel áll kapcsolatban.
 	\end{itemize}
 \paragraph{Operációs rendszerek osztályozása}
-	\begin{enumerate}
+	\begin{enumerate}[nosep]
 	\item Az operációs rendszer alatti hardver "mérete" szerint:
-		\begin{itemize}
+		\begin{itemize}[nosep]
 		\item mikroszámítógépek operációs rendszerei
 		\item kisszámítógépek, esetleg munkaállomások operációs rendszerei
 		\item nagygépek (Main Frame Computers, Super Computers) operációs rendszerei
 		\end{itemize}
 	\item A kapcsolattartás típusa szerint:
-		\begin{itemize}
+		\begin{itemize}[nosep]
 		\item kötegelt feldolgozású operációs rendszerek vezérlőkártyás kapcsolattartással
 		\item interaktív operációs rendszerek.
 		\end{itemize}
@@ -36,7 +37,7 @@ Az operációs rendszerek alapvetően három részre bonthatók:
 
 \subsection{Az operációs rendszerek jellemzése (komponensei és funkciói).}
 \paragraph{Operációs rendszerek komponensei:}
-\begin{description}
+\begin{description}[nosep]
 	\item[Eszközkezelők (Device Driver)] Felhasználók elől el fedik a perifériák különbségeit, egységes kezelői felületet kell biztosítani.
 	\item[Megszakítás kezelés (Interrupt Handling)] Alkalmas perifériák felől érkező kiszolgálási igények fogadására, megfelelő ellátására.
 	\item[Rendszerhívás, válasz (System Call, Reply)] az operációs rendszer magjának ki kell szolgálnia a felhasználói alkalmazások (programok) erőforrások iránti igényeit úgy, hogy azok lehetőleg észre se vegyék azt, hogy nem közvetlenül használják a perifériákat$\leftarrow$ programok által kiadott rendszerhívások, melyekre rendszermag válaszokat küldhet.
@@ -48,11 +49,11 @@ Az operációs rendszerek alapvetően három részre bonthatók:
 \end{description}
 
 \paragraph{Operációs rendszerek funkciói:}
-\begin{description}
+\begin{description}[nosep]
 \item[Folyamatkezelés]
 A folyamat egy végrehajtás alatt álló program. Hogy feladatát ellássa erőforrásokra van szüksége (processzor idő, memória, állományok I/O berendezések).
 Az operációs rendszer feladata:
-\begin{itemize}
+\begin{itemize}[nosep]
 	\item Folyamatok létrehozása és törlése
 	\item Folyamatok felfüggesztése és újraindítása
 	\item Eszközök biztosítása a folyamatok kommunikációjához és szinkronizációjához.
@@ -60,7 +61,7 @@ Az operációs rendszer feladata:
 \item[Memória (főtár) kezelés]
 Bájtokból álló tömbnek tekinthető, amelyet a CPU és az I/O közösen használ. Tartalma törlődik rendszerkikapcsoláskor és rendszerhibáknál.
 Az operációs rendszer feladata:
-\begin{itemize}
+\begin{itemize}[nosep]
 	\item Nyilvántartani, hogy az operatív memória melyik részét ki (mi) használja.
 	\item Eldönteni melyik folyamatot kell betölteni, ha memória felszabadul.
 	\item Szükség szerint allokálni és felszabadítani a memória területeket a szükségleteknek megfelelően.
@@ -68,13 +69,13 @@ Az operációs rendszer feladata:
 \item[Másodlagos tárkezelés]
 Nem törlődik, és elég nagy hogy minden programot tároljon. A merevlemez a legelterjedtebb
 formája. Az operációs rendszer feladata:
-\begin{itemize}
+\begin{itemize}[nosep]
 	\item Szabadhely kezelés.
 	\item Tárhozzárendelés.
 	\item Lemez elosztás.
 \end{itemize}
 \item[I/O rendszerkezelés]
-\begin{itemize}
+\begin{itemize}[nosep]
 	\item Puffer rendszer.
 	\item Általános készülék meghajtó (device driver) interface.
 	\item Speciális készülék meghajtó programok.
@@ -82,28 +83,28 @@ formája. Az operációs rendszer feladata:
 \item[Fájlkezelés]
 Egy fájl kapcsolódó információk együttese, amelyet a létrehozója definiál. Általában program és adatfájlokról beszélünk.
 Az operációs rendszer feladata:
-\begin{itemize}
+\begin{itemize}[nosep]
 	\item Fájlok és könyvtárak létrehozás és törlése.
 	\item Fájlokkal és könyvtárakkal történő alapmanipuláció.
 	\item Fájlok leképezése a másodlagos tárra, valamilyen nem törlődő, stabil adathordozóra.
 \end{itemize}
 \item[Védelmi rendszer]
 Olyan mechanizmus, mely az erőforrásokhoz való hozzá férést felügyeli. Az operációs rendszer feladata:
-\begin{itemize}
+\begin{itemize}[nosep]
 	\item Különbséget tenni jogos (authorizált) és jogtalan használat között.
 	\item Specifikálni az alkalmazandó kontrolt.
 	\item Korlátozó eszközöket szolgáltatni.
 \end{itemize}
 \item[Hálózat elérés támogatása]
 Az elosztott rendszer processzorok adat és vezérlő vonallal összekapcsolt együttese, ahol a memória és az óra nem közös. Adat- és vezérlővonal segítségével történik a kommunikáció. Az elosztott rendszer a felhasználóknak különböző osztott erőforrások elérését teszi lehetővé, mely lehetővé teszi:
-\begin{itemize}
+\begin{itemize}[nosep]
 	\item a számítások felgyorsítását,
 	\item a jobb adatelérhetőséget,
 	\item a nagyobb megbízhatóságot.
 \end{itemize}
 \item[Parancs interpreter alrendszer]
 Az operációs rendszernek sok parancsot vezérlő utasítás formájában lehet megadni. Vezérlő utasítások minden területhez tartoznak (folyamatok, I/O kezelés...). Az operációs rendszernek azt a programját, amelyik a vezérlő utasítást beolvassa és interpretálja a rendszertől függően más és más módon nevezhetik:
-\begin{itemize}
+\begin{itemize}[nosep]
 	\item Vezérlő kártya interpreter.
 	\item Parancs sor interpreter (command line).
 	\item Héj (burok, shell)
@@ -113,7 +114,7 @@ Az operációs rendszernek sok parancsot vezérlő utasítás formájában lehet
 \subsection{A rendszeradminisztráció, fejlesztői és alkalmazói támogatás eszközei.}
 \paragraph{Rendszeradminisztráció}
 Magának az operációs rendszernek a működtetésével kapcsolatos funkciók. Ezek közvetlenül semmire sem használhatók, csak a hardverlehetőségek kibővítését célozzák, illetve a hardver kezelését teszik kényelmesebbé. A rendszeradminisztráción belül a következő \emph{összetett funkciókat} jelölhetjük ki:
-\begin{enumdescript}
+\begin{enumdescript}[nosep]
 	\item[processzorütemezés:] a CPU-idő szétosztása a rendszer- és a felhasználói feladatok
 	(taszkok, folyamatok) között;
 	\item[megszakításkezelés:] a hardver-szoftver megszakításkérések elemzése, állapotmentés,
@@ -131,7 +132,7 @@ Magának az operációs rendszernek a működtetésével kapcsolatos funkciók. 
 	\item[operátori interfész:] a kapcsolattartás az üzemeltetővel.
 \end{enumdescript}
 A konkrét operációs rendszerek a funkciókat másképpen oszthatják fel. Így például az IBM OS operációs rendszerek változataiban négy fő funkciót szoktak megkülönböztetni:
-\begin{enumerate}
+\begin{enumerate}[nosep]
 	\item a munkakezelést,
 	\item a taszkkezelést,
 	\item az adatkezelést és
@@ -140,7 +141,7 @@ A konkrét operációs rendszerek a funkciókat másképpen oszthatják fel. Íg
 A rendszeradminisztrációs funkciókat a \textbf{rendszermag} valósítja meg, amelynek a szolgáltatásait a már említett rendszerhívásokkal érhetjük el.
 
 \paragraph{Programfejlesztési támogatás} fő funkciói:
-\begin{enumdescript}
+\begin{enumdescript}[nosep]
 	\item[rendszerhívások:] a programokból alacsony szintű operációsrendszeri funkciók
 	aktivizálására,
 	\item[szövegszerkesztők:] a programok és dokumentációk írására,
@@ -154,7 +155,7 @@ A rendszeradminisztrációs funkciókat a \textbf{rendszermag} valósítja meg, 
 
 \paragraph{Alkalmazói támogatás}
 Az alkalmazói támogatás funkciói a számítógépes rendszer több szintjén valósulnak meg, és az alábbi fő funkciókra bonthatók:
-\begin{enumdescript}
+\begin{enumdescript}[nosep]
 	\item[operátori parancsnyelvi rendszer:] a számítógép géptermi üzemvitelének
 	támogatására;
 	\item[munkavezérlő parancsnyelvi rendszer:] a számítógép alkalmazói szintű

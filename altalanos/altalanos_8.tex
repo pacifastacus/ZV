@@ -1,14 +1,144 @@
 %----------------------------------------------------------------------------
 \section{Fizika 1}
+{\footnotesize Fizikai fogalmak, mennyiségek. Impulzus, impulzusmomentum. Newton törvényei. Munkatétel. Az I. és II. főtétel. A kinetikus gázmodell.}
 %----------------------------------------------------------------------------
 \subsection{Fizikai fogalmak, mennyiségek.}
+\paragraph{Alapfogalmak}
+\begin{description}[nosep]
+	\item[Mérőszám] Megmutatja, hogy a mértékegységet hányszor lehet a mérendő mennyiségbe belefoglalni.
+	\item[Mértékegység] Egy mérőszám típusát és nagyságrendjét meghatározó jelző.
+	\item[Fizikai mennyiség] Adott fizikai jellemzőt leíró mérőszám és annak mértékegysége. Valamely jelenség, folyamat minőségileg megkülönböztethető, és mennyiségileg meghatározható tulajdonsága.
+	\begin{enumdescript}[nosep]
+		\item[Skalármennyiség] Olyan mennyiség, melynek nincs iránya, tehát teljes mértékben leír a nagysága (pl. hőmérséklet, tömeg, térfogat).
+		\item[Vektormennyiség] Olyan mennyiség, melynek nagyságán kívül iránya is van (pl. erő, sebesség, térerősség).
+	\end{enumdescript}
+\end{description}
+
+\paragraph{Erő}
+\emph{Olyan hatás, ami egy tömeggel rendelkező testet gyorsulásra késztet.} Az \emph{eredő erő} a testre ható \emph{összes erő vektoriális összege}. $1N$ erő olyan hatás, amely egy $1kg$$  $ tömegű testet $1\frac{m}{s^2}$ mértékű gyorsulásra késztet. \underline{Vektormennyiség}. Iránya megegyezik a gyorsulás irányával. Néhány alapvető erő: elektromágneses erő, gravitációs erő, nukleáris erő.\\
+Jele: $F$ (force) \quad $\vec{F} = m \cdot \vec{a}$\\
+Mértékegysége: $N$ (Newton) \quad $ N = \nicefrac{kg\cdot m}{s^2} $
+
+\paragraph{Tömeg}
+\emph{A fizikai testek tulajdonsága, amely a tehetetlenségüket méri.} A súlytól eltérően a tömeg mindig ugyanaz marad, akárhová kerül is a hordozója. \underline{Skalármennyiség}.\\
+Jele: $m$ (mass)\\
+Mértékegysége: $kg$ (kilogramm)
+
+Szigorúan véve három különböző dolgot neveznek tömegnek:
+\begin{description}
+	\item[Tehetetlen tömeg] a test tehetetlenségének mértéke: a rá ható erő mozgásállapot változtató hatásával szembeni ellenállás. A kis tehetetlen tömegű test sokkal gyorsabban változtatja mozgásállapotát, mint a nagy tehetetlen tömegű.
+	\item[Passzív gravitáló tömeg] a test és a gravitációs tér kölcsönhatásának mértéke. Azonos gravitációs térben a kisebb passzív gravitáló tömegű testre kisebb erő hat, mint a nagyobbra.
+	\item[Aktív gravitáló tömeg] a test által létrehozott gravitációs tér erősségének a mértéke. Például a Hold gyengébb gravitációs teret hoz létre, mint a Föld, mert a Holdnak kisebb az aktív gravitáló tömege.
+\end{description}
+
+\paragraph{Súly}
+Az az \underline{erő}, amellyel a test az \textbf{alátámasztást nyomja} vagy a \textbf{felfüggesztést húzza}, tehát \emph{a test környezetére gyakorolt erőinek az eredője}. Azonos tömegű testek különböző erősségű gravitációs terekben különböző súlyúak, mert a testre ható gravitációs erőt a test közvetíti a környezetének.\\
+Jele: $G$ \quad $\vec{G} = m \cdot \vec{g}$\\
+Mértékegysége: $N$ (Newton)
+
+\paragraph{Távolság}
+Két pont közötti távolság az a legrövidebb út, melyen eljutunk egyik pontból a másikba, tehát a helyváltozás mértéke. A legrövidebb út általában egyenes mentén van. \underline{Skalármennyiség}.\\
+Jele: $d$ (distance) vagy $l$ (length)\\
+Mértékegysége: $m$ (méter)
+
+\paragraph{Pálya}
+Azt a vonalat, amin a test mozog, pályának nevezzük.
+
+\paragraph{Út}
+A mozgó test által befutott pályaszakasz hossza a megtett út.
+
+\paragraph{Elmozdulás}
+A kezdőpontból a végpontba mutató \underline{vektort} elmozdulásnak nevezzük.
+Az út hossza nem lehet kisebb az elmozdulás nagyságánál, hiszen két pont között az egyenes szakasznak a legkisebb a hossza.
+
+\paragraph{Idő}
+A folyamatokban bekövetkező \emph{események sorrendiségének kifejezésére való skalármennyiség}. Az idő SI-alapegysége az SI-másodperc(?). Az ebből származó nagyobb időegységek, mint perc, óra és nap, nem SI-egységek, mert nem tízes számrendszerűek, és szükség van időnként szökőmásodpercre.\\
+Jele: $t$ (time)\\
+Mértékegysége: $s$ (szekundum vagy másodperc)
+
+\paragraph{Nyomás}
+Az egységnyi felületre ható erőhatást adja meg.\\
+Jele: $p$ (pressure) \quad $p = \nicefrac{F}{A}$\\
+Mértékegysége: $Pa$ (Pascal) \quad $Pa = \nicefrac{N}{m^2}$
+
+\paragraph{Munka}
+Amikor egy \emph{testre kifejtett erő hatására a test elmozdul, mechanikai munkavégzés történik}, ami \underline{arányos} a kifejtett \underline{erő nagyságával} és a \underline{megtett úttal}. A munka az erő és az elmozdulás \underline{skaláris szorzata}. Egy joule munkát végez az egy newton nagyságú erő a vele egyirányú egy méter hosszúságú elmozdulás közben. Ugyancsak egy joule az egy watt teljesítménnyel egy másodpercig végzett munka.\\
+Jele: $W$ (work) \quad $W=F\cdot s \cdot \cos\alpha$\\
+Mértékegysége: $J$ (Joule)	\quad $J = N \cdot m = kg \cdot \frac{m^2}{s^2}$
+
+\paragraph{Teljesítmény}
+A munkavégzés vagy energiaátvitel sebessége, más szóval az \emph{egységnyi idő alatt végzett munka}.\\
+Jele: $P$ (power) \quad $P = \nicefrac{W}{t}$\\
+Mértékegysége: $W$ (Watt) \quad $W = \nicefrac{J}{s}$
+
+\paragraph{Sebesség}
+Egy pontszerű test kitüntetett ponthoz viszonyított mozgásának jellemzésére szolgáló fizikai mennyiség. \textbf{Az út idő szerinti deriváltja}, tehát az \emph{időegység alatt bekövetkezett helyváltozás mértéke}. \underline{Vektormennyiség}.\\
+Jele: $v$ (velocity) \quad $v = \nicefrac{s}{t}$\\
+Mértékegysége: $\nicefrac{m}{s}$
+
+\paragraph{Gyorsulás}
+\textbf{A sebességvektor idő szerinti deriváltja}, tehát az \emph{időegység alatt bekövetkezett sebességváltozás mértéke}. \underline{Vektormennyiség}.\\
+Jele: $a$ (acceleration) 
+$$\overline{a}=\frac{\Delta v}{\Delta t} = \frac{v-u}{t}\quad \text{ahol v a végsebesség, u a kezdeti sebesség}$$
+$$a=\lim\limits_{\Delta t \to 0} \frac{\Delta v}{\Delta t} = \frac{dv}{dt}$$
+Mértékegysége: $\nicefrac{m}{s^2}$
 
 \subsection{Impulzus, impulzusmomentum.}
+\paragraph{Lendület (impulzus)}
+Egy test mozgását leíró vektormennyiség. Nagysága arányos a tömeggel és a sebességgel. Lendületmegmaradás törvénye: zárt rendszer összes lendülete állandó. Nyugalomban lévő testnek nincs lendülete, a lendületet csakis külső erő változtathatja meg.\\
+Jele: $I$ (impulzus)	$$\vec{I}=m\cdot \vec{v}$$
+Mértékegysége: $kg\cdot \nicefrac{m}{s} = N \cdot s$
+
+\paragraph{Perdület (impulzusmomentum)} Forgómozgásban lévő test lendülete által létrehozott nyomatékot jellemző vektormennyiség. Az erőkar és a lendület szorzata. Zárt rendszerben a lendületmegmaradás következtében a perdület állandó. Rögzített tengely körüli forgásnál a perdületet a tehetetlenségi nyomaték és a szögsebesség szorzatából számíthatjuk ki.
+Jele: $L$	$$L=\Theta \cdot \omega$$
+Mértékegysége: $kg\cdot \nicefrac{m^2}{s} = N \cdot m \cdot s$
 
 \subsection{Newton törvényei.}
+\begin{description}
+	\item[I. Tehetetlenség törvénye] Minden inerciarendszerben vizsgált test nyugalomban marad vagy egyenes vonalú egyenletes mozgást végez mindaddig, míg ezt az állapotot egy másik test vagy erő hatása meg nem változtatja egy kölcsönhatás során.
+
+	\item[II. Dinamika alaptörvénye] Egy pontszerű test gyorsulása azonos irányú a rá ható erővel, nagysága egyenesen arányos az erő nagyságával, és fordítottan arányos a test tömegével. $\vec{F}=m \cdot \vec{a}$
+
+	\item[III. Hatás-ellenhatás törvénye] Két test kölcsönhatása során mindkét testre azonos nagyságú, azonos hatásvonalú és egymással ellentétes irányú erő hat.
+
+	\item[IV. Szuperpozíció elve] Ha egy testre egy időpillanatban több erő hat, akkor ezek együttes hatása megegyezik a vektori eredőjük (vektoriális összegük) hatásának vonalával.
+\end{description}
 
 \subsection{Munkatétel.}
+\begin{theorem}
+	Egy test mozgási energiájának változásának mértéke megegyezik a testre ható összes erő munka előjeles összegével.
+	$$\Delta E_m = \sum_{i=1}^{n}W_i$$
+\end{theorem}
 
-\subsection{Az I. és II. főtétel.}
+\subsection{A termodinamika I. és II. főtétel.}
+\begin{theorem}[I. főtétel]
+	Egy zárt rendszer belső energiájának változása egyenlő a rendszerrel közölt hő és a rendszeren végzett munka összegével.
+	$$ \Delta U = Q+W $$
+\end{theorem}
+A testek belső energiájának megváltozása egyenlő a testtel közölt hőmennyiség és a testen végzett munka előjeles összegével. Ez az energiamegmaradás törvénye, mert azt mondja ki, hogy külső beavatkozás nélkül nincs energiaváltozás.
+
+\begin{theorem}[II. főtétel]
+	Termikus kölcsönhatással járó természetes folyamatoknál csak a nagyobb hőmérsékletű test képes a hőátadásra. Tehát egy elszigetelt rendszer állapota időben termikus egyensúly felé halad.
+\end{theorem}
 
 \subsection{A kinetikus gázmodell.}
+A gázok tömeggel rendelkező részecskékből állnak, melyek energiaveszteség nélkül ütköznek egymással és a környezetükben lévő testekkel. Mozgási energiájuk csak a rendszer hőmérsékletétől függ. Állandóan mozgásban vannak, és az ütközések között egyenes vonalú egyenletes mozgást végeznek. Össztérfogatuk mindig jóval kisebb, mint a gázt tartalmazó tároló térfogata.
+Alapegyenlet: $$p \cdot V = \frac{2}{3}N \cdot \frac{1}{2}mv^2$$ ahol p az ütközésekkel keltett nyomás, V a térfogat, N a molekulaszám, az $\nicefrac{1}{2}mv^2$ pedig egy molekula átlagos mozgási energiája.
+
+A kinetikus gázmodell segítségével értelmezhetők a gázok olyan makroszkopikus tulajdonságai, mint a nyomás, a hőmérséklet, vagy a térfogat. Newton úgy gondolta, hogy a gáz nyomását a molekulái között fellépő állandó taszítás okozza, a kinetikus gázelmélet szerint viszont a nyomás a különböző sebességgel mozgó gázmolekulák ütközéseiből származik. A kinetikus gázmodell a természetben nem létező ideális gázt feltételez.
+A kinetikus gázmodell szerint:
+\begin{enumerate}
+	\item a gáz részecskékből áll, amelyeknek tömege és súlya van, viszont össztérfogatuk elhanyagolható a gázt tartalmazó edény térfogatához képest
+	\item a részecskék állandó mozgásban vannak
+	\item a részecskék tökéletes gömb alakúak és rugalmas természetűek
+	\item a részecskék mozgási energiája csak a rendszer hőmérsékletétől függ
+	\item a részecskék egymással és az edény falával energiaveszteség nélkül ütköznek
+	\item a részecskék közötti erőhatások elhanyagolhatóak, ezért két ütközés között egyenes vonalú egyenletes mozgást végeznek
+\end{enumerate}
+A kinetikus gázelmélet alapegyenlete:
+$$ pV = \frac{2}{3}N \frac{m_0v^2}{2}$$
+$p$ – nyomás
+$V$ – térfogat
+$N$ – molekulák száma
+$m_0$ – egy molekula tömege
+$\frac{m_0v^2}{2}$– egy molekula átlagos mozgási energiája
