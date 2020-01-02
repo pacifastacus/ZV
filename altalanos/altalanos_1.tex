@@ -23,7 +23,7 @@
 	## \label{itm:rule2} Ha $t_1,t_2 \in Term$, akkor $(t_1 = t_2) \in Form$
 	## \label{itm:rule3} Ha $P \in \mathcal{P}, (n=1,2,\dots)$, és $t_1,t_2,\dots,t_n\in Term$, akkor $P(t_1,t_2,\dots,t_n)\in Form$
 	## Ha $A \in Form$, akkor $\neg A \in Form$
-	## Ha $A,b \in Form$, akkor $(A \supset B),(A \land B),(A\lor B),(A\equiv B) \in Form$
+	## Ha $A,B \in Form$, akkor $(A \supset B),(A \land B),(A\lor B),(A\equiv B) \in Form$
 	## Ha $x\in Var, A\in Form$, akkor $\forall x A, \exists x A \in Form$
 	\end{easylist}
 \end{definition}
@@ -36,7 +36,7 @@
 	Az $\langle U, \rho\rangle$ párt az $L^{(1)}$ nyelv egy interpretációjának nevezzük, ha
 	\begin{easylist}
 		# $U \neq \emptyset$ azaz $U$ nemüres halmaz
-		# $Dom(\rho) = Con$ azaz a $\rho$ a $Con$ halmazon értelmezett függvény, amelyre teljesülnek a következők:
+		# $Dom(\rho) = Con$ azaz a $\rho$(ró) a $Con$ halmazon értelmezett függvény, amelyre teljesülnek a következők:
 		## Ha $a \in F(0)$, akkor $\rho(a) \in U$
 		## Ha $f \in \mathcal{F}(n)$ ahol $n\neq 0$, akkor $\rho(f)$ az $U^{(n)}$ halmazon értelmezett az $U$ halmazba képező függvény ($\rho(f) : U^{(n)} \rightarrow U $)
 		## Ha $p \in \mathcal{P}(0)$, akkor $\rho(p) \in {0, 1}$
@@ -44,14 +44,14 @@
 	\end{easylist}
 \end{definition}
 \begin{definition}[értékelés (elsőrendű)]
-	Legyen $L^{(1)} = \langle LC, Var, Con, Term, Form\rangle$ egy elsőrendű nyelv, $\langle U, \rho\rangle$ pedig a nyelv egy interpretációja. Az $\langle U, \rho\rangle$ interpretációra támaszkodó $\nu$ értékelésen egy olyan függvényt értünk, amely teljesíti a következőket:
+	Legyen $L^{(1)} = \langle LC, Var, Con, Term, Form\rangle$ egy elsőrendű nyelv, $\langle U, \rho\rangle$ pedig a nyelv egy interpretációja. Az $\langle U, \rho\rangle$ interpretációra támaszkodó $\nu$(nű) értékelésen egy olyan függvényt értünk, amely teljesíti a következőket:
 	\begin{itemize}
 		\item  $ Dom(\nu) = Var $
 		\item  $ Ha x \in Var$, akkor $\nu(x) \in U $
 	\end{itemize}
 \end{definition}
 \begin{definition}[értékelés (elsőrendű)]
-	Legyen $L^(1) = (LC, Var, Con, Term, Form)$ egy elsőrendű nyelv, $\langle U, \rho \rangle$ pedig a nyelv egy interpretációja, $\nu$ pedig az $\langle U, \rho \rangle$ interpretációra támaszkodó értékelés.
+	Legyen $L^{(1)} = (LC, Var, Con, Term, Form)$ egy elsőrendű nyelv, $\langle U, \rho \rangle$ pedig a nyelv egy interpretációja, $\nu$ pedig az $\langle U, \rho \rangle$ interpretációra támaszkodó értékelés.
 	\begin{easylist}
 		# Ha $a \in F(0)$, akkor 
 				$|a|\InterpretOnNu = \rho(a)$
@@ -148,7 +148,7 @@
 		\item Az $A$ formula \emph{modellje} az $\{A\}$ egyelemű formulahalmaz modelljét értjük;
 		\item Az $A$ formula \emph{kielégíthető}, ha $\{A\}$ formulahalmaz kielégíthető;
 		\item Az $A$ formula \emph{kielégíthetetlen}, ha $\{A\}$ formulahalmaz kielégíthetetlen;
-		\item A  $\Gamma$ formulahalmaznak \underline{logikai következménye} az $A$ formula, ha a $\Gamma \cup \{\neq A\}$ formulahalmaz kielégíthetetlen. Jelölés: $\Gamma \models A$ 
+		\item A  $\Gamma$ formulahalmaznak \underline{logikai következménye} az $A$ formula, ha a $\Gamma \cup \{\neg A\}$ formulahalmaz kielégíthetetlen. Jelölés: $\Gamma \models A$ 
 		\item Az $A$ formulának \underline{logikai következménye} a $B$ formula, ha a $\{A\} \models B$. Jelölés: $A \models B$ 
 		\item Az $A$ formula \emph{érvényes} (\underline{logikai törvény})\label{def:logikai törvény}, ha $\emptyset \models A$, azaz ha az $A$ formula \underline{logikai következménye} az üres halmaznak. Másképpen, ha minden $ \langle U, \rho \rangle$ interpretációjában, minden $\nu$ értékelés szempontjából $|A|\InterpretOnNu = 1$ Jelölés: $\models A$
 		\item Az $A$ és a $B$ formula \emph{logikailag ekvivalens}, ha $A \models B$ és $B \models A$. Jelölés: $A \Leftrightarrow B$ 
@@ -160,10 +160,10 @@
 	lásd:a \ref{def:logikai törvény} fejezet definíciója.
 \end{definition}
 \begin{definition}[elemi konjunkció]
-	Legyen $L^{(0)} = (LC, Con, Form)$ egy nulladrendű nyelv. Ha az $A \in Form$ formula literál vagy különböző alapú literálok konjunkciója, akkor $A$-t elemi konjunkciónak nevezzük. 
+	Legyen $L^{(0)} = (LC, Con, Form)$ egy nulladrendű nyelv. Ha az $A \in Form$ formula literál vagy különböző alapú literálok konjunkciója\footnote{konjunkció: Logikai ÉS($\land$) művelet}, akkor $A$-t elemi konjunkciónak nevezzük. 
 \end{definition}
 \begin{definition}[elemi diszjunkció]
-	Legyen $L^{(0)} = (LC, Con, Form)$ egy nulladrendű nyelv. Ha az $A \in Form$ formula literál vagy különböző alapú literálok diszjunkciója, akkor $A$-t elemi diszjunkciónak nevezzük. 
+	Legyen $L^{(0)} = (LC, Con, Form)$ egy nulladrendű nyelv. Ha az $A \in Form$ formula literál vagy különböző alapú literálok diszjunkciója\footnote{diszjunkció: Logikai VAGY($\lor$) művelet}, akkor $A$-t elemi diszjunkciónak nevezzük. 
 \end{definition}
 \begin{definition}[diszjunktív normálforma]
 	Egy elemi konjunkciót vagy elemi konjunkciók diszjunkcióját diszjunktív normálformának nevezzük. 
@@ -236,42 +236,44 @@ Bázis:
 \end{equation}
 Szabályok:
 \begin{itemize}
+	\begin{multicols}{2}
 	\item Struktúrális szabályok:
 	\begin{itemize}
-		\item Bővítés $\frac{\Gamma \vdash A}{\Gamma, B \vdash A} $
-		\item Felcserélés $\frac{\Gamma,B,C,\Delta\vdash A} {\Gamma,C,B,\Delta\vdash A} $
-		\item Szűkítés $\frac{\Gamma,B,B,\Delta\vdash A}
-		{\Gamma,B,\Delta\vdash A} $
-		\item Metszet $\frac{\Gamma\vdash A \Delta,A\vdash B}{\Gamma,\Delta\vdash B} $
+		\item Bővítés $$\frac{\Gamma \vdash A}{\Gamma, B \vdash A} $$
+		\item Felcserélés $$\frac{\Gamma,B,C,\Delta\vdash A} {\Gamma,C,B,\Delta\vdash A} $$
+		\item Szűkítés $$\frac{\Gamma,B,B,\Delta\vdash A}
+		{\Gamma,B,\Delta\vdash A} $$
+		\item Metszet $$\frac{\Gamma\vdash A\quad \Delta,A\vdash B}{\Gamma,\Delta\vdash B} $$
 	\end{itemize}
 	\item Logikai szabályok:
 	\begin{itemize}
 		\item Implikáció szabályai:
 		\begin{itemize}
-			\item bevezető: $\frac{\Gamma,A\vdash B}{\Gamma\vdash A \supset B} $
-			\item alkalmazó: $\frac{\Gamma\vdash A \Gamma\vdash A \supset B}{\Gamma \vdash B} $
+			\item bevezető: $$\frac{\Gamma,A\vdash B}{\Gamma\vdash A \supset B} $$
+			\item alkalmazó: $$\frac{\Gamma\vdash A\quad \Gamma\vdash A \supset B}{\Gamma \vdash B} $$
 		\end{itemize}
 		\item Negáció szabályai:
 		\begin{itemize}
-			\item bevezető:$\frac{\Gamma,A\vdash B \Gamma,A\vdash \neg B}{\Gamma\vdash \neg A} $
-			\item alkalmazó:$\frac{\Gamma\vdash \neg\neg A}{\Gamma \vdash A}$
+			\item bevezető:$$\frac{\Gamma,A\vdash B\quad \Gamma,A\vdash \neg B}{\Gamma\vdash \neg A} $$
+			\item alkalmazó:$$\frac{\Gamma\vdash \neg\neg A}{\Gamma \vdash A}$$
 		\end{itemize}
 		\item Konjunkció szabályai:
 		\begin{itemize}
-			\item bevezető:$\frac{\Gamma\vdash A \Gamma\vdash B}{\Gamma\vdash A\land B}$
-			\item alkalmazó:$\frac{\Gamma,A,B\vdash C}{\Gamma,A\land B,\vdash C}$
+			\item bevezető:$$\frac{\Gamma\vdash A\quad \Gamma\vdash B}{\Gamma\vdash A\land B}$$
+			\item alkalmazó:$$\frac{\Gamma,A,B\vdash C}{\Gamma,A\land B,\vdash C}$$
 		\end{itemize}
 		\item Diszjunkció szabályai:
 		\begin{itemize}
-			\item bevezető:$\frac{\Gamma\vdash A}{\frac{\Gamma\vdash A \lor B \Gamma\vdash B}{\Gamma\vdash A \lor B}}$
-			\item alkalmazó:$\frac{\Gamma,A\vdash C \Gamma,B\vdash C}{\Gamma,A\lor B\vdash C}$
+			\item bevezető:$$\frac{\Gamma\vdash A}{\Gamma\vdash A \lor B }\quad \frac{\Gamma\vdash B}{\Gamma\vdash A \lor B}$$
+			\item alkalmazó:$$\frac{\Gamma,A\vdash C\quad \Gamma,B\vdash C}{\Gamma,A\lor B\vdash C}$$
 		\end{itemize}
 		\item (Materiális) ekvivalencia szabályai:
 		\begin{itemize}
-			\item bevezető:$\frac{\Gamma,A\vdash B \Gamma,B\vdash A}{\Gamma\vdash A\equiv B}$
-			\item alkalmazó:$\frac{\Gamma\vdash A \Gamma\vdash A\equiv B}{\frac{\Gamma\vdash B \Gamma\vdash B \Gamma\vdash A \equiv B}{\Gamma\vdash A}}$
+			\item bevezető:$$\frac{\Gamma,A\vdash B\quad \Gamma,B\vdash A}{\Gamma\vdash A\equiv B}$$
+			\item alkalmazó:$$\frac{\Gamma\vdash A\quad \Gamma\vdash A\equiv B}{\Gamma\vdash B }\quad \frac{\Gamma\vdash B\quad \Gamma\vdash A \equiv B}{\Gamma\vdash A}$$
 		\end{itemize}
 	\end{itemize}
+	\end{multicols}
 \end{itemize}
 \end{definition}
 %-------------------------------------------------------------------------------
