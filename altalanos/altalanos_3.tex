@@ -108,6 +108,12 @@ A változó értékkomponense mindig a címen elhelyezett bitkombinációként j
 Egy változó értékkomponensének meghatározására a következő lehetőségek állnak rendelkezésünkre:
 \begin{description}
 	\item[Értékadó utasítás] Az eljárás-orientált nyelvek leggyakoribb utasítása, az algoritmusok kódolásánál alapvető.
+	\item[Input] A változó értékkomponensét egy perifériáról kapott adat határozza meg.
+	\item[Kezdőértékadás] Két fajtája van. \textbf{Explicit kezdőértékadásnál} a programozó explicit deklarációs utasításban a változó értékkomponensét is megadja. Amikor a változó címkomponenst kap, akkor egyben az értéket reprezentáló bitsorozat is beállítódik Megadható az értékkomponens literál vagy kifejezés segítségével.
+	
+	A hivatkozási nyelvek egy része azt mondja, hogy mindaddig, amíg a programozó valamilyen módon nem határozza meg egy változó értékkomponensét, az határozatlan, tehát nem használható föl. Ez azért van, mert amikor egy változó címkomponenst kap, akkor az adott memóriaterületen tetszőleges bitkombináció („szemét”) állhat, amivel nem lehet mit kezdeni.
+	
+	Van olyan hivatkozási nyelv, amely az \textbf{automatikus kezdőértékadás} elvét vallja. Ezeknél a nyelveknél, ha a programozó nem adott explicit kezdőértéket, akkor a címkomponens hozzárendelésekor a hivatkozási nyelv által meghatározott bitkombináció kerül beállításra („nullázódnak a változók”). A hivatkozási nyelvek harmadik része nem mond semmit erről a dologról. Viszont az implementációk túlnyomó része megvalósítja az automatikus kezdőértékadást, akár még a hivatkozási nyelv ellenében is.
 \end{description}
 
 \subsubsection{Kifejezés}
