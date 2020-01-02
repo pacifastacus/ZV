@@ -1,10 +1,41 @@
 %----------------------------------------------------------------------------
 \section{Adatbiztonság}
+{\footnotesize Fizikai, ügyviteli és algoritmusos adatvédelem, az informatikai biztonság szabályozása. Kriptográfiai alapfogalmak. Klasszikus titkosító módszerek. Digitális aláírás, a DSA protokoll.}
 %----------------------------------------------------------------------------
 \subsection{Fizikai, ügyviteli és algoritmusos adatvédelem, az informatikai biztonság szabályozása.}
+\begin{definition}[Adatvédelem]
+	azon fizikai, ügyviteli és algoritmikus eszközök együttes felhasználását értjük, amelyek segítségével a véletlen adatvesztések és szándékos adatrongálódások és információ kiszivárogtatások megelőzhetők, vagy jelentős mértékben megnehezíthetők
+\end{definition}
+\paragraph{Fizikai adatvédelem} két lényegi dolgot takar: Egyrészt biztosítani kell az optimális, de legalább a még elfogadható \textbf{üzemi körülményeket} (hőmérséklet, páratartalom, por, tartalék alkatrészek stb.), másrészt pedig a szükséges \textbf{vagyonvédelmi intézkedésekről} sem szabad megfeledkezni. Például: Villamos hálózat helyes kialakítása; Szünetmentes tápegységek használata; Megfelelő szerverterem kialakítása(klimatizálás, füstérzékelés, árnyékolás,\dots); Megfelelő adattároló eszközfajták használata; Betörésvédelem.
+
+\paragraph{Ügyviteli adatvédelem} a folyamatok szabályozásának, a szabályzatoknak a kialakítása és védelme. A fizikai adatvédelem önmagában ugyanis nem elegendő. Példa: hiába zárjuk be a szerverszoba ajtaját, ha a portás beengedi azt, aki egy szerszámos táskával érkezvén arról tájékoztatja, hogy ’zsírozni kell a switcheket’ (social hacking/engineering). Tehát szükséges \textbf{pontosan szabályozni}, hogy \textbf{ki}, \text{mikor}, \textbf{mit} és \textbf{hogyan} tehet meg, illetve nem tehet meg. Szükség van \textbf{informatikai biztonsági szabályzatra} is, amely mindezt egységes módon áttekinti. Megfelelő felhasználó menedzselési rendet kell kialakítani, hogy a felhasználók, hozzáférési jogosultságaik, munkájukból adódó szerepköreik kezelése összhangba hozható legyen. Példák: Feladat- és jogkörök szétválasztása; Hozzáférések és tevékenységek regisztrálása; Személyazonosítás; Hatáskörök és felelősségek szétválasztása vagy átlapolása.
+
+\paragraph{Algoritmikus adatvédelem} feladata olyan programok és eljárások alkalmazása, amelyek segítik az előző két terület feladatait és létrehozzák azokat a számítógépes védelmi funkciókat, amik ezen a területen meggátolják az adatokhoz való illetéktelen hozzáférést és módosítást. Példák: Hálózati azonosítás; \textbf{Titkosítás}; Behatolásvédelem; Automatikus adatmentés; Többforrásos adattárolás.
+
+\paragraph{Az informatikai biztonsági szabályrendszer szükségessége:} (1) az adatok egyre inkább elektronikus formában jelennek meg; (2) a Szervezetek informatika nélkül működésképtelenek; (3) az informatikai függőség egyre nagyobb; (4) ugyanakkor a fenyegetettség is egyre növekszik; (5) az üzletfolytonossághoz kritikus fontosságú; (6) a kárpotenciál és a kockázati tényezők szervezetenként eltérőek lehetnek!
+
+\subsubsection{Biztonsági célok}
+Alapkövetelmények, amelyek teljesülése az üzemszerű használhatóság előfeltétele:
+\begin{enumerate}
+	\item rendelkezésre állás (elérhetőség az arra jogosultak számára)
+	\item sértetlenség (valódiság)
+	\item bizalmasság (jellegtől függően)
+	\item nyomon követhetőség, hitelesség
+	\item Biztosítékok (az információs rendszer teljességére nézve)
+\end{enumerate}
+Ez alapján úgy lehet meghatározni az Informatikai Biztonság fogalmát, hogy az akkor áll fenn, ha az információs rendszer védelme az alapkövetelmények szempontjából
+\begin{itemize}
+	\item \textbf{zárt:} minden fontos fenyegetést figyelembe vesz
+	\item \textbf{teljes körű:} a rendszer összes elemére kiterjedő
+	\item \textbf{folyamatos:} megszakítás nélküli, az időben változó körülmények ellenére is
+	\item \textbf{kockázatarányos:} a feltehető kárérték és a kár valószínűségének szorzata nem haladhat meg egy előre rögzített küszöböt, amely egy üzleti döntés.
+\end{itemize}
 
 \subsection{Kriptográfiai alapfogalmak.}
 
+
+
 \subsection{Klasszikus titkosító módszerek.}
+
 
 \subsection{Digitális aláírás, a DSA protokoll.}
