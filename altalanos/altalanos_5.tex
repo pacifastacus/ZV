@@ -99,7 +99,7 @@ Olyan speciális adatszerkezet, melynek adatelemei karaktereket kódolnak. A kar
 	\item[Random] A direkt állományokhoz hasonlóan hash függvény helyezi el a rekordokat a blokkokban, de ez a függvény csak egyértelmű (nem kölcsönösen egyértelmű). A logikai rekordok között nincs jól meghatározott kapcsolat. A hash függvény különböző rekordazonosítókhoz ugyanazt a blokkot is kijelölheti. Ennek kezelése:
 	\begin{enumdescript}[noitemsep]
 		\item[Nyílt címzés] A foglalt helyre került elemet a következő szabad helyen helyezi el
-		\item[Láncolás] Listába fűzi az egy helyre került elemeket
+		\item[Láncolás] \emph{Ebben az esetben már összetett állományszerkezetről beszélünk!} Listába fűzi az egy helyre került elemeket: A rekordokban léteznie kell egy mutatómezőnek.
 	\end{enumdescript}
 \end{enumdescript}
 
@@ -116,3 +116,15 @@ Mivel mindkét technika lemezcímeket kezel, ezért az összetett állományszer
 	\item Multilista állomány
 	\item Invertált állomány
 \end{enumerate}
+Ezek táblázatba rendezése:\\
+\begin{tabularx}{0.75\linewidth}{|c|c|X|}
+	\hline 
+	~ & Láncolás & Indexelés \\ 
+	\hline 
+	Elsődleges kulcs & Láncolt szeriális áll. & Indexelt szeriális áll.
+	
+	Indexelt szekvenciális áll. \\ 
+	\hline 
+	Másodlagos kulcs & Multilista áll. & Invertált áll. \\ 
+	\hline 
+\end{tabularx} 
