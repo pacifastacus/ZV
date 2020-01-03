@@ -14,7 +14,8 @@
 	\hline 
 	Kapcsolat & Kapcsolattípus & Kapcsolat-előfordulás \\ 
 	\hline 
-\end{tabular} 
+\end{tabular}
+
 \begin{description}[nosep]
 	\item[Egyed] A valós világnak az az eleme (tárgy, jelenség, elképzelés, személy, fogalom stb.), amely a modellezés tárgyát képezi.
 	\item[Egyedtípus] Az azonos tulajdonságtípusokkal rendelkező egyedek absztrakciója.
@@ -51,26 +52,38 @@ A relációs modell a legelterjedtebb modell. Ez köszönhető egyrészt annak, 
 személyi számítógépek elterjedésekor a megjelenő adatbázis-kezelő rendszerek ezen a modellen alapultak, valamint jól formalizált matematikai háttérrel rendelkezik.\\
 A \textbf{tartomány (domain)} atomi értékek halmaza. Rendelkezik névvel, típussal és formátummal Jele: \textbf{D}\\
 Az \textbf{attribútum} kijelöli az adott tartomány szerepét valamely rendszer esetén. Jele: \textbf{A}\\
-A \textbf{relációs séma} ekkor az R(A 1 , ..., A n ) módon formalizálható, ahol R a séma neve, míg A i -k attribútumok. A relációs séma \textbf{foka} az attribútumainak száma.
+A \textbf{relációs séma} ekkor az $R(A_1, ..., A_n)$ módon formalizálható, ahol R a séma neve, míg A i -k attribútumok. A relációs séma \textbf{foka} az attribútumainak száma.
 
 A reláció ekkor a következő formalizmussal értelmezett:
 $$r = r(R),\quad \text{ahol}\; r \subset dom(A_1) \times \dots \times dom(A_n)$$
-A reláció az \emph{egyedtípusnak} feleltethető meg Az érték n-esek az \emph{egyed-előfordulások}. Szokták \textbf{rekordnak} is nevezni. A reláció kétdimenziós táblázattal szemléltethető. A táblázat oszlopait az attribútumok címkézik, a sorokban pedig a rekordok helyezkednek el. Megjegyzendő, hogy logikai szinten a rekordoknak nincs sorrendjük, a fizikai megvalósítás során mégis szükséges valamilyen sorrend felállítása.
+Másszóval:
+$$ r = \{t_1,\dots,t_m\},\quad\text{ahol }t_i = \langle v_{i1},\dots,v_{in}\rangle \;(1 \leq i \leq m)$$
+a fent említett $v_{ij}\;(1\leq i \leq n)$ érték vagy $dom(A_j)$ eleme vagy NULL érték.
+A relációséma az \emph{egyedtípusnak} feleltethető meg. A reláció sorai\footnote{formális modellben érték n-eseknek hívjuk őket.}, azaz  \textbf{rekordjai} az \emph{egyed-előfordulások} vagy \emph{kapcsolat-előfordulások}. A reláció kétdimenziós táblázattal szemléltethető. A táblázat oszlopait az attribútumok címkézik, a sorokban pedig a rekordok helyezkednek el. Megjegyzendő, hogy logikai szinten a rekordoknak nincs sorrendjük, a fizikai megvalósítás során mégis szükséges valamilyen sorrend felállítása.
 \paragraph{A relációs modell megszorításai}
+Az adatmodell megszorításainak csoportosítása:
+\begin{itemize}[nosep]
+	\item Az adatmodellben benne rejlő megszorítások: \textbf{modellalapú} vagy implicit megszorítások.
+	\item Az adatmodell sémáiban közvetlenül kifejezett megszorítások: \textbf{sémaalapú} vagy explicit megszorítások.
+	\item Olyan megszorítások, amelyeket nem lehet közvetlenül az adatmodell sémáiban kifejezni, és ezért az alkalmazói programokkal kell kifejezni és érvényre juttatni őket: \textbf{alkalmazásalapú} vagy szemantikus megszorítások vagy üzleti szabályok.
+\end{itemize}
+Sémaalapú megszorítások:
 \begin{description}[nosep]
-	\item[Tartomány megszorítás] a tartomány elemei atomiak.
-	\item[Kulcs megszorítás] \emph{Szuper kulcsnak} nevezzük az olyan attribútum halmazt, amelynél nincs két olyan rekord, ahol az attribútumok rendre megegyeznek. Szuper kulcs mindig van. (Ha más nincs, akkor maga a rekord.) Az elsődleges kulcs olyan halmaz, ami szuper kulcsot alkot, de bármely attribútumot elhagyva belőle már nem kapunk szuper kulcsot. (minimális szuper kulcs) Legyen $R_1$ és $R_2$ két reláció. Az $R_1$ reláció $F_k$-val jelölt attribútum halmazát külső kulcsnak nevezzük, ha az $F_k$-hoz tartozó attribútumok tartományai megegyeznek a $R_2$ elsődleges kulcsának tartományaival, és ha teljesül, hogy valamely $R_1$-beli rekord esetén vagy megegyezik valamely $R_2$-beli rekord elsődleges kulcsával, vagy NULL. (A kapcsolatok realizálják a külső kulcsok.)
-\end{description}
-
-\paragraph{Integritási megszorítások}
-\begin{description}
+	\item[Tartomány megszorítás] Minden rekord minden egyes $A$ attribútumhoz tartozó értéknek a $dom(A)$ tartományból kell származnia. Ezen felül a $dom(A)$ tartományok elemei \emph{atomi értékeknek} kell lenniük.
+	\item[Kulcs megszorítás] a relációsémának mindig rendelkeznie kell elsődleges kulccsal. Ennek bővebb tárgyalása később.
 	\item[Egyedintegritási megszorítás] Az elsődleges kulcs nem lehet NULL értékű.
 	\item[Hivatkozási integritási megszorítás] Egy $R_1$ relációséma $FK$-val jelölt attribútumhalmaza külső (idegen) kulcsa $R_1$-nek, amely hivatkozik az $R_2$ relációsémára, ha eleget tesz a következő feltételeknek:
 	\begin{itemize}
 		\item Az $FK$-beli attribútumoknak és az $R_2$ $PK$-val jelölt elsődleges kulcsattribútumainak páronként azonos a tartománya; ekkor azt mondjuk, hogy az $FK$ attribútumok hivatkoznak az $R_2$ relációsémára.
 		\item Bármely $r_1(R_1)$ aktuális állapotának egy $t_1$ rekordjában egy $FK$-beli érték vagy megjelenik egy $r_2(R_2)$ aktuális állapotának valamely $t_2$ rekordjában $PK$ értékeként, vagy az értéke NULL. Az előbbi esetben $t_1[FK] = t_2[PK]$, ekkor azt mondjuk, hogy a $t_1$ rekord hivatkozik a $t_2$ rekordra.
 	\end{itemize}
+	Ha e két feltétel teljesül, egy hivatkozási integritási megszorítás áll fenn $R_1$-ről $R_2$-re vonatkozóan.
 \end{description}
+\subparagraph{Szuperkulcs, kulcs és elsődleges kulcs} 
+\textbf{Szuper kulcsnak} nevezzük az olyan attribútum halmazt, amelynél nincs két olyan rekord, ahol az attribútumok rendre megegyeznek. Szuper kulcs mindig van. (Ha más nincs, akkor a séma összes attribútumának halmaza)\\
+A \textbf{kulcs} olyan halmaz, ami szuper kulcsot alkot, de bármely attribútumot elhagyva belőle már nem kapunk szuper kulcsot (minimális szuper kulcs).\\
+Egy relációsémának egynél több kulcsa is lehet. Ilyen esetben a kulcsok mindegyikét \emph{kulcsjelöltnek} hívjuk. A kulcsjelöltek közül a modellező feladata, hogy válasszon egy \textbf{elsődleges kulcsot}. Ezen kulcs fog a rekordok azonosítására szolgálni.\\
+Legyen $R_1$ és $R_2$ két reláció. Az $R_1$ reláció $F_k$-val jelölt attribútum halmazát \emph{külső kulcsnak} nevezzük, ha az $F_k$-hoz tartozó attribútumok tartományai megegyeznek a $R_2$ elsődleges kulcsának tartományaival, és ha teljesül, hogy valamely $R_1$-beli rekord esetén vagy megegyezik valamely $R_2$-beli rekord elsődleges kulcsával, vagy NULL. (A kapcsolatok realizálják a külső kulcsok.)
 
 \subsubsection{ER modell}
 \begin{itemize}[nosep]
