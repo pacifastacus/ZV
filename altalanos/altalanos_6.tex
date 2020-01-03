@@ -85,6 +85,79 @@ A \textbf{kulcs} olyan halmaz, ami szuper kulcsot alkot, de bármely attribútum
 Egy relációsémának egynél több kulcsa is lehet. Ilyen esetben a kulcsok mindegyikét \emph{kulcsjelöltnek} hívjuk. A kulcsjelöltek közül a modellező feladata, hogy válasszon egy \textbf{elsődleges kulcsot}. Ezen kulcs fog a rekordok azonosítására szolgálni.\\
 Legyen $R_1$ és $R_2$ két reláció. Az $R_1$ reláció $F_k$-val jelölt attribútum halmazát \emph{külső kulcsnak} nevezzük, ha az $F_k$-hoz tartozó attribútumok tartományai megegyeznek a $R_2$ elsődleges kulcsának tartományaival, és ha teljesül, hogy valamely $R_1$-beli rekord esetén vagy megegyezik valamely $R_2$-beli rekord elsődleges kulcsával, vagy NULL. (A kapcsolatok realizálják a külső kulcsok.)
 
+\subsubsection{Funkcionális függés.}
+Más szavakkal: egy R relációsémában X akkor és csak akkor
+határozza meg funkcionálisan Y-t, ha valahányszor r(R) két
+rekordja megegyezik az X értékeken, szükségszerűen
+megegyezik az Y értékeken is.
+\begin{definition}[1]
+	Legyen $R(A_1 , A_2 \dots A_n)$ relációséma és $X$, $Y$ az $\{A_1 , A_2 \dots A_n\}$ attr. halmaz részhalmazai. $X$-től funkcionálisan függ $Y$, ha bármely $R$ feletti $T$ tábla esetén valahányszor két sor megegyezik $X$-n, akkor megegyezik $Y$-n is. Jele: $X \to Y$
+\end{definition}
+\begin{definition}[2]
+	Az $R$ két attribútumhalmaza, $X$ és $Y$ között, $X \to Y$-nal jelölt funkcionális függés előír egy megszorítást azokra a lehetséges rekordokra, amelyek egy $R$ fölötti $r$ relációt alkothatnak. A megszorítás az, hogy bármely két, $r$-beli $t_1$ és $t_2$ rekord esetén, amelyekre $t_1[X] = t_2[X]$ teljesül, teljesülnie kell $t_1[Y] = t_2[Y]$-nak is.
+\end{definition}
+\begin{note}
+	Két attribútumhalmaz közötti összefüggést/kapcsolatot írja le. Legyen X és Y az R reláció két attribútumhalmaza! Y funkcionálisan függ X-től ( vagy X funkcionálisan meghatározza Y-t), ha bármelyik két rekord esetén abból, hogy a két rekord X attribútum-értékei megegyeznek következik, hogy az Y attribútum-értékei is megegyeznek.
+\end{note}
+\begin{note}
+	A funkcionális függés nem két irányú kapcsolat!\\
+	Ha $X \to Y$ és $Y \to X$ egyszerre áll fenn, akkor azt mondjuk, hogy $X$ és $Y$ \textbf{kölcsönös funkcionális függésben} áll egymással.
+\end{note}
+
+\begin{theorem}[A funkcionális függés tulajdonságai]~\\
+	\begin{enumerate}[nosep]
+		\item reflexivitás: $\text{Ha} X\subseteq Y,\quad \text{akkor} X \to Y$\\
+		{\small\bfseries Egy attribútumhalmaz mindig meghatározza önmagát, vagy saját maga bármilyen részhalmazát.}
+		{\footnotesize $X = \{A_1,A_2,A_3,A_4\}$\\
+			$Y = \{A_2,A_3\}$\\
+			$t_1[X] = t_2[X] \implies t_1[Y]=t_2[Y]$}
+		\item augmentivitás: $\{X\to Y\}\quad \implies XZ \to YZ $\\
+		{\small\bfseries egy funkcionális függés mindkét oldalának ugyanazzal az attribútumhalmazzal történő bővítése újabb érvényes funkcionális függést eredményez.}
+		
+		\item tranzitivitás: $\{X \to Y,Y \to Z\}\quad \implies X \to Z$\\
+		{\small\bfseries a funkcionális függések tranzitívak.}
+		\item dekompozíció: $\{X \to YZ\}\quad \implies X \to Y$\\
+		{\small\bfseries egy funkcionális függés jobb oldaláról eltávolíthatunk attribútumokat.}
+		\item additivitás szabályai: $\{X \to Y,X \to Z\}\quad \implies X \to YZ$\\
+		{\small\bfseries funkcionális függések egy $\{X \to A_1 ,X \to A_2 ,\dots,X \to A_n \}$ halmazát összevonhatjuk egyetlen $X \to \{A_1 ,A_2 ,\dots,A_n \}$ funkcionális függéssé.}
+		\item pszeudotranzitivitás: $\{X \to Y,WY \to Z\}\quad \implies WX \to Z$\\
+	\end{enumerate}
+\end{theorem}
+\begin{definition}[Triviális függés]
+	Egy $X \to Y$ funkcionális függés \textbf{triviális}, ha $X \subseteq Y$ (Y részhalmaza X-nek), egyébként nemtriviális.
+\end{definition}
+\begin{theorem}[Triviális függés]
+	Egy $X \to Y$ funkcionális függés \textbf{teljesen nem triviális}, ha $X\cap Y=\emptyset$ ($X$ és $Y$ metszete üres halmaz).
+\end{theorem}
+
+\subsubsection{Normálformák}
+\paragraph{Első normál forma (1NF)}
+Egy reláció első normál formában van, ha minden attribútuma egyszerű, nem összetett adat.
+\paragraph{Második normál forma (2NF)}
+Az első normál forma nem elegendő feltétel a redundanciák megszüntetésére. Egy reláció második normál alakjában nem tartalmazhat tényeket a reláció kulcs egy részére vonatkozóan. A második normál forma definíciója két feltétellel írható le.
+\begin{itemize}[nosep]
+	\item A reláció első normál formában van
+	\item A reláció minden nem elsődleges attribútuma funkcionálisan függ az elsődleges kulcstól.
+\end{itemize}
+\paragraph{Harmadik normál forma (3NF)}
+A második normál formájú relációkban nem lehetnek olyan tények, amelyek a reláció kulcs részeihez kapcsolódnak. Azonban ennek ellenére is lehet bennük redundancia, ha olyan tényeket tartalmaznak, amelyek a nem elsődleges attribútumokkal állnak kapcsolatban. Ezt a lehetőséget szünteti meg a harmadik normál forma. Egy reláció harmadik normál formában van, ha
+\begin{itemize}[nosep]
+	\item A reláció második normál formában van.
+	\item A reláció nem tartalmaz funkcionális függőséget a nem elsődleges attribútumok között.
+\end{itemize}
+\paragraph{Boyce/Codd normál forma (BCNF)}
+A normál formák tárgyalása során eddig olyan relációkra mutattunk példákat, melyeknek csak egy reláció kulcsa van. A normál formák definíciója természetesen alkalmazható a több kulccsal rendelkező relációkra is. Ebben az esetben minden attribútum, mely valamely kulcsnak a része, elsődleges attribútum, de ez az attribútum függhet egy másik, ezt nem tartalmazó kulcs részétől. Ha ez a helyzet fennáll, redundanciát tartalmaz a reláció. Ennek a felismerése vezetett a harmadik normál forma egy szigorúbb definíciójához, a Boyce/Codd normál formához.
+\begin{itemize}[nosep]
+	\item Minden elsődleges attribútum teljes funkcionális függőségben van azokkal a kulcsokkal, melyeknek nem része
+\end{itemize}
+
+\paragraph{Negyedik normál forma (4NF)}
+Egy reláció negyedik normál formában van, ha 3. normál formában van, és legfeljebb egy többértékű függés\footnote{Többértékű függőség: $X \to\to Y$ függőséget kielégíti egy R reláció, ha $\forall t_1,t_2 \in R \exists t_3 \in R$ úgy, hogy: 1)$t_1[X]=t_2[X]$ 2)$t_3[XY]=t_1[XY]$ 3)$t_3[R-XY]=t_2[R-XY]$. Következménye:$\exists t_4\in R$ úgy, hogy: 1)$t_4[XY]=t_2[XY]$ 2)$t_4[R-XY]=t_1[R-XY]$} van benne. Másként: Az összetett azonosító egyik része sem függ a másiktól, csak az összetett azonosító egészétől.
+\paragraph{Ötödik normál forma (5NF)}
+Az összetett azonosító nem okoz pszeudotranzitív funkcionális függést.\\
+
+A harmadik normálformáig mindenféleképpen érdemes normalizálni a relációkat. Ez a redundanciák nagy részét kiszűri. Azok az esetek, melyekben a negyedik illetve az ötödik normál formák alkalmazására van szükség, ritkábban fordulnak elő. Az ötödik normál forma esetén a redundancia megszüntetése nagyobb tároló terület felhasználásával lehetséges csak. Így általában az adatbázis tervezője döntheti el, hogy az ötödik normál formát és a nagyobb adatbázist vagy a redundanciát és a komplikáltabb frissítési, módosítási algoritmusokat választja.
+
 \subsubsection{ER modell}
 \begin{itemize}[nosep]
 	\item egyed - kapcsolat modell
@@ -211,48 +284,7 @@ Az adatbázis architektúra \emph{fizikai (belső)}, \emph{logikai (külső)} é
 
 Az adatbázis-építés során először elemzés, tervezés, modellezés útján kell eljutni sémához és alsémákhoz koncepcionális szinten, majd e sémát leírva meta adatbázisba kerül (üres adatbázis), fel kell tölteni a fizikai adatbázist, végül lekérdezések útján nyerhetők ki a szükséges információk.
 
-\subsection{Funkcionális függés.}
-\begin{definition}[1]
-	Legyen $R(A_1 , A_2 \dots A_n)$ relációséma és $X$, $Y$ az $\{A_1 , A_2 \dots A_n\}$ attr. halmaz részhalmazai. $X$-től funkcionálisan függ $Y$, ha bármely $R$ feletti $T$ tábla esetén valahányszor két sor megegyezik $X$-n, akkor megegyezik $Y$-n is. Jele: $X \to Y$
-\end{definition}
-\begin{definition}[2]
-	Az $R$ két attribútumhalmaza, $X$ és $Y$ között, $X \to Y$-nal jelölt funkcionális függés előír egy megszorítást azokra a lehetséges rekordokra, amelyek egy $R$ fölötti $r$ relációt alkothatnak. A megszorítás az, hogy bármely két, $r$-beli $t_1$ és $t_2$ rekord esetén, amelyekre $t_1[X] = t_2[X]$ teljesül, teljesülnie kell $t_1[Y] = t_2[Y]$-nak is.
-\end{definition}
-\begin{note}
-	Két attribútumhalmaz közötti összefüggést/kapcsolatot írja le. Legyen X és Y az R reláció két attribútumhalmaza! Y funkcionálisan függ X-től ( vagy X funkcionálisan meghatározza Y-t), ha bármelyik két rekord esetén abból, hogy a két rekord X attribútum-értékei megegyeznek következik, hogy az Y attribútum-értékei is megegyeznek.
-\end{note}
-\begin{note}
-	A funkcionális függés nem két irányú kapcsolat!\\
-	Ha $X \to Y$ és $Y \to X$ egyszerre áll fenn, akkor azt mondjuk, hogy $X$ és $Y$ \textbf{kölcsönös funkcionális függésben} áll egymással.
-\end{note}
-
-\begin{theorem}[A funkcionális függés tulajdonságai]~\\
-	\begin{enumerate}[nosep]
-		\item reflexivitás: $\text{Ha} X\subseteq Y,\quad \text{akkor} X \to Y$\\
-			{\small\bfseries Egy attribútumhalmaz mindig meghatározza önmagát, vagy saját maga bármilyen részhalmazát.}
-			{\footnotesize $X = \{A_1,A_2,A_3,A_4\}$\\
-			$Y = \{A_2,A_3\}$\\
-			$t_1[X] = t_2[X] \implies t_1[Y]=t_2[Y]$}
-		\item augmentivitás: $\{X\to Y\}\quad \implies XZ \to YZ $\\
-			{\small\bfseries egy funkcionális függés mindkét oldalának ugyanazzal az attribútumhalmazzal történő bővítése újabb érvényes funkcionális függést eredményez.}
-			
-		\item tranzitivitás: $\{X \to Y,Y \to Z\}\quad \implies X \to Z$\\
-			{\small\bfseries a funkcionális függések tranzitívak.}
-		\item dekompozíció: $\{X \to YZ\}\quad \implies X \to Y$\\
-			{\small\bfseries egy funkcionális függés jobb oldaláról eltávolíthatunk attribútumokat.}
-		\item additivitás szabályai: $\{X \to Y,X \to Z\}\quad \implies X \to YZ$\\
-			{\small\bfseries funkcionális függések egy $\{X \to A_1 ,X \to A_2 ,\dots,X \to A_n \}$ halmazát összevonhatjuk egyetlen $X \to \{A_1 ,A_2 ,\dots,A_n \}$ funkcionális függéssé.}
-		\item pszeudotranzitivitás: $\{X \to Y,WY \to Z\}\quad \implies WX \to Z$\\
-	\end{enumerate}
-\end{theorem}
-\begin{definition}[Triviális függés]
-	Egy $X \to Y$ funkcionális függés \textbf{triviális}, ha $X \subseteq Y$ (Y részhalmaza X-nek), egyébként nemtriviális.
-\end{definition}
-\begin{theorem}[Triviális függés]
-	Egy $X \to Y$ funkcionális függés \textbf{teljesen nem triviális}, ha $X\cap Y=\emptyset$ ($X$ és $Y$ metszete üres halmaz).
-\end{theorem}
-
-\subsection{Relációalgebra és relációkalkulus. }
+\subsection{Relációalgebra és relációkalkulus.}
 A relációalgebra egy absztrakt kezelő nyelv. Minden relációs algebrai művelet eredménye egy reláció lesz.
 
 \subsubsection{Unáris műveletek}
@@ -312,34 +344,6 @@ A reláció kalkulus egy elsőrendű logikán alapuló lekérdező nyelv.
 	\item[rekord alapú (soralapú) relációkalkulus] (Tuple Relation Calculus – TRC) formuláiban rekordváltozók és attribútumaik szerepelnek. A formulák elején az eredménybe kerülő attribútumok szerepelnek (amiket az ABC kisbetűivel jelölünk), a végén a feltételek, hogy milyen sorokból. Atomi formulái sor attribútumértéke hasonlító operátor másik sor attribútumértéke vagy (konstans) érték formában épülnek fel. Formulái atomi formulákból képezhetőek logikai összekötőjelekkel és kvantorokkal.
 	\item[tartomány alapú relációkalkulus] tartományváltozókkal (attribútumok) dolgozik. Formuláiban elöl az attribútumok, hátul a feltételek szerepelnek. Atomi formulái tartományváltozó, hasonlító operátor, érték vagy tartományváltozó. Formulái atomi formulákból képezhetőek logikai összekötőjelekkel és kvantorokkal.
 \end{description}
-
-\subsubsection{Normálformák}
-\paragraph{Első normál forma (1NF)}
-Egy reláció első normál formában van, ha minden attribútuma egyszerű, nem összetett adat.
-\paragraph{Második normál forma (2NF)}
-Az első normál forma nem elegendő feltétel a redundanciák megszüntetésére. Egy reláció második normál alakjában nem tartalmazhat tényeket a reláció kulcs egy részére vonatkozóan. A második normál forma definíciója két feltétellel írható le.
-\begin{itemize}[nosep]
-	\item A reláció első normál formában van
-	\item A reláció minden nem elsődleges attribútuma funkcionálisan függ az elsődleges kulcstól.
-\end{itemize}
-\paragraph{Harmadik normál forma (3NF)}
-A második normál formájú relációkban nem lehetnek olyan tények, amelyek a reláció kulcs részeihez kapcsolódnak. Azonban ennek ellenére is lehet bennük redundancia, ha olyan tényeket tartalmaznak, amelyek a nem elsődleges attribútumokkal állnak kapcsolatban. Ezt a lehetőséget szünteti meg a harmadik normál forma. Egy reláció harmadik normál formában van, ha
-\begin{itemize}[nosep]
-	\item A reláció második normál formában van.
-	\item A reláció nem tartalmaz funkcionális függőséget a nem elsődleges attribútumok között.
-\end{itemize}
-\paragraph{Boyce/Codd normál forma (BCNF)}
-A normál formák tárgyalása során eddig olyan relációkra mutattunk példákat, melyeknek csak egy reláció kulcsa van. A normál formák definíciója természetesen alkalmazható a több kulccsal rendelkező relációkra is. Ebben az esetben minden attribútum, mely valamely kulcsnak a része, elsődleges attribútum, de ez az attribútum függhet egy másik, ezt nem tartalmazó kulcs részétől. Ha ez a helyzet fennáll, redundanciát tartalmaz a reláció. Ennek a felismerése vezetett a harmadik normál forma egy szigorúbb definíciójához, a Boyce/Codd normál formához.
-\begin{itemize}[nosep]
-	\item Minden elsődleges attribútum teljes funkcionális függőségben van azokkal a kulcsokkal, melyeknek nem része
-\end{itemize}
-
-\paragraph{Negyedik normál forma (4NF)}
-Egy reláció negyedik normál formában van, ha 3. normál formában van, és legfeljebb egy többértékű függés\footnote{Többértékű függőség: $X \to\to Y$ függőséget kielégíti egy R reláció, ha $\forall t_1,t_2 \in R \exists t_3 \in R$ úgy, hogy: 1)$t_1[X]=t_2[X]$ 2)$t_3[XY]=t_1[XY]$ 3)$t_3[R-XY]=t_2[R-XY]$. Következménye:$\exists t_4\in R$ úgy, hogy: 1)$t_4[XY]=t_2[XY]$ 2)$t_4[R-XY]=t_1[R-XY]$} van benne. Másként: Az összetett azonosító egyik része sem függ a másiktól, csak az összetett azonosító egészétől.
-\paragraph{Ötödik normál forma (5NF)}
-Az összetett azonosító nem okoz pszeudotranzitív funkcionális függést.\\
-
-A harmadik normálformáig mindenféleképpen érdemes normalizálni a relációkat. Ez a redundanciák nagy részét kiszűri. Azok az esetek, melyekben a negyedik illetve az ötödik normál formák alkalmazására van szükség, ritkábban fordulnak elő. Az ötödik normál forma esetén a redundancia megszüntetése nagyobb tároló terület felhasználásával lehetséges csak. Így általában az adatbázis tervezője döntheti el, hogy az ötödik normál formát és a nagyobb adatbázist vagy a redundanciát és a komplikáltabb frissítési, módosítási algoritmusokat választja.
 
 \subsection{Az SQL.}
 Az SQL (Structured Query Language) szabványosított struktúrált lekérdezőnyelv, amely a relációs adatmodell alapján felépülő adatbázisok kezelésére képes. Az SQL olyan nyelv, mely platformfüggetlen. Részei:

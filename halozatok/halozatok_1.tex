@@ -4,11 +4,57 @@
 %----------------------------------------------------------------------------
 \subsection{Fizikai jelátviteli közegek.}
 
+\subsubsection{Koaxiális kábel}
+A középponttól a burkolatig haladva az alábbi részekből áll: központi vezeték, dielektrum, árnyékoló réteg, külső műanyag szigetelés.\\
+A koncentrikus felépítés miatt kevésbé érzékeny a zavarokra és az áthallásra, mint a csavart érpár. Nagyobb távolságra használható és többpontos alkalmazásban több állomást is képes támogatni (egy közös vonalon).
+
+Egy vezetékre párhuzamosan több kommunikációs eszköz is felszerelhető. 
+Analóg átvitel esetén néhány km-enként szükséges erősítés. Mintegy 600 MHz-ig
+használható. Digitális átvitel esetén km-enként szükséges jelismétlő használata.
+A mai (strukturált kábelezési technológiára épülő) LAN környezetekben már nem
+használják új építésű passzív hálózatokhoz.
+
+\subsubsection{Csavart érpár}
+A távközlésben alkalmazott kábeltípusok több csavart érpárt tartalmaznak (Számítógép hálózatoknál a 4 érpár szokott lenni). Ezek egy része oda másik része visszirányú információtovábbításra szolgál.
+
+A csavart érpárú kábeleket többféleképpen csoportosíthatjuk. Egyik alapvető különbsége a kábeleknek az árnyékolásuk. Eszerint léteznek árnyékolatlan (UTP), és árnyékolt (FTP,STP) kábeltípusok. Ezen túlmenően a kábelek átviteli jellemzők szerint különböző kategóriákba csoportosítjuk őket:\\
+\begin{tabular}{|c|c|c|c|}
+	\hline 
+	Kategória (USA) & Osztály (EU) & Frekvencia & Bitráta \\ 
+	\hline 
+	Caetgory 3 & Class C & 16 MHz & 10 Mb/s \\ 
+	\hline 
+	Cat. 5/5e & Class D & 125 MHz & 100 Mb/s 2 ill. 1 Gb/s 4 érpáron \\ 
+	\hline 
+	Cat 6 & Class E & 250 MHz & 1 Gb/s 2 érpáron \\ 
+	\hline 
+	Cat 6a & Class EA & 500 MHz & 10 Gb/s \\ 
+	\hline 
+	Cat 7 & Class F & 600 MHz & 10 Gb/s \\ 
+	\hline 
+\end{tabular} 
+
+A csavart érpár kialakításával két dolgot érünk el:
+\begin{description}[nosep]
+	\item[Zajcsökkentés] A külső zavaró jelek a két, egymáshoz közeli és azonos tulajdonságú dróton megegyező amplitúdóval és fázissal jelennek meg, így a két drót közötti feszültségben a külső jelek hatása nagymértékben kioltja egymást. A csavarásnak köszönhetően a két drót hasonlóan erősen csatolódik a külső jelekhez, hiszen néha az egyik, néha a másik drót van közelebb a zavaró jel forrásához. (Emiatt kell több érpárt más menetemelkedéssel csavarni, hogy ne legyenek minden menetben ugyanúgy összecsatolódva a különböző párok tagjai. Az áthallás így minimalizálható.)
+	\item[Vezeték sugárzásának csökkentése] A pár két tagján ellentétes fázisú jelet továbbítva a két drót sugárzása erősen kioltja egymást, így nem fog antennaként viselkedni a kábel.
+\end{description}
+\subsubsection{Optikai szál}
+Egy optikai kábel több szálból tevődik össze, melyek hierarchikusan rendezett nyalábokba vannak szervezve. Épületekben, géptermekben oda-vissza irányú szálpárból (egyenként egycsatornásak) alkotott optikai vezetékeket is használnak. A szálak rétegből tevődnek össze: mag, védőburkolat, puffer, köpeny. 
+
+Egy optikai szál egy vagy több optikai csatorna (WDM) számára használható. Egy csatornás változatban az oda-vissza pont-pont kapcsolathoz két szál szükséges. A fény egy vagy több módusban terjed az optikai szálban eszerint beszélünk egy-módusú (SMF--Singlemode Fibre) és több-módusú (MMF--Multimode Fibre) optikai szálról. Fizikai megnyilvánulásaikban az SMF kábel magja kisebb keresztmetszetű az MMF-éhez képest. Jeltovábbítás tekintetében az SMF jobb, mivel a fény a szál tengelyével párhuzamosan fut visszaverődés nélkül. Emiatt a fényimpulzusok nem torzulnak, nagyobb átviteli sebesség érhető el.
+
+\subsubsection{Rádióhullámok}
+
+
 \subsection{Forráskódolás, csatornakódolás és moduláció.}
+
 
 \subsection{Csatornafelosztás és multiplexelési technikák.}
 
+
 \subsection{Vezetékes és a mobil távközlő hálózatok.}
+
 
 \subsection{Műholdas kommunikáció és helymeghatározás.}
 

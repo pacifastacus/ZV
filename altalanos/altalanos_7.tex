@@ -11,35 +11,35 @@ Az OSI modell a hálózatot mintegy réteges tortát képzeli el. Ennek a tortá
 \paragraph[Fizikai réteg]{\arabic{paragraph}. Fizikai réteg (physical layer)}
 Elektromos és mechanikai jellemzők procedurális és funkcionális specifikációja két (közvetlen fizikai összeköttetésű) eszköz közötti jeltovábbítás céljából. A bitátvitel megvalósítása a legfontosabb feladata.\\
 %Másik megfogalmazás
-%Ez a legalsó réteg, amely a fizikai közeggel foglalkozik, azzal, hogy hogyan kell az elektromos jeleket a hálózati kábelekre ültetni. Biztosítania kell, hogy a kábelre kiküldött 1 bitet a vevõ oldal is 1-nek lássa, és ne 0-nak. Mi a feltétele, és hogyan lehet megvalósítani a lehetõ legminimálisabb háttérzajt, stb. Az összes, internetet alkotó hálózat lényegében csak a fizikai rétegeiken keresztül kommunikál egymással. Az internetek forgalma bármilyen fizikai közegen továbbítható, ennek mikéntjét írja le a fizikai réteg, és annak protokolljai.\\
+{\footnotesize Ez a legalsó réteg, amely a fizikai közeggel foglalkozik, azzal, hogy hogyan kell az elektromos jeleket a hálózati kábelekre ültetni. Biztosítania kell, hogy a kábelre kiküldött 1 bitet a vevõ oldal is 1-nek lássa, és ne 0-nak. Mi a feltétele, és hogyan lehet megvalósítani a lehetõ legminimálisabb háttérzajt, stb. Az összes, internetet alkotó hálózat lényegében csak a fizikai rétegeiken keresztül kommunikál egymással. Az internetek forgalma bármilyen fizikai közegen továbbítható, ennek mikéntjét írja le a fizikai réteg, és annak protokolljai.}\\
 \textbf{Adategység: bit}
 \stepcounter{paragraph}
 %2
 \paragraph[Adatkapcsolati réteg]{\arabic{paragraph}. Adatkapcsolati réteg (data-link layer)}
-Megbízható adatátvitelt biztosít egy fizikai összeköttetésen keresztül. Ezen réteg legfontosabb funkcionalitása a közeghozzáférés (egy csatorna megosztása a rá kapcsolt állomások közt), problémaköréhez tartozik a fizikai címzés, hálózati topológia, közeghozzáférés, fizikai átvitel hibajelzése és a keretek sorrendhelyes kézbesítése. Az IEEE két alrétegre (MAC- Medium Access Controll, LLC – Logical Link Controll) bontotta az adatkapcsolati réteget.\\
+Megbízható adatátvitelt biztosít egy fizikai összeköttetésen keresztül. Ezen réteg legfontosabb funkcionalitása a közeghozzáférés (egy csatorna megosztása a rá kapcsolt állomások közt), problémaköréhez tartozik a fizikai címzés közeghozzáférés, fizikai átvitel hibajelzése. Az IEEE két alrétegre (MAC- Medium Access Controll, LLC – Logical Link Controll) bontotta az adatkapcsolati réteget.\\
 %Másik megfogalmazás
-%Ez a réteg a fizikai réteg felett helyezkedik el. A feladata abban áll, hogy biztosítsa: az adó oldali adatok a vevõ oldalra is adatként jussanak el, és ne legyen belõle értelmetlen jelek sorozata: szemét. Ezt úgy valósítja meg, hogy az adatokat egyértelmûen azonosítható adatkeretkre tördeli szét, ellátja a szükséges vezérlõbitekkel, majd sorrendben továbbítja azokat. A vevõ oldal pedig a kapott kereteket megfelelõ sorrendben összeállítja. Az adó oldal ezenkívül még a vevõ által küldött nyugtázásokat is feldolgozza. Mivel a fizikai réteg a biteket értelmezés nélkül továbbítja, ezért az adatkapcsolati réteg feladata, hogy felismerje a keretek határait. Másik fontos feladata az, hogy a kétirányú átvitel esetén az esetleges ütközésekbõl adódó problémákat megoldja.\\
+{\footnotesize Ez a réteg a fizikai réteg felett helyezkedik el. A feladata abban áll, hogy biztosítsa: az adó oldali adatok a vevõ oldalra is adatként jussanak el, és ne legyen belõle értelmetlen jelek sorozata: szemét. Ezt úgy valósítja meg, hogy az adatokat egyértelmûen azonosítható adatkeretkre tördeli szét, ellátja a szükséges vezérlõbitekkel, majd sorrendben továbbítja azokat. A vevõ oldal pedig a kapott kereteket megfelelõ sorrendben összeállítja. Az adó oldal ezenkívül még a vevõ által küldött nyugtázásokat is feldolgozza. Mivel a fizikai réteg a biteket értelmezés nélkül továbbítja, ezért az adatkapcsolati réteg feladata, hogy felismerje a keretek határait. Másik fontos feladata az, hogy a kétirányú átvitel esetén az esetleges ütközésekbõl adódó problémákat megoldja.}\\
 \textbf{Adategység: keret}
 \stepcounter{paragraph}
 %3
 \paragraph[Hálózati réteg]{\arabic{paragraph}. Hálózati réteg (network layer)}
 Összeköttetést és útvonalválasztást biztosít a nem közvetlen összeköttetésű hálózati csomópontok közt. Világméretben bárhonnan bárhová lehessen küldeni információt. Redundáns útvonalak is lehetnek. Ezek közül a 3. rétegnek kell választania.\\
 %Másik megfogalmazás
-%A hálózati réteg az adatkapcsolati réteg felett helyezkedik el, és alapfeladata az adatkapcsolati réteg által elkészített keretek forrás- és célállomás közti útvonalának meghatározása/kiválasztása, azaz a forgalomirányítás: merre, milyen útvonalon (kvázi melyik számítógépeken, hálózatokon keresztül) kell az adatokat küldeni, hogy a rendeltetési helyre érkezzenek. Ez történhet statikusan: olyan táblázatok segítségével, amelyek nem változnak; dinamikusan: ilyenkor a táblázatok állandóan változnak, és a hálózat aktuális helyzetét (térképét) adják. Ezzel a módszerrel figyelembe vehető a hálózat terhelése is. Természetesen igaz az, hogy két keret, amelynek ugyanaz a forrás- és célállomása is, nem biztos, hogy ugyanazon az útvonalon keresztül jut el a rendeltetési helyre, hiszen a hálózat pillanatról pillanatra változik. Amennyiben túl sok a hálózaton a küldendõ adatkeret, akkor ezek egymást akadályozzák, feltorlódhatnak. Ezzel az úgynevezett torlódási problémával is a hálózati rétegnek kell szembenéznie. Ha egy adatkeretnek több hálózaton kell áthaladnia ahhoz, hogy célba érjen, akkor probléma merülhet fel olyan esetekben is, ahol a hálózatok eltérõ felépítésûek. A problémát (ti. a heterogén hálózatok összekapcsolását) szintén a hálózati réteg oldja meg. A hálózati réteg feladatait a TCP/IP alapú hálózatokban az Internet Protocol látja el.\\
+{\footnotesize A hálózati réteg az adatkapcsolati réteg felett helyezkedik el, és alapfeladata az adatkapcsolati réteg által elkészített keretek forrás- és célállomás közti útvonalának meghatározása/kiválasztása, azaz a forgalomirányítás: merre, milyen útvonalon (kvázi melyik számítógépeken, hálózatokon keresztül) kell az adatokat küldeni, hogy a rendeltetési helyre érkezzenek. Ez történhet statikusan: olyan táblázatok segítségével, amelyek nem változnak; dinamikusan: ilyenkor a táblázatok állandóan változnak, és a hálózat aktuális helyzetét (térképét) adják. Ezzel a módszerrel figyelembe vehető a hálózat terhelése is. Természetesen igaz az, hogy két keret, amelynek ugyanaz a forrás- és célállomása is, nem biztos, hogy ugyanazon az útvonalon keresztül jut el a rendeltetési helyre, hiszen a hálózat pillanatról pillanatra változik. Amennyiben túl sok a hálózaton a küldendõ adatkeret, akkor ezek egymást akadályozzák, feltorlódhatnak. Ezzel az úgynevezett torlódási problémával is a hálózati rétegnek kell szembenéznie. Ha egy adatkeretnek több hálózaton kell áthaladnia ahhoz, hogy célba érjen, akkor probléma merülhet fel olyan esetekben is, ahol a hálózatok eltérõ felépítésûek. A problémát (ti. a heterogén hálózatok összekapcsolását) szintén a hálózati réteg oldja meg. A hálózati réteg feladatait a TCP/IP alapú hálózatokban az Internet Protocol látja el.}\\
 \textbf{Adategység: csomag}
 \stepcounter{paragraph}
 %4
 \paragraph[Szállítási réteg]{\arabic{paragraph}. Szállítási réteg (transport layer)}
 Megbízható hálózati összeköttetést létesít két csomópont között. Feladatkörébe tartozik pl.: a virtuális áramkörök kezelése, átviteli hibák felismerése/javítása és az áramlásszabályozás. Az egyik oldalon bemenő bitfolyamnak kell kijönnie a másik oldalon.\\
 %Másik megfogalmazás
-%A hálózati réteg felett elhelyezkedve, ez a réteg biztosítja azt, hogy minden adat érintetlenül, sértetlenül érkezzen meg a rendeltetési helyére. Az adatokat csomagokra bontja szét, ha szükséges. A szállítási réteg két végpont között réteg, ami azt jelenti, hogy itt a forrás- és a célállomás egymással kommunikál, míg az alsóbb rétegeknél ez nem igaz: ott a gazdagépek a szomszédjukkal folytatnak párbeszédet. Ezarra jó, hogy a réteg mintegy azt ellenõrzi, hogy az átvitel során a közbeesõ gépek mindegyike helyesen vitte-e át az adatokat.A szállítási réteg feladatait TCP/IP alapú hálózatokban a Transmission Control Protocol látja el. A következõ három réteg a felhasználók számára biztosít szolgáltatásokat. A három réteget együtt felsõ rétegeknek nevezik.\\
+{\footnotesize A hálózati réteg felett elhelyezkedve, ez a réteg biztosítja azt, hogy minden adat érintetlenül, sértetlenül érkezzen meg a rendeltetési helyére. Az adatokat csomagokra bontja szét, ha szükséges. A szállítási réteg két végpont között réteg, ami azt jelenti, hogy itt a forrás- és a célállomás egymással kommunikál, míg az alsóbb rétegeknél ez nem igaz: ott a gazdagépek a szomszédjukkal folytatnak párbeszédet. Ezarra jó, hogy a réteg mintegy azt ellenõrzi, hogy az átvitel során a közbeesõ gépek mindegyike helyesen vitte-e át az adatokat.A szállítási réteg feladatait TCP/IP alapú hálózatokban a Transmission Control Protocol látja el. A következõ három réteg a felhasználók számára biztosít szolgáltatásokat. A három réteget együtt felsõ rétegeknek nevezik.}\\
 \textbf{Adategység: Szegmens vagy TPDU}
 \stepcounter{paragraph}
 %5
 \paragraph[Viszonyréteg]{\arabic{paragraph}. Viszonyréteg (session layer)}
 Ez a réteg építi ki, kezeli és fejezi be az alkalmazások közötti dialógusokat (session, dialógus kontroll).\\
 %Másik megfogalmazás
-Közvetlenül a szállítási rétegre épül. Ez a réteg azt teszi lehetõvé, hogy különbözõ gépek felhasználói viszonyt létesíthessenek egymással. Lényegében közönséges adatátvitelrõl van szó, amihez néhány kényelmes szolgáltatást adtak hozzá. Ilyen például az úgynevezett kölcsönhatás-menedzselés, ami vezérli, hogy a két oldal egyszerre ne próbálkozzon ugyanazzal a mûvelettel. Ez például úgy oldható meg, hogy vezérlõjelet tartanak fent, és csak az az oldal végezheti az adott mûveletet, amelyiknél ez a vezérlõjel van. Egy másik fontos szolgáltatás a szinkronizáció. Képzeljük el például, hogy egy állománytovábbítás valamilyen hálózati hiba miatt megszakad. Jó lenne, ha ilyen esetben nem kellene elölrõl kezdeni az egészet. Ezért a viszonyréteg az adatokhoz úgynevezett szinkronizációs jeleket ragaszt, amelyek segítségével a hiba megszûnése után az adatok továbbítása az utolsó ellenõrzési jeltõl folytatódhat.\\
+{\footnotesize Közvetlenül a szállítási rétegre épül. Ez a réteg azt teszi lehetõvé, hogy különbözõ gépek felhasználói viszonyt létesíthessenek egymással. Lényegében közönséges adatátvitelrõl van szó, amihez néhány kényelmes szolgáltatást adtak hozzá. Ilyen például az úgynevezett kölcsönhatás-menedzselés, ami vezérli, hogy a két oldal egyszerre ne próbálkozzon ugyanazzal a mûvelettel. Ez például úgy oldható meg, hogy vezérlõjelet tartanak fent, és csak az az oldal végezheti az adott mûveletet, amelyiknél ez a vezérlõjel van. Egy másik fontos szolgáltatás a szinkronizáció. Képzeljük el például, hogy egy állománytovábbítás valamilyen hálózati hiba miatt megszakad. Jó lenne, ha ilyen esetben nem kellene elölrõl kezdeni az egészet. Ezért a viszonyréteg az adatokhoz úgynevezett szinkronizációs jeleket ragaszt, amelyek segítségével a hiba megszûnése után az adatok továbbítása az utolsó ellenõrzési jeltõl folytatódhat.}\\
 (\textbf{Adategység: Üzenet, PDU -- Protocol Data Unit})
 \stepcounter{paragraph}
 
@@ -60,9 +60,38 @@ A fentiek fényében foglaljuk össze, hogy hogyan mûködik egy ilyen hálózat
 (\textbf{Adategység: Üzenet, PDU -- Protocol Data Unit})
 
 \subsection{Ethernet szabványok. (IEEE 802.3 )}
-Az OSI hivatkozási modell két legalsó rétegét kielégítő protokoll gyűjtemény.
+Az OSI hivatkozási modell két legalsó rétegét kielégítő protokoll gyűjtemény.\\
+Résidő: 512 bitidő\\
+Keretek közti idő (IFG): 9,6 \textmu s\\
+Átviteli kísérletek max. száma: 16\\
+Zavaró bitek száma (jam size): 32\\
+Legnagyobb kerethossz: 1518 bájt\\
+Legkisebb kerethossz: 64 bájt\\
+Közeghozzáférés: CSMA/CD\\
+\subparagraph{CSMA/CD algoritmusa}~\\
+\begin{enumerate}[nosep]
+	\item Várakozás továbbítandó keretre, majd a keret formázása.
+	\item Csatorna foglalt?
+	\begin{itemize}[nosep]
+		\item Igen: Ugrás 2-re.
+		\item Nem: Keretek közötti idő kivárása, majd a kerettovábbítás megkezdése.
+	\end{itemize}
+	\item Van ütközés küldés közben?
+	\begin{itemize}[nosep]
+		\item Igen: Zavarójelek küldése. Továbbítási kísérletek számának növelése. Ugrás 4-re.
+		\item Nem: Átvitel befejezése. Sikeres átvitel jelzése. Ugrás az 1-re.
+	\end{itemize}
+	\item Elértük a max. kísérletszámot (16)?
+	\begin{itemize}[nosep]
+		\item Igen: Sikertelen továbbítás jelzése. Ugrás az 1-re.
+		\item Nem: Késleltetés kiszámítása és az idő kivárása. Ugrás a 2-re.
+	\end{itemize}
+\end{enumerate}
+
 \paragraph{(Klasszikus) Ethernet -- 10BASE}
 A megnevezés első száma az átviteli sebességet jelöli, az ezt követő Base az alapsávú átvitelre utal. A következő szám, koaxiális kábel esetén a kábel hosszát adja meg 100 méteres egységekre kerekítve.\\
+Kódolás: Manchester (0: bitidőben -/+ átmenet; 1: bitidőben +/- átmenet). Folyamatos szinkronizációt biztosít, de kétszeres jelváltási sebességre van szükség.\\
+Átviteli sávszélesség: 10Mbit/s\\
 \begin{tabular}{|c|c|c|c|c|}
 	\hline 
 	Megnevezés & Kábel & Max. szegmenshossz & Csomópont/szegmens & Megjegyzés \\ 
@@ -81,6 +110,9 @@ A megnevezés első száma az átviteli sebességet jelöli, az ezt követő Bas
 Különböző médiumokra tervezték: Category 5 árnyékolatlan (UTP) kábel, Category 5 árnyékolt (STP) kábel, Optikai szál. Mindegyik más fizikai médiumfüggő alréteggel rendelkezik.
 
 Az FDDI hálózatra kifejlesztett 4B5B (4B/5B) bit kódolást adaptálták a 100 Base X-re. Az adat minden 4 bitjét (nibble) 5 biten kódolnak. Csak olyan 5 bites szimbólumokat használnak, amelyben legfeljebb két ‘0’ bit van egymás mellett. A garantált 2 bitenkénti jel átmenet jó bit szinkronizálást biztosít. Az adat kódolásra nem használt 16 öt bites szimbólum közül 2-2 a keret elejét és végét határolja.\\
+Kódolás: Optikai szál esetén -- NRZI(0: nincs jelváltás 1: jelváltás)\\
+Rézérpár -- MLT-3(0: jel szinten tartás; 1: jelváltás ciklikusan -1$\to$0$\to$1$\to$0$\to$-1 )\\
+Átviteli sávszélesség: 100Mbit/s\\
 \begin{tabular}{|c|c|c|c|}
 	\hline 
 	Megnevezés & Kábel & Max. szegmenshossz & Megjegyzés \\ 
@@ -164,6 +196,23 @@ Forgalomirányítási konfigurációk osztályozása:
 		\item  Külső forgalomirányítási protokollok (EGP - Pl. EGP, BGP). Nem feltétlenül a legjobb útvonal meghatározása a cél (politika alapú forgalomirányítás - BGP)
 	\end{itemize}
 \end{itemize}
+
+\paragraph{Távolságvektor alapú routing}~
+
+\subparagraph{RIP} A szomszédok fél perc elteltével a teljes routing információt cserélnek egymással. Minden út egyes költségű, maximálisan 15 csomópontig engedi a továbbítást. Távolságvektor alapú.
+
+\subparagraph{EIGRP} A RIP megoldáshoz hasonló, de összetett metrikát használ a sávszélesség, terheltség és hasonló információk alapján, ezzel optimálisabban kezeli az útválasztást. A táblázatok frissítése csak változás esetén történik meg, ezzel kevésbé terheli a hálózatot. Távolságvektor alapú.
+
+\paragraph{Link-állapot alapú routing} A rendszer felállásánál a routerek feltérképezik a szomszédokat, lemérik az útköltségeket, és mátrixba rendezik az összegyűjtött információkat. Az optimális út megtalálása Dijkstra algoritmussal történik.
+
+\subparagraph{IS-IS} Link-állapot alapú.
+
+\subparagraph{OSPF} A hálózatot területekre bontja. A területek csillag topológiát követnek: a középső „gerincterület” kapcsolódik minden más területhez, és csak ezen keresztül tudják elérni egymást a területek. Minden terület saját belső felépítéssel rendelkezik, amiről kifelé nem juttatnak információt. A határukon vannak a terület-határ útválasztók, melyek tartják a kapcsolatot a középső területtel. Az optimális út kiválasztásához területenként Dijkstra algoritmust használ. Link-állapot alapú.
+
+\paragraph{Vektor-állapot alapú routing}
+
+\subparagraph{BGP} Vektor-állapot alapú.
+
 
 \subsection{Az internet hálózati protokollok, legfontosabb szabványok és szolgáltatások.}
 A hétköznapi életben leginkább elterjedt hálózati technológia a TCP/IP \emph{protokollrendszerre} épülő hálózat. A TCP/IP architektúra -- korántsem egységes -- modellszemlélete eltér az OSI modell szemlélet módjától:
