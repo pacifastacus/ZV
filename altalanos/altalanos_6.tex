@@ -95,12 +95,37 @@ Legyen $R_1$ és $R_2$ két reláció. Az $R_1$ reláció $F_k$-val jelölt attr
 \begin{note}
 Nincsen ER alapú adatbázis kezelő, ami azt jeleni, hogy le kell képezzük relációs sémává az ER modellt.
 \end{note}
+A modell kezeli az egyszerű és összetett, az egyértékű és halmazértékű (többértékű), valamint a tárolt és származtatott tulajdonságtípusokat.
 \begin{definition}[Egyedtípusok]
 	Azokat az egyedtípusokat, amelyek nem rendelkeznek saját kulcsattribútumokkal, \textbf{gyenge egyedtípusoknak} nevezzük. Ezzel ellentétben azokat a (hagyományos) egyedtípusokat, 	amelyeknek van kulcsattribútumuk, \textbf{erős egyedtípusoknak} nevezzük.
 \end{definition}
 \begin{definition}
 	A gyenge egyedtípusoknak \textbf{részleges kulcsuk} (\emph{diszkriminátoruk}) van, amely azon attribútumok halmaza, amelyek egyértelműen azonosítják azokat a gyenge egyedeket, amelyek ugyanazon tulajdonos egyed(ek)hez kapcsolódnak.
 \end{definition}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{fig/6-ER_symbols}
+	\caption{ER model jelölései}
+	\label{fig:6-ersymbols}
+\end{figure}
+Ennél a modellnél \emph{bármilyen fokszámú, számosságú és szorosságú kapcsolat} definiálható. Általában bináris kapcsolatokat használnak, mert ezeket a legkönnyebb leképezni más modellekre, de előfordulhat akár ötös fokszámú kapcsolat is. A kapcsolatok rendelkezhetnek attribútumokkal is. A számosságot az alapértelmezett 1:1, 1:N, M:N típusokon felül korlátozni lehet minimum és maximum határokkal minden egyedtípus felől. Például minimum kettő, maximum öt projektben vegyen részt egy dolgozó, és egy projektben minimum nyolc, maximum akármennyi dolgozó legyen.
+
+A gyenge egyedtípusokhoz speciális azonosító kapcsolatra van szükség, ami jelzi, hogy valamelyik résztvevője gyenge. Emellett totális résztvevőnek hívjuk azt az egyedtípust, amelynek kötelező jelen lennie a kapcsolatban. A gyenge egyedtípusok ezért általában totális résztvevők.Egy kapcsolat lehet rekurzív is: minden résztvevő ugyanaz az egyedtípus. Ilyen például az, amikor az egyik dolgozó a más dolgozó felettese.
+\begin{figure}[h]
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{fig/6-ER_example1}
+		\caption{}
+		\label{fig:6-erexample1}
+	\end{subfigure}
+	\begin{subfigure}{0.6\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{fig/6-ER_example2}
+		\caption{}
+		\label{fig:6-erexample2}
+	\end{subfigure}
+	\caption{ER séma példa}
+	\end{figure}
 
 \paragraph{ER séma leképezése relációs sémára}~\\
 \begin{enumerate}[nosep]
