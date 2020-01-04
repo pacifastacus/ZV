@@ -57,6 +57,31 @@ Magyar találmány: Bláthy-Zipernowsky-Déry. Zárt vasmag, két oldal: primer 
 ahol $N$ a tekercs menetszáma.\\
 Felhasználás: igény szerinti feszültség előállítás a 230V-os hálózati feszültségből és a villamos energia gazdaságos szállítása.
 
+\begin{theorem}[Kirchhoff I. törvénye]
+	Egy csomópontba befolyó áramok összege megegyezik az onnan elfolyó áramok összegével. (csomóponti törvény) $$ \Sigma I = I_1 + I_2 + I_3 + \dots$$
+\end{theorem}
+
+\begin{theorem}[Kirchhoff II. törvénye]
+	Bármely zárt hurokban az áramköri elemeken lévő feszültségek előjel helyesen vett összege nulla. (hurok törvény) $$ \Sigma U = 0 $$
+\end{theorem}
+
+\paragraph{Soros kapcsolás}
+Soros kapcsolásban ugyanaz az áram folyik át minden ellenálláson, a feszültségek
+összeadódnak. A sorosan kapcsolt ellenállások eredőjét az ellenállások összegzésével kapjuk, így az eredő nagyobb lesz bármely elem értékénél.
+$$R_e = R_1 + R_2 + R_3\quad 
+L_e = L_1 + L_2 + L_3\quad 
+\frac{1}{C_e} = \frac{1}{C_1} + \frac{1}{C_2} + \frac{1}{C_3}$$
+
+\paragraph{Párhuzamos kapcsolás}
+Párhuzamos kapcsolásban azonos feszültség lép fel minden ellenálláson, az áramerősségek pedig összeadódnak. A párhuzamosan kapcsolt ellenállások eredőjét az ellenállások reciprokának összegével képezzük, ami még nem az eredőt,hanem annak a reciprokát adja ezért ennek is venni kell még a reciprokát.
+$$\frac{1}{R_e} = \frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3}\quad \frac{1}{L_e} = \frac{1}{L_1} + \frac{1}{L_2} + \frac{1}{L_3}\quad 
+C_e = C_1 + C_2 + C_3$$
+%Párhuzamosan kapcsolt ellenállások, induktivitások, illetve sorosan kapcsolt kapacitások eredőjének kiszámításához használt speciális matematikai művelet a \emph{replusz}. Jele $\times$
+
+\paragraph{Feszültségosztó}
+Két ellenállás soros kapcsolása. A tápláló feszültség megoszlik az $R_1$ és $R_2$ ellenállás között. A feszültség az ellenállásokkal egyenes arányban oszlik meg.\\ %$$U_\text{ki}=\frac{R_2}{R_1 + R_2}$$
+\includegraphics[width=0.25\linewidth]{fig/10-voltage_divider}
+
 \subsubsection{RC és RLC hálózatok}
 \paragraph{Soros RC hálózat} esetén az \emph{áramerősség} a közös mennyiség. A feszültségvektorok diagramjából impedancia háromszöget kapunk, melyből Z kiszámíthatjuk a $Z$ impedanciát:
 $$Z^2 = R^2 + X_c^2 \rightarrow Z = \sqrt{R^2 + X_c^2}$$
@@ -75,7 +100,6 @@ A kapcsolás kis frekvencián $X_c$ miatt szakadásként, nagy frekvencián veze
 		\label{fig:10-serialrcplot}
 	\end{subfigure}
 \end{figure}
-
 
 \paragraph{Párhuzamos RC} hálózatnál a \emph{feszültség} a közös mennyiség. Az áramok vektorainak diagramjából admittancia (Y) háromszöget kapunk:
 $$Y^2 = G^2 + B_c^2 \rightarrow Z = \sqrt{G^2 + B_c^2}$$
@@ -138,35 +162,26 @@ A dióda működőképességét ellenállásmérő műszerrel ellenőrizhetjük 
 Stabilizál. Adott nagyságú záróirányú feszültségnél hirtelen megnő a félvezető dióda árama. Konstrukciótól függően különböző letörési feszültségek vannak
 \paragraph{Schottky dióda} nagyon gyorsan nyitó/záró dióda típus. Tápegységekben gyakran találkozunk velük.
 
+\subsubsection{Tranzisztorok}
+Három kivezetésű félvezető Elektromos jelek erősítésére vagy kapcsolására használják legtöbbet. Egy minimális szintig a tranzisztorok is zárnak, de egy szint fölött telítésbe mennek. E két állapot közötti váltást nevezzük kapcsoló üzemnek, a két szint közötti szakaszon pedig lineáris üzemnek (ilyenkor erősítőként működtetjük). Két elterjedt típusa a bipoláris és a térvezérelt (FET).
+\paragraph{Bipoláris tranzisztor}
+Nagyjából két dióda egybefordítva. Lehet npn és pnp típusú. Kivezetéseinek neve: kollektor, bázis, emitter. A tranzisztor a bázison átfolyó árammal vezéreljük. Lineáris üzemben a bázisáram változtatásával (ami a bázis és emitter közé kapcsolt nyitófeszültség kis mértékű változtatását jelenti) elérik, hogy a kollektoráram annak ß-szorosával változzon: így hasznosítható a tranzisztor áramerősítése. A lineáris üzemű kapcsolások tervezésnél alapvető lépés a munkapont beállítása. 
+Ha a munkapont nincs megfelelő helyen, vagy a jel túl nagy az aktuális munkaponthoz, akkor az erősített kimeneti jel torzított lesz. A tranzisztor könnyen melegszik, és a munkapont eltolódik a hőváltozás hatására, ezért bonyolultabb kapcsolás kell a stabil erősítés eléréséhez.
+
+\paragraph{Térvezérlésű (FET) tranzisztorok}
+A kapufeszültség által keltett elektromos tér vezérli, emiatt gyorsabban kapcsolható. Kisebb a hőmérsékletfüggése, és minimális teljesítmény kell a vezérléséhez. Magas a bemeneti impedancia, ezért kisebb zajjal dolgozik, de nem is érhető el vele nagyon nagy erősítés.
+
 \subsubsection{Alapkapcsolások}
-\begin{theorem}[Kirchhoff I. törvénye]
-	Egy csomópontba befolyó áramok összege megegyezik az onnan elfolyó áramok összegével. (csomóponti törvény) $$ \Sigma I = I_1 + I_2 + I_3 + \dots$$
-\end{theorem}
+A bipoláris tranzisztort négypólusként kezelhetjük, ha három kivezetése közül egyet közösítünk. A bemenet és a kimenet közös pontja földpont. Így váltakozó áramú szempontból három alapkapcsolást különböztetünk meg: közös (vagy földelt) emitteres, közös kollektoros, közös bázisú.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{fig/10-alapkapcs}
+	\caption{Tranzisztor alapkapcsolásai}
+	\label{fig:10-alapkapcs}
+\end{figure}
 
-\begin{theorem}[Kirchhoff II. törvénye]
-	Bármely zárt hurokban az áramköri elemeken lévő feszültségek előjel helyesen vett összege nulla. (hurok törvény) $$ \Sigma U = 0 $$
-\end{theorem}
+A tranzisztor működéséhez nyitóirányú bázis-emitter feszültséget (szilícium esetén kb. 0,6 V) kell biztosítani. A kollektor-bázis átmenet előfeszítése záró irányú legyen. Az egyenfeszültségek és egyenáramok a tranzisztor működési állapotának, a munkapontnak az adatai. A munkapont körüli változások jelentik a váltakozó áramú működést. Működés közben egyenáramú és rá szuperponálódott váltakozó áramú mennyiségek mérhetők. 
 
-\paragraph{Soros kapcsolás}
-Soros kapcsolásban ugyanaz az áram folyik át minden ellenálláson, a feszültségek
-összeadódnak. A sorosan kapcsolt ellenállások eredőjét az ellenállások összegzésével kapjuk, így az eredő nagyobb lesz bármely elem értékénél.
-$$R_e = R_1 + R_2 + R_3\quad 
-L_e = L_1 + L_2 + L_3\quad 
-\frac{1}{C_e} = \frac{1}{C_1} + \frac{1}{C_2} + \frac{1}{C_3}$$
-
-\paragraph{Párhuzamos kapcsolás}
-Párhuzamos kapcsolásban azonos feszültség lép fel minden ellenálláson, az áramerősségek pedig összeadódnak. A párhuzamosan kapcsolt ellenállások eredőjét az ellenállások reciprokának összegével képezzük, ami még nem az eredőt,hanem annak a reciprokát adja ezért ennek is venni kell még a reciprokát.
-$$\frac{1}{R_e} = \frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3}\quad \frac{1}{L_e} = \frac{1}{L_1} + \frac{1}{L_2} + \frac{1}{L_3}\quad 
-C_e = C_1 + C_2 + C_3$$
-%Párhuzamosan kapcsolt ellenállások, induktivitások, illetve sorosan kapcsolt kapacitások eredőjének kiszámításához használt speciális matematikai művelet a \emph{replusz}. Jele $\times$
-
-\paragraph{Feszültségosztó}
-Két ellenállás soros kapcsolása. A tápláló feszültség megoszlik az $R_1$ és $R_2$ ellenállás között. A feszültség az ellenállásokkal egyenes arányban oszlik meg.\\ %$$U_\text{ki}=\frac{R_2}{R_1 + R_2}$$
-\includegraphics[width=0.25\linewidth]{fig/10-voltage_divider}
-
-\paragraph{Wheatstone híd} A híd olyan négypólus, amelyben az áramköri elemek értékét úgy választjuk meg, hogy a kimeneti feszültség nulla legyen. Ezt nevezzük a híd kiegyenlített állapotának. A Wheatstone híd felhasználható ellenállás mérésre, mivel a szemben elhelyezkedő ellenállások szorzata = a másik két szemben lévő ellenállás szorzatával. Ha a négy ág közül három ismert, a negyedik kiszámítható. Kis áramok mérésére nem alkalmas.\\
-%$$U_\text{ki} = 0\quad \text{ha}\quad R_1R_3 = R_2R_4 $$
-\includegraphics[width=0.5\linewidth]{fig/10-wheatstone_bridge}
 
 \subsection{Integrált műveleti erősítők.}
 A műveleti erősítő kiváló minőségű differenciálerősítő integrált áramkör, amely egyenfeszültség erősítésére is alkalmas. Analóg számítás- és szabályzástechnikai alkalmazásokhoz fejlesztették ki, de igen sokoldalúan alkalmazzuk őket.\\
@@ -195,11 +210,28 @@ Valódi műveleti erősítők jellemző értékei:
 	\item véges maximális jelváltozási sebesség (slew rate): $\text{SR} \approx 0.5 \text{--} 30 \nicefrac{V}{\mu s}$
 \end{itemize}
 
-\paragraph{Negatív visszacsatolás} A kimeneti jel egy részét visszavezetik és kivonják a bemeneti jelből, így erősítésre ténylegesen a bejövő jel és az adott hányadban visszacsatolt kimeneti jel különbsége kerül. Így a kimenet megváltoztatása a negatív visszacsatolás révén ellene hat az U’ különbség növekedésének. Állandó bemeneti jel esetén a kimeneti feszültség is stabil értékre áll be. a negatív visszacsatolást alkalmazó áramköröknél a műveleti erősítő két bemeneti feszültségének különbsége a nagy nyílthurkú erősítés miatt igen kicsi.\\
-\includegraphics[width=0.5\linewidth]{fig/10-op_amp_neg_feedback}
+\paragraph{Negatív visszacsatolás} A kimeneti jel egy részét visszavezetik és kivonják a bemeneti jelből, így erősítésre ténylegesen a bejövő jel és az adott hányadban visszacsatolt kimeneti jel különbsége kerül. Így a kimenet megváltoztatása a negatív visszacsatolás révén ellene hat az U’ különbség növekedésének. Állandó bemeneti jel esetén a kimeneti feszültség is stabil értékre áll be. a negatív visszacsatolást alkalmazó áramköröknél a műveleti erősítő két bemeneti feszültségének különbsége a nagy nyílthurkú erősítés miatt igen kicsi.
 
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.33\linewidth}
+		\includegraphics[width=\linewidth]{fig/10-op_amp_neg_invertfeedback}
+		\caption{invertáló erősítő}
+	\end{subfigure}
+	\begin{subfigure}{0.33\linewidth}
+		\includegraphics[width=\linewidth]{fig/10-op_amp_neg_noninvertfeedback}
+		\caption{nem invertáló erősítő}
+	\end{subfigure}
+	\begin{subfigure}{0.33\linewidth}
+		\includegraphics[width=\linewidth]{fig/10-op_amp_neg_voltagefollowerfeedback}
+		\caption{feszültségkövető}
+	\end{subfigure}
+	\caption{műveleti erősítők különböző fajta visszacsatolással}
+	\label{fig:10-opampnegfeedbacktypes}
+\end{figure}
 
 \subsection{Tápegységek.}
+\paragraph{Lineáris üzemű} Transzformátor segítségével átalakítjuk a feszültséget egy számunkra megfelelő szintre, majd egyenirányítjuk. Ezután soros áteresztő elemek (általában tranzisztorok) segítségével szabályozzuk a jelet a stabil kimenet elérése érdekében. Nagy stabilitású kimenetet tudunk vele biztosítani, de a mérete nagy, és a hatásfoka is 20-50\% körül lehet, így nem minden esetben megfelelő.
 \paragraph{Kapcsoló üzemű tápegységek} A korábban ismertetett tápegységek (hálózati transzformátor + egyenirányító + áteresztő tranzisztor) hatásfoka csak 25-50\%. Az áteresztő tranzisztor vesztesége jelentősen csökkenthető, ha kapcsolóval helyettesítjük. A transzformátor vesztesége (és mérete) pedig úgy csökkenthető, ha nagyfrekvenciás (20kHz-200kHz) váltakozó feszültséget transzformálnak.
 
 A kapcsoló üzemű tápegységekben (switch-mode power supply (SMPS)) a feszültségszabályozást egy teljesítménytranzisztor változtatható kitöltési tényezővel történő egymást követő bekapcsolásával (teljes telítési állapot) és kikapcsolásával (lezárt állapot) valósítják meg. A terhelésnek megfelelő kitöltési tényezőjű gyorsan ismétlődő (10kHz\textendash100kHz) be- és kikapcsolás a szűrés után a kívánt nagyságú egyenfeszültséget biztosítja a kimeneten

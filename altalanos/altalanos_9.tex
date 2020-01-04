@@ -14,7 +14,7 @@ Jele: Q\\
 Mértékegysége: Coulomb (C)\\
 1 Coulomb = 1As (amperszekundum)\\
 Az elektromosan töltött anyag elektromágneses teret hoz létre. Az elektromos töltés kvantált, azaz minden test töltése egy legkisebb töltés többszöröse. Ez a legkisebb töltés az elemi töltés, ami a proton töltése: 1,6 · 10 -19 Coulomb. Az elektron töltése ennek a -1 -szerese. (A kvarkok felfedezése óta úgy gondolják, hogy azok töltése még kisebb lehet, az elemi töltés 1/2, vagy 1/3 része.) Az elektromos töltésre is igaz a megmaradási elv, azaz zárt rendszer töltése állandó. Az elektromos töltések egymásra gyakorolt erőhatásán keresztül a töltés mérhető. A pontszerű töltések között ható (F) erő egyenesen arányos a töltésekkel (Q 1 , Q 2 ) és fordítottan arányos a töltések közötti
-távolság (r) négyzetével. Ez Coulomb törvénye.
+távolság (r) négyzetével. Ez Coulomb törvénye:
 $$F=k\cdot\frac{Q_1 \cdot Q_2}{r^2}$$
 ahol $k$ az arányossági tényező, melynek értéke: $9\cdot10^9 \frac{Nm^2}{C^2}$
 
@@ -34,27 +34,37 @@ $A$ : egy $r$ sugarú gömb felszíne ($4\pi r^2$)
 \end{theorem}
 
 \subsubsection{Elektromos potenciál és feszültség}
-Az elektromos mezőbe helyezett töltés az elektromos erő hatására elmozdul, az erőtér munkát végez, a munka nagysága:
-$$W = Q \cdot U$$
-Ebből a potenciál:
-$$U = k\cdot \frac{Q}{r}$$
-Az elektromos teret egy kiválasztott pontjához képest fennálló munkavégző képessége szempontjából a potenciál jellemzi. A villamos töltések a villamos tér egyes pontjaiban potenciális energiával rendelkeznek.
-Az elektromos tér valamely pontjának potenciálja az a munkamennyiség, amellyel a tér az egységnyi pozitív töltést abból a pontból a nullapotenciálúnak választott pontba képes mozgatni.
-Az elektromos tér két pontja közötti feszültség az a munkamennyiség, amellyel a tér az egységnyi pozitív töltést a nagyobb potenciálú pontból a kisebb potenciálú pontba képes mozgatni. A feszültség tehát a két
-pont potenciáljának különbsége. 
-Így az A és B pont közötti feszültség az A-ból a B-be történő mozgatáshoz szükséges munka és a mozgatott töltés hányadosa:
-$$U_{AB} = U_A - U_B = \frac{W_{AB}}{Q}$$
-Mértékegysége a Volt. Az elektromos mező két pontja között 1 Volt a feszültség, ha 1 Coulomb töltés átvitelekor az erők 1 Joule munkát végeznek.
+Az elektromos mező erőt fejt ki a benne mozgó töltött testre, ezért munkát végez azon. A végzett munka kiszámolható, ha ismert a két (A és B) pont közti feszültség. A feszültség jele: $U$, mértékegysége volt (V). Mindig két pont között értendő. $U=U(A,B)$.
+Ha a test töltése Q coulomb, akkor az elektromos mező éppen
+$$W=Q \cdot U $$
+munkát végez a töltött testen, miközben az a mező A pontjából a mező B pontjába mozdul el. 
+
+Az elektromos mező, vagy elektromos hálózat egy adott pontjának potenciálja az adott pontnak egy választott 0-ponthoz  viszonyított feszültsége. A 0-pont megválasztása tetszőleges. Képlettel: 
+$$U(A)=U(A,0)$$
+Az azonos potenciálú pontok között mozgó töltött testen az elektromos tér nem végez munkát, azokat nem gyorsítja vagy lassítja. Az azonos potenciálú pontok ekvipotenciális vonalakat, felületeket alkotnak. Ezek jól ábrázolják az elektromos teret. Praktikusan a Föld-et tekintik 0-potenciálú testnek, így a Földdel vezetékkel összekötött fémek potenciálja nulla lesz. A potenciál ilyen módon való lenullázása a földelés. 
+
+Pontszerű töltés által $r$ távolságra keltett feszültség:
+$$U(r)=k\cdot\frac{Q}{r} \quad \text{(előjelesen)}$$
+%Ebből a potenciál:
+%$$U = k\cdot \frac{Q}{r}$$
+%Az elektromos teret egy kiválasztott pontjához képest fennálló munkavégző képessége szempontjából a potenciál jellemzi. A villamos töltések a villamos tér egyes pontjaiban potenciális energiával rendelkeznek.
+%Az elektromos tér valamely pontjának potenciálja az a munkamennyiség, amellyel a tér az egységnyi pozitív töltést abból a pontból a nullapotenciálúnak választott pontba képes mozgatni.
+%Az elektromos tér két pontja közötti feszültség az a munkamennyiség, amellyel a tér az egységnyi pozitív töltést a nagyobb potenciálú pontból a kisebb potenciálú pontba képes mozgatni. A feszültség tehát a két
+%pont potenciáljának különbsége. 
+%Így az A és B pont közötti feszültség az A-ból a B-be történő mozgatáshoz szükséges munka és a mozgatott töltés hányadosa:
+%$$U_{AB} = U_A - U_B = \frac{W_{AB}}{Q}$$
+%Mértékegysége a Volt. Az elektromos mező két pontja között 1 Volt a feszültség, ha 1 Coulomb töltés átvitelekor az erők 1 Joule munkát végeznek.
 
 \subsubsection{Elektromos áram és áramerősség}
 Az elektromos áram a szabadon mozgó töltéshordozók rendezett áramlása. Az elektromos áram létrejöttének feltétele a potenciálkülönbség. Ha az áramlás folyamatosan egyirányú, akkor egyenáramról, ha az áramlás iránya szabályos időközönként megfordul, akkor váltakozóáramról beszélünk.\\
-Az áramerősség a vezető keresztmetszetén 1 másodperc alatt átáramló töltések mennyisége:
+Egyenáram esetén az áramerősség a vezető keresztmetszetén t idő alatt átáramló töltések mennyisége:
 $$ I = \frac{Q}{t}$$
+
 Mértékegysége az Amper.
 1 Ampernyi áramerősség a vezetőréteg keresztmetszetén 1 sec alatt átáramló 1 Coulomb töltést jelent.
 
 \subsubsection{Kapacitás}
-Egy rendszer azon képessége, hogy mennyi elektromos töltést képes tárolni. Két vezetőből álló kondenzátor esetén a kapacitás egyenlő az egyik vezetőn felhalmozott töltés és a vezetők közötti feszültség hányadosával:
+Egy áramköri elem azon képessége, hogy mennyi elektromos töltést képes tárolni. Két vezetőből álló kondenzátor esetén a kapacitás egyenlő az egyik vezetőn felhalmozott töltés és a vezetők közötti feszültség hányadosával:
 $$ C = \frac{Q}{U} $$
 Mértékegysége a Farad.
 
@@ -65,7 +75,7 @@ $R$ az ellenállás, ami a vezető anyagi minőségétől, méreteitől és hőm
 Mértékegysége az Ohm ($\Omega$).\\
 1 Ohm ellenállású a vezető, ha abban 1 Volt feszültség 1 Amper erősségű áramot hoz létre.\\
 Az ellenállás a vezető hosszával egyenesen, a keresztmetszetével fordítottan arányos:
-$$ R = \rho \cdot \frac{1}{A} $$
+$$ R = \rho \cdot \frac{l}{A} $$
 $\rho$ (ró) a vezető fajlagos ellenállása, ami az anyagi minőségétől és hőmérsékletétől függő állandó.
 
 \subsubsection{Elektromos áram munkája és teljesítménye}
