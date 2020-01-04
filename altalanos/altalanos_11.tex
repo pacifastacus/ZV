@@ -6,6 +6,11 @@
 Egy-egy alapáramkör megvalósítására több áramkörtechnikai megoldás született, ezek a teljesítményfelvételben, tápfeszültségigényben, H (high) és L (low) szint feszültségben, sebességben és a kimeneti terhelhetőségben térnek el egymástól. Az áramkörcsaládok helyes megválasztásához ismernünk kell a belső felépítésüket és a bemeneti-kimeneti terhelhetőségüket is. Egy logikai kapu minden bemeneti állapotához meghatározott kimeneti állapot tartozik. A logikai kapu által megvalósított függvény nem egyértelmű, ha a szintállapot és a logikai állapot közötti kapcsolat nincs tisztázva. Ez az összerendelés lehet: pozitív logika (H=1,L=0) és lehet negatív logika (H=0,L=1) ,attól függően, hogy azt az áramkörcsaládot használjuk, amelyikkel egyszerűbb a kapcsolás. Ha negatív logikára térünk át a függvényeket a következőképpen kel megcserélnünk:\\
 Nem-vagy $\leftrightarrow$ Nem-és , vagy $\leftrightarrow$ és , nem $\leftrightarrow$ nem\\ 
 A fizikai megvalósításukhoz: kapcsolókat,komparátorokat,tranzisztorokat használunk. A gyakorlatban szinte minden logikai kaput Nem-és kapukkal realizálnak, olcsósága miatt.
+Egy (kombinációs) logikai áramkör tervezésénél miután felírtuk a függvényt boolean-algebrai alakban, azt egyszerűsítjük. Ezután átírjuk a függvényt úgy, hogy a független változókból képzett maxtermek logikai összege (Diszjunktív normálforma) vagy mintermek logikai szorzata (Konjunktív normálforma) legyen. Ezt az átírást megkönnyíti a Karnaugh--tábla alkalmazása. Az ilyen kanonikus alakra hozott függvény végül a de-morgan azonosságokat felhasználva átírható csak NAND műveleteket tartalmazó formulára.
+
+Négynél több független logikai változó esetén a kézi egyszerűsítés már nem elég hatékony ezért ilyenkor számítógépes algoritmusokat alkalmazunk: Quine-McCluskey (kimerítő teljes algoritmus, melynek hosszú a futásideje, ezért csak közepesen sok változószámig alkalmazható), illetve az Espresso (heurisztikus algoritmus, amit szinte minden szintézisprogram használ) algoritmusok.
+
+
 
 \subsection{Digitális áramköri családok jellemzői(TTL, CMOS, NMOS).}
 \subsubsection{TTL --- Tranzisztor-tranzisztor logika}
