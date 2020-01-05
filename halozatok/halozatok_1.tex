@@ -99,7 +99,7 @@ A rádióhullámok térben egyetlen periodikus jel vagy több periodikus jel ös
 
 \paragraph{Csatornakódolás} Cél a közlemény megbízható átvitele a csatornán, emiatt az egyes kódközlemények redundanciával rendelkeznek. A redundanciát a hibajelző és hibajavító kódolások okozzák.
 
-\paragraph{Moduláció} A kódjelek fizikai jelekre történő leképzése. Gyakran hívják a fizikai jelzéseket egyszerűen jeleknek, míg a forrásjeleket és kódjeleket (forrás- és kód) karaktereknek vagy szimbólumoknak.
+\paragraph{Moduláció} A (digitális)kódjelek fizikai analóg jelekre történő leképzése. Gyakran hívják a fizikai jelzéseket egyszerűen jeleknek, míg a forrásjeleket és kódjeleket (forrás- és kód) karaktereknek vagy szimbólumoknak.
 
 
 \paragraph{Jelkódolás} A (digitális) adat leképezése (digitális) vivőjelre (pl. feszültségszintekre, feszültségszint-váltásokra). A fizikai rétegben megjelenős bitsorozatot az alkalmazott csatorna jelkészletére, jelzésrendszerére képezzük le.
@@ -130,9 +130,10 @@ Adattömörítési feladatoknál gyakorta alkalmazott. A tömörítés alapja, h
 1 bit: jelszint váltás a bitidő elején\\
 \includegraphics[width=0.35\linewidth]{fig/12-NRZ1}
 
-\paragraph{Manchester jelkódolás} A klasszikus Ethernet is használta ezt a kódolást. Folyamatos szinkronizációt biztosít, de dupla jelváltás-sebességet igényel.
+\paragraph{Manchester jelkódolás} A klasszikus Ethernet is használta ezt a kódolást. Folyamatos szinkronizációt biztosít, de dupla jelváltás-sebességet igényel.\\
 0 bit: negatív jelátmenet a bitidő felénél\\
 1 bit: pozitív jelátmenet a bitidő felénél\\
+\includegraphics[width=0.35\linewidth]{fig/12_Manchester}
 
 \subsubsection{Csatornakódolás}
 
