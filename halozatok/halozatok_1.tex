@@ -116,24 +116,38 @@ Adattömörítési feladatoknál gyakorta alkalmazott. A tömörítés alapja, h
 
 
 \subsubsection{Jelkódolási technikák}
+\begin{multicols}{2}
 \paragraph{NRZ (Non-Return- to Zero) jelkódolás} Legegyszerűbb kódolási technika, könnyen implementálható, de nem biztosít szinkronizációt hosszabb 0 vagy 1 sorozatok esetén.\\
-0 bit: alacsony jelszint teljes bitidőben.\\ 1 bit: magas jelszint teljes bitidőben.\\ Jelváltás a bitidő elején történik.
-\includegraphics[width=0.35\linewidth]{fig/12-NRZ}
+0 bit: alacsony jelszint teljes bitidőben.\\ 
+1 bit: magas jelszint teljes bitidőben.\\ 
+Jelváltás a bitidő elején történik.
 
+\includegraphics[width=\linewidth]{fig/12-NRZ}
+\end{multicols}
+
+\begin{multicols}{2}
 \paragraph{RZ (Return to Zero) jelkódolás} Jelváltási sebesség duplikáció csupa 1-es esetén\\
 0 bit: alacsony jelszint teljes bitidőben\\
-1 bit: első félidőben magas majd alacsony jelszint\\
-\includegraphics[width=0.35\linewidth]{fig/12-RZ}
+1 bit: első félidőben magas majd alacsony jelszint
 
+\includegraphics[width=\linewidth]{fig/12-RZ}
+\end{multicols}
+
+\begin{multicols}{2}
 \paragraph{NRZI (Non-Return to Zero Invert on One) jelkódolás}~\\
 0 bit: változatlan jelszint\\
-1 bit: jelszint váltás a bitidő elején\\
-\includegraphics[width=0.35\linewidth]{fig/12-NRZ1}
+1 bit: jelszint váltás a bitidő elején
 
+\includegraphics[width=\linewidth]{fig/12-NRZ1}
+\end{multicols}
+
+\begin{multicols}{2}
 \paragraph{Manchester jelkódolás} A klasszikus Ethernet is használta ezt a kódolást. Folyamatos szinkronizációt biztosít, de dupla jelváltás-sebességet igényel.\\
 0 bit: negatív jelátmenet a bitidő felénél\\
-1 bit: pozitív jelátmenet a bitidő felénél\\
-\includegraphics[width=0.35\linewidth]{fig/12_Manchester}
+1 bit: pozitív jelátmenet a bitidő felénél
+
+\includegraphics[width=\linewidth]{fig/12_Manchester}
+\end{multicols}
 
 \subsubsection{Csatornakódolás}
 
@@ -142,29 +156,35 @@ Adattömörítési feladatoknál gyakorta alkalmazott. A tömörítés alapja, h
 \subsubsection{Moduláció}
 A bináris információt sok esetben nem alapsávi impulzusok formájában visszük át a csatornán, hanem egy (alsó- és felső frekvenciahatár megadásával) jól meghatározott frekvenciatartománnyal rendelkező (sáváteresztő) csatornán. A rendelkezésre álló frekvenciasáv középértéke adja a vivőfrekvenciát, melyen valamilyen modulációs eljárással tudjuk leképezni a továbbítandó bit értékét.
 
+\begin{multicols}{2}
 \paragraph{ASK (Amplitude Shift Keying -- Amplitúdó váltás)} Előnye az egyszerű implementáció. Hátrány a diszkrét komponens jelenléte.\\
 0 bit: vivőfrekvencia hiánya (Amplitúdó A=0). $S_{(0)}(t) = 0$\\
 1 bit: A amplitúdójú vivőfrekvencia jelenléte. $S_{(1)}(t) = A\cdot\sin(\omega_v\cdot t) $\\
 \begin{center}
-	\includegraphics[width=0.25\linewidth]{fig/12-ASK}
+	\includegraphics[width=\linewidth]{fig/12-ASK}
 \end{center}
+\end{multicols}
 
+\begin{multicols}{2}
 \paragraph{FSK (Frequency Shift Keying -- Frekvencia váltás)} Előny az egyszerű dekódolás. Hátrány a nagy sávszélesség igény.\\
 0 bit: vivőfrekvenciánál $\omega_d$ frekvencialökettel nagyobb frekvencia. $S_{(0)}(t) = A\cdot\sin((\omega_v + \omega_d)\cdot t) $\\
 1 bit: vivőfrekvenciánál $\omega_d$ frekvencialökettel kisebb frekvencia. $S_{(1)}(t) = A\cdot\sin((\omega_v - \omega_d)\cdot t) $\\
 Itt a bit ráta és a baud ráta értéke azonos. A sávszélesség szükséglet: $2\omega_d$
 \begin{center}
-	\includegraphics[width=0.25\linewidth]{fig/12-FSK}
+	\includegraphics[width=\linewidth]{fig/12-FSK}
 \end{center}
+\end{multicols}
 
+\begin{multicols}{2}
 \paragraph{PSK (Phase Shift Keying -- fázis váltás)} ~\\
 0 bit: a vivőhöz képest ellentétes fázisú jel. $S_{(0)}(t) = A\cdot\sin((\omega_v)\cdot t+\pi)= -A\cdot\sin((\omega_v)\cdot t) $\\
 1 bit: a vivővel azonos fázisú jel. $S_{(1)}(t) = A\cdot\sin((\omega_v)\cdot t)$\\
 Ez a felírási forma általánosítási lehetőséget nyit a többszintű PSK alkalmazására: 180 fok helyett több kisebb eltolási érték segítségével egy átviteli időegységben több bit átvitele is megoldható.
 Pl.: 4 szintű PSK (Quadrate PSK, QPSK): 0, 90, 180 és 270 fokos eltolások léteznek. Itt egy időegység alatt két bitnyi információ vihető át.
 \begin{center}
-	\includegraphics[width=0.25\linewidth]{fig/12-PSK}
+	\includegraphics[width=\linewidth]{fig/12-PSK}
 \end{center}
+\end{multicols}
 
 \paragraph{QAM (Kvadratúra amplitúdómoduláció)}
 Egy jelet meghatároz a vivőjelhez képest mért amplitúdó és fáziseltolás mértéke. Ezáltal egyetlen jel több bitnyi információt közvetít. Attól függően, hogy hány különböző érvényes jelet tartalmaz beszélhetünk 4-QAM (2 bites), 8-QAM (3 bites), 16-QAM (4 bites), stb\dots modulációkról, melyek közül a 256-QAM képes egy teljes bájtot kódolni. Minél több különálló jelünk van, annál érzékenyebb az átvitel a zajra, illetve a csillapítás mértékére.
