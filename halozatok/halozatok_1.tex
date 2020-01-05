@@ -76,10 +76,31 @@ A rádióhullámok térben egyetlen periodikus jel vagy több periodikus jel ös
 \end{easylist}
 
 \subsection{Forráskódolás, csatornakódolás és moduláció.}
-A kommunikációs rendszerek az adatokat az adatforrás és a célállomás között
-továbbítják. Az adatokat először a \emph{forráskódoló} kezeli, amelynek eredményeképp az adatok tömörebb formában kerülnek ábrázolásra. A kódoló kimenetén forráskódbeli kódszavak sorozata jelenik meg, amely kódszavak forrásábécé feletti sorozatok.
-A forráskódoló kimenete kerül a \emph{csatornakódoló} bemenetére, amely a kimenetén csatonakódszavak sorozatát állítja elő. A csatornakódoló, a forráskódolóval ellentétes műveletet végez, meghosszabbítja az input sorozatokat, redundanciát ad hozzájuk.
-A modulátor a csatornakódszó szimbólumait (karaktereit) jelekké (analóg szimbólumokká) transzformálja (\emph{moduláció}), amelyek átvihetők a csatornán.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{fig/12-hirkozlesi_rendszer}
+	\caption{Egy tetszőleges hírközlési rendszer}
+	\label{fig:12-hirkozlesirendszer}
+\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{fig/12-kodolo_felepitese}
+	\caption{Kódoló felépítése (dekódoló ehhez hasonló)}
+	\label{fig:12-kodolofelepitese}
+\end{figure}
+
+\begin{definition}{Kódolás}
+	A közlemények(végtelen) halmazából a kódközlemények(végtelen) halmazába képző függvény.
+\end{definition}
+\begin{note}
+	Közlemények a forrásból származó a forrásábécé jeleiből (forrásjelek) képzett tetszőleges véges sorozat. A kódközlemény a csatornán haladó a csatornaábécé jeleiből (kódjelek) képzett tetszőleges véges sorozat.
+\end{note}
+\paragraph{Forráskódolás} az a kódolási eljárás, amikor az a cél, hogy a kódközlemény minimális redundanciával rendelkezzen. Tehát cél a gazdaságosság és általában ez egyértelmű dekódolhatóság!
+
+\paragraph{Csatornakódolás} Cél a közlemény megbízható átvitele a csatornán, emiatt az egyes kódközlemények redundanciával rendelkeznek. A redundanciát a hibajelző és hibajavító kódolások okozzák.
+
+\paragraph{Moduláció} A kódjelek fizikai jelekre történő leképzése. Gyakran hívják a fizikai jelzéseket egyszerűen jeleknek, míg a forrásjeleket és kódjeleket (forrás- és kód) karaktereknek vagy szimbólumoknak.
+
 
 \paragraph{Jelkódolás} A (digitális) adat leképezése (digitális) vivőjelre (pl. feszültségszintekre, feszültségszint-váltásokra). A fizikai rétegben megjelenős bitsorozatot az alkalmazott csatorna jelkészletére, jelzésrendszerére képezzük le.
 
@@ -87,6 +108,14 @@ A modulátor a csatornakódszó szimbólumait (karaktereit) jelekké (analóg sz
 A modulációsebesség és az adatátviteli sebesség (természetesen) különböző mennyiségek mérésére szolgál, de egy konkrét, jól meghatározott környezetben a két mennyiség között szoros összefüggés áll fenn.
 
 \subsubsection{Forráskódolás}
+\paragraph{Huffmann--féle optimális kód}
+A Huffman-kódolás karakterek (jelek, betűk, számjegyek) olyan kódolását jelenti, amelyben az egyes kódok nem azonos hosszúságúak (különböző számú bitből állnak) annak érdekében, hogy a szövegek átlagosan rövidebbek legyenek, mint az azonos hosszúságú kódok használata esetében. Ez a karakterek gyakoriságának figyelembe vételével történik. A kódolás egy mohó stratégián alapszik, és az adattömörítésben igen hatékonyan használható. Hasonlóan változó kódszóhosszúgású kódolás még a Shannon--féle kódolás, ill. a Gilbert-féle kód, melyeknél a gyengébb optimalizálás árán gyorsabban végrehajtható algoritmust alkalmazunk.
+
+\paragraph{Lempel-Ziv kódolás}
+Adattömörítési feladatoknál gyakorta alkalmazott. A tömörítés alapja, hogy a kódoló csak egy szótárbeli indexet küld át. A szótár dinamikusan bővül, kiinduló állapotban az összes egybetűs szimbólumot tartalmazza. A kódolás elve igen egyszerű: az aktuális pozíciótól kezdve addig kell a szimbólumokat kiolvasni, amíg a sorozat szerepel a szótárban. Ezután elküldjük ezen sorozat indexét, a szótárba felvesszük kiegészítve a következő szimbólummal, és az algoritmust ettől a szimbólumtól folytatjuk.
+
+
+\subsubsection{Jelkódolási technikák}
 \paragraph{NRZ (Non-Return- to Zero) jelkódolás} Legegyszerűbb kódolási technika, könnyen implementálható, de nem biztosít szinkronizációt hosszabb 0 vagy 1 sorozatok esetén.\\
 0 bit: alacsony jelszint teljes bitidőben.\\ 1 bit: magas jelszint teljes bitidőben.\\ Jelváltás a bitidő elején történik.
 \includegraphics[width=0.35\linewidth]{fig/12-NRZ}
@@ -144,7 +173,9 @@ Egy jelet meghatároz a vivőjelhez képest mért amplitúdó és fáziseltolás
 
 
 \subsection{Csatornafelosztás és multiplexelési technikák.}
-Multiplexelés alatt a telekommunikációban azt az eljárást értik, amikor két vagy
+Amikor Több forrás kíván ugyanazon a csatornán osztozni szét kell tudnuk választani az egyes forrásokból érkező közleményeket, elkerülendő az üzenetek ütközése illetve az egyes üzenetek azonosítása. Multiplexálás során az egy közös csatornát logikai csatornákra bontjuk, illetve de-multiplexálással szétválogatjuk az üzeneteket.
+
+Multiplexálás alatt a telekommunikációban azt az eljárást értik, amikor két vagy
 több csatornát összefognak egy csatornába úgy, hogy az inverz multiplexelés művelettel, vagy demultiplexeléssel, vagy demuxálással elő tudják állítani az eredeti csatornákat. Az eredeti csatornák egy úgynevezett kódolási sémával azonosíthatóak. A multiplexelés kifejezésnek általában a magyar keverés kifejezést feleltethetjük meg. 
 
 Az elektronikus kommunikációban , két alap multiplexelés használatos: az időosztásos multiplexelés (Time-Division Multiplexing -- TDM) és a frekvenciaosztásos multiplexelés (Frequency-Division Multiplexing -- FDM). Az
@@ -158,11 +189,15 @@ Hanghullámok átvitele elektromos hálózaton. Az érthető beszédhez elegend�
 \subsubsection{Digitális telefonhálózatok}
 Mivel a végberendezések jobbára analóg eszközök, ezért A/D D/A átalakítókra van szükség, amit a helyi kapcsolóközpontokban valósítanak meg. Ilyen rendszereknél időosztásos multiplexálással (TDM) működnek. Ez még mindig valós áramkörkapcsolást jelent. Az analóg jelek digitalizálás PCM (Pulse Coded Modulation) kódolással történik.
 
+
 \paragraph{PCM} A mintavételezés sűrűsége kétszerese a frekvenciának. Egy minta a hullám aktuális amplitúdója a mintavételezés időpontjában. Beszélhetünk lineáris és nemlineáris kvantálásról attól függően, hogy az egyes amplitúdó értékek kvantálási intervallumai megegyeznek-e.
 
 Digitális telefónia esetén egy csatorna sávszélessége 64~kHz.
 
-\paragraph{ADSL -- Asymmetric Digital Subscriber Line} Telefónia és adatátvitel egyidejűleg. Az ADSL lényege, hogy a meglévő távbeszélő (vagy ISDN) alapszolgáltatással párhuzamosan, ugyanazt az előfizetői érpárat felhasználva kapcsolatot biztosítson a nagysebességű hálózatokhoz. Ahhoz hogy egy-időben, egymástól függetlenül telefon (vagy ISDN) szolgáltatást és kétirányú nagysebességű adatátvitelt biztosítson egy szűrőt (splitter) kell az ügyfélnél és a központ oldalon is elhelyezni.
+\paragraph{ADSL -- Asymmetric Digital Subscriber Line} Telefónia és adatátvitel egyidejűleg. Az ADSL lényege, hogy a meglévő távbeszélő (vagy ISDN) alapszolgáltatással párhuzamosan, ugyanazt az előfizetői érpárat felhasználva kapcsolatot biztosítson a nagysebességű hálózatokhoz.
+Az ADSL jellemzője a DSL megoldásokon belül, hogy a letöltési és a feltöltési sávszélesség aránya nem egyenlő (vagyis a vonal aszimmetrikus), amely az otthoni felhasználóknak kedvezve a letöltés sebességét helyezi előnybe a feltöltéssel szemben, általában 8:1 arányban. Mind technikai, mind üzleti okai vannak az ADSL gyors elterjedésének. A technikai előnyt az adja, hogy a zajelnyomási lehetőségeket kihasználva lehetővé teszi nagyobb távolságon is a gyors adatátvitelt. Az első generációs ADSL letöltési sebessége 256~kbit/s-tól indul és 8096~kbit/s-ig emelhető, a feltöltésé 64~kbit/s-től 832~kbit/s-ig állítható. Az ADSL2 névre keresztelt továbbfejlesztés első verziója 12~Mbit/s, majd a néhány hónappal később érkezett ADSL2+ 24~Mbit/s elméleti maximális letöltést tesz lehetővé.
+
+Ahhoz hogy egy-időben, egymástól függetlenül telefon (vagy ISDN) szolgáltatást és kétirányú nagysebességű adatátvitelt biztosítson egy szűrőt (splitter) kell az ügyfélnél és a központ oldalon is elhelyezni. A splitter FDM multiplexálást valósít meg
 \subparagraph{Splitter} az előfizetői érpárra kapcsolódik, feladata az alacsonyabb frekvenciájú telefon (vagy ISDN) jelek, és a magasabb frekvenciasávban működő ADSL jelek szétválasztása.
 
 Az előfizetői oldal ADSL modemjét \textbf{ADSL NT}-nek hívjuk (ADSL Network Termination = ADSL hálózatvégződés), míg a hálózati csomópontban találhatók az un. \textbf{DSLAM} egységek (Digital Subscriber Line Access Multiplexer = Digitális előfizetői hozzáférés koncentrátor). A telefónia, feltöltési és letöltési adatvonalakat FDM-mel választják külön:
@@ -186,13 +221,31 @@ Minden csatornánál lemérik a jel/zaj viszonyt, ehhez igazodva különböző Q
 \begin{center}
 	\includegraphics[width=0.7\linewidth]{fig/12-DMT}
 \end{center}
+\subsubsection{Mobilhálózatok}
+Cellaalapú rádiós hálózat. Ezen rendszerek lényege, hogy a lefedendő területet úgynevezett „cellákra” osztják, minden egyes cellában egy bázisállomással. A bázisállomásokat általában valamilyen nagy sávszélességű vezetékes hálózat kapcsolja össze egymással. A cellák méretét az igénybevételtől függően eltérően határozzák meg, városon belül a pár száz méteres átmérőjű cellák dominálnak, míg városon kívül akár 5--10~km-nél is nagyobb távolságú bázisállomásoktól is foghatunk jeleket.
 
+\paragraph{1. generáció}
+Az 1.~generációs (1G) hálózatokat az 1980-as években kezdték el üzemeltetni. Ezek mind analóg rendszerek voltak, támogatták a felhasználó számára észrevétlen, automatikus cellaváltást, valamint már eleve úgy tervezték őket, hogy kapcsolhatók legyenek a vezetékes telefonhálózathoz. Európában az NMT (Nordic Mobile Telephony) volt a domináns. Egy nagy hátránya volt, hogy a szabvány kezdeti változata nem írt elő semmiféle titkosítást a beszédátvitelre, így azt, a megfelelő készülék birtokában, bárki lehallgathatta. Ezek a rendszerek alapvetően beszédátvitelre szolgáltak. Gyenge beszédátviteli minőség, kevés szolgáltatásfajta. Viszonylag nagy, 30--50~km átmérőjű cellák.
+
+\paragraph{2. generáció -- GSM/GPRS/EDGE}
+Az igazi áttörést a 2.~generációs (2G) hálózatok megjelenése hozta meg. A legfontosabb eltérés az 1G-hez képest a digitális jelátvitel bevezetése. A digitálisan kódolt hangot tömöríteni lehet, így egyszerre sokkal több csatornát lehet használni, mint az ugyanakkora sávszélességet használó analóg rendszerben. A kapacitás további növekedését eredményezte, hogy a digitális mobilkészülékek kisebb teljesítményű rádiót használtak, így a cellák méretét is kisebbre tudták venni. A kisebb teljesítményű rádió kevesebb energiával is beérte, így az akkumulátorok mérete is csökkent. Mindezek sokkal olcsóbbá és hatékonyabbá is tették a mobiltelefonálást. A legelterjedtebb 2G hálózat a GSM. A GSM vezette be az úgynevezett SIM kártyákat. A SIM egy kisméretű írható/olvasható adatkártya, amely tartalmazza a felhasználó hálózaton történő azonosításához szükséges információkat, valamint a telefonkönyvét. Továbbfejlesztés GPRS, EDGE. Rádiós közeghozzáférés: FDMA+TDMA. 900MHz/1800MHz.
+
+\paragraph{3. generáció -- UMTS}
+A 3G hálózatok legjelentősebb újításai a 2Ghez képest a megnövekedett kapacitás (több felhasználó kiszolgálása a cellákon belül), a nagysebességű adatkapcsolatok támogatása (internetelérés) és több új hálózati szolgáltatás bevezetése, mint például a videotelefonálás, multimédia szolgáltatások. CDMA közeghozzáférés. HSUPA/HSDPA
+
+\paragraph{4. generáció}
+A 4G technológia arra épül, amelyet a 3G kínál, de mindent sokkal gyorsabban hajt végre. MIMO/beamforming. VoLTE.
+
+\paragraph{5. generáció}
+IoT eszközök. Nagy sebesség, alacsony késleltetés(ping). Eszköz-eszköz kommunikáció. Okos eszközök, önvezetés.
 
 \subsection{Műholdas kommunikáció és helymeghatározás.}
 A műholdas kommunikációs hálózatban a műhold, illetve a hozzá tartozó földi
 állomások hálózatot alkotnak. A központi állomások, melyekhez számítógépes
 hálózatok, telefon, távíró és egyéb kommunikációs vonalak kapcsolhatók,
-eljuttatják az átalakított jeleket a műholdra, amely megváltoztatva a frekvenciát, felerősíti a jeleket és visszajuttatja a földi állomásokra, a felhasználói állomásokra. A távközlési műhold, mint a hálózat legnagyobb egysége a jelek vételére, valamint azok meghatározott területek felé való sugárzására egyaránt alkalmas. Ilyen műholdak keringenek a Föld körül az Intelsat, Eutelsat, Inmarsat stb. rendszerben. Egy adott szolgáltatás működtetője a műhold kapacitásából transzponder(rész)t -- csatornát, vonalakat -- bérelhet. A felhasználó a felhasználói állomáson, terminálon keresztül veszi igénybe a rendszer szolgáltatásait. A felhasználói állomások (terminálok) funkciójukat tekintve lehetnek, a) csak vételre szolgáló, illetve b) adó-vevő földi terminálok. A csak vételre szolgáló terminálokkal felépített rendszerek műsor- vagy adatszórásra, tehát egyirányú összeköttetésre alkalmas rendszerek. Egy központi állomásból és csillag alakzatban elhelyezkedő vevőterminálokból állnak. A központ és a terminálok között műholdon keresztül létesül az egyirányú
+eljuttatják az átalakított jeleket a műholdra, amely megváltoztatva a frekvenciát, felerősíti a jeleket és visszajuttatja a földi állomásokra, a felhasználói állomásokra. A távközlési műhold, mint a hálózat legnagyobb egysége a jelek vételére, valamint azok meghatározott területek felé való sugárzására egyaránt alkalmas. Ilyen műholdak keringenek a Föld körül az Intelsat, Eutelsat, Inmarsat stb. rendszerben. 
+
+Egy adott szolgáltatás működtetője a műhold kapacitásából transzponder(rész)t -- csatornát, vonalakat -- bérelhet. A felhasználó a felhasználói állomáson, terminálon keresztül veszi igénybe a rendszer szolgáltatásait. A felhasználói állomások (terminálok) funkciójukat tekintve lehetnek, a) csak vételre szolgáló, illetve b) adó-vevő földi terminálok. A csak vételre szolgáló terminálokkal felépített rendszerek műsor- vagy adatszórásra, tehát egyirányú összeköttetésre alkalmas rendszerek. Egy központi állomásból és csillag alakzatban elhelyezkedő vevőterminálokból állnak. A központ és a terminálok között műholdon keresztül létesül az egyirányú
 kapcsolat. A központi állomásból kisugárzott jeleket a műhold közvetítésével
 minden, a rendszerbe tartozó (zárt hálózat), vagy az ellátási körzeten belüli
 (nyílt hálózat) terminál egyidőben veszi. Erre példa: a francia POLYCOM
@@ -212,15 +265,14 @@ szabvány szerinti összekapcsolását.
 \subsubsection{GPS}
 A GPS (Global Positioning System) Globális Helymeghatározó Rendszer, az
 Amerikai Egyesült Államok Védelmi Minisztériuma (Department of Defense)
-által (elsődlegesen katonai célokra) kifejlesztett és üzemeltetett – a Föld bármely
-pontján, a nap 24 órájában működő – műholdas helymeghatározó rendszer.
-A helymeghatározás 24 db műhold segítségével történik, melyek a Föld felszíne
-fölött 20 200 km-es magasságban keringenek, az Egyenlítővel 55 fokos szöget
+által (elsődlegesen katonai célokra) kifejlesztett és üzemeltetett -- a Föld bármely pontján, a nap 24~órájában működő -- műholdas helymeghatározó rendszer.
+A helymeghatározás 24~db műhold segítségével történik, melyek a Föld felszíne
+fölött 20.200~km-es magasságban keringenek, az Egyenlítővel 55~fokos szöget
 bezáró pályán. Egy-egy műhold nagyjából naponta kétszer kerüli meg a Földet.
-Az égbolton sík terepen egyszerre 7-12 műhold látható, melyből a
+Az égbolton sík terepen egyszerre 7--12 műhold látható, melyből a
 helymeghatározáshoz 3, a tengerszint feletti magasság meghatározásához pedig
 további egy hold szükséges. A GPS műholdak két frekvencián sugároznak,
-ezeket L1-nek (1575,42 MHz) és L2-nek (1227,6 MHz) nevezik. Minden
+ezeket L1-nek (1575,42~MHz) és L2-nek (1227,6~MHz) nevezik. Minden
 műhold szórt spektrumú jelet sugároz, amit „pszeudo-véletlen zaj”-nak lehet
 nevezni (angol megnevezése: pseudo-random noise, röviden: 'PRN'). Ez a PRN
 minden műholdnál különböző. A PRN kódoknak két fajtája van: az első a C/A
